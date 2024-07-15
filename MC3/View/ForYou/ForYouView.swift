@@ -12,8 +12,12 @@ struct ForYouView: View {
         NavigationStack {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top) {
-                    ForEach(Dog.sampleDogList) { order in
-                        ForYouCard( dog: order)
+                    ForEach(Dog.sampleDogList) { dog in
+                        NavigationLink(
+                            destination: ProfileView(),
+                            label: {
+                                ForYouCard( dog: dog)
+                            })
                     } .listRowSeparator(.hidden)
                 }
             }.padding(.bottom,30)
