@@ -16,7 +16,7 @@ struct ForYouView: View {
                         ForYouCard( dog: order)
                     } .listRowSeparator(.hidden)
                 }
-            }.padding(.bottom,40)
+            }.padding(.bottom,30)
             VStack(alignment: .leading, spacing: 20) {
                 VStack{
                     Button(action: {
