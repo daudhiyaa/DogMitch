@@ -8,24 +8,55 @@
 import SwiftUI
 
 struct SelectBreedView: View {
-    let dogBreed = ["Labrador Retriever", "German Shepherd"]
+    let dogBreed = ["Labrador Retriever", "German Shepherd", "Golden Retriever", "Bulldog", "Siberian Husky", "Pomeranian", "Australian Shepherd", "Chihuahua"]
+    @State private var isChosen: Bool = false
     @State private var searchText = ""
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 20) {
-                if (searchText != ""){
+                if (searchText != "" && dogBreed.filter { $0.contains(searchText)}.count == 0){
                     ContentUnavailableView.search
                 }else{
                     ScrollView(){
                         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
                             ForEach(searchResults, id: \.self) { name in
-                                SelectBreedCard(name: name)
+                                Button(action: {
+                                                      isChosen.toggle()
+                                }) {
+                                    SelectBreedCard(name: name, isChosen: isChosen)
+                                }
                             }.padding(.top)
                         }
-                        .padding(.top)
+                        .padding(.top,8)
                     }
                 }
-            }.padding(24)
+                VStack{
+                    if isChosen{
+                        Button(action: {
+                            // ACTION
+                        }) {
+                            Text("Next") .font(.system(size: 17)).fontWeight(.semibold)
+                                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+                                .padding(12)
+                                .background(Colors.tosca)
+                                .cornerRadius(30)
+                                .foregroundColor(.white)
+                        }
+                    }else{
+                        Button(action: {
+                            // ACTION
+                        }) {
+                            Text("Next") .font(.system(size: 17)).fontWeight(.semibold)
+                                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+                                .padding(12)
+                                .background(Color(hex: "#D9D9D9"))
+                                .cornerRadius(30)
+                                .foregroundColor(.white)
+                        }.disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                    }
+                    
+                }
+            }.padding(18)
                 .navigationBarTitle("Select Your Dog Breed", displayMode: .inline)
         }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
     }

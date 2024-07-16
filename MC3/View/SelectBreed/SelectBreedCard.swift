@@ -9,11 +9,17 @@ import SwiftUI
 
 struct SelectBreedCard: View {
     let name: String
+    let isChosen: Bool
     var body: some View {
-        ZStack(alignment: .topTrailing) { 
+        ZStack(alignment: .topTrailing) {
             RoundedRectangle(cornerRadius: 20)
                 .fill(Colors.yellow)
                 .frame(maxWidth: 170, maxHeight: 95)
+            if isChosen{
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color(hex: "#B78905"))
+                    .frame(maxWidth: 170, maxHeight: 95)
+            }
             VStack{
                 HStack{
                     Image(name)
@@ -29,5 +35,5 @@ struct SelectBreedCard: View {
 }
 
 #Preview {
-    SelectBreedCard(name: "Labrador Retriever")
+    SelectBreedCard(name: "Labrador Retriever", isChosen: true)
 }
