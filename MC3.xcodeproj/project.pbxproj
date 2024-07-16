@@ -21,6 +21,10 @@
 		B4D297282C40DDD80075B940 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D297272C40DDD80075B940 /* Item.swift */; };
 		B4D2972A2C40DDD90075B940 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4D297292C40DDD90075B940 /* Assets.xcassets */; };
 		B4D2972D2C40DDD90075B940 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4D2972C2C40DDD90075B940 /* Preview Assets.xcassets */; };
+		B4DBEE782C460E25002C5231 /* MedicalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DBEE772C460E25002C5231 /* MedicalView.swift */; };
+		B4DBEE7A2C460E4D002C5231 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DBEE792C460E4D002C5231 /* AboutView.swift */; };
+		B4DBEE842C46509A002C5231 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DBEE832C46509A002C5231 /* FlowLayout.swift */; };
+		B4DBEE872C465275002C5231 /* Personality.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DBEE862C465275002C5231 /* Personality.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +43,10 @@
 		B4D297272C40DDD80075B940 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		B4D297292C40DDD90075B940 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B4D2972C2C40DDD90075B940 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B4DBEE772C460E25002C5231 /* MedicalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalView.swift; sourceTree = "<group>"; };
+		B4DBEE792C460E4D002C5231 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		B4DBEE832C46509A002C5231 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
+		B4DBEE862C465275002C5231 /* Personality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Personality.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +100,9 @@
 		B4B5EE162C440D110035D40F /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				B4B5EE1F2C441E3D0035D40F /* MedicalDocument */,
+				B4DBEE762C460E12002C5231 /* Medical */,
+				B4DBEE752C460E0E002C5231 /* About */,
 				B4B5EE172C440D240035D40F /* ProfileView.swift */,
 			);
 			path = Profile;
@@ -141,7 +152,8 @@
 		B4D297222C40DDD80075B940 /* MC3 */ = {
 			isa = PBXGroup;
 			children = (
-				06477AC02C455CB9006F4C79 /* Model */,
+				B4DBEE852C465265002C5231 /* Model */,
+				B4DBEE7B2C460E6C002C5231 /* Components */,
 				06477AB92C4542E8006F4C79 /* Helper */,
 				B4B5EE152C440CBD0035D40F /* View */,
 				B4D297232C40DDD80075B940 /* MC3App.swift */,
@@ -159,6 +171,38 @@
 				B4D2972C2C40DDD90075B940 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B4DBEE752C460E0E002C5231 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				B4DBEE792C460E4D002C5231 /* AboutView.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
+		B4DBEE762C460E12002C5231 /* Medical */ = {
+			isa = PBXGroup;
+			children = (
+				B4DBEE772C460E25002C5231 /* MedicalView.swift */,
+			);
+			path = Medical;
+			sourceTree = "<group>";
+		};
+		B4DBEE7B2C460E6C002C5231 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				B4DBEE832C46509A002C5231 /* FlowLayout.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		B4DBEE852C465265002C5231 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B4DBEE862C465275002C5231 /* Personality.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,11 +281,15 @@
 				B4D297262C40DDD80075B940 /* ContentView.swift in Sources */,
 				B4B5EE212C441E4C0035D40F /* MedicalDocumentView.swift in Sources */,
 				B4B5EE1E2C440FEF0035D40F /* ForYouView.swift in Sources */,
+				B4DBEE7A2C460E4D002C5231 /* AboutView.swift in Sources */,
 				B4B5EE1C2C440FDE0035D40F /* DogsMateView.swift in Sources */,
-				06477ABB2C4542F5006F4C79 /* Color.swift in Sources */,
-				06477AC72C4584C4006F4C79 /* SelectBreedCard.swift in Sources */,
+				B4DBEE842C46509A002C5231 /* FlowLayout.swift in Sources */,
 				B4D297282C40DDD80075B940 /* Item.swift in Sources */,
-				06477AC22C455CC4006F4C79 /* Dog.swift in Sources */,
+				B4DBEE782C460E25002C5231 /* MedicalView.swift in Sources */,
+				B4DBEE872C465275002C5231 /* Personality.swift in Sources */,
+                06477ABB2C4542F5006F4C79 /* Color.swift in Sources */,
+                06477AC72C4584C4006F4C79 /* SelectBreedCard.swift in Sources */,
+                06477AC22C455CC4006F4C79 /* Dog.swift in Sources */,
 				B4D297242C40DDD80075B940 /* MC3App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

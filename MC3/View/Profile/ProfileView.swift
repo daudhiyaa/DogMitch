@@ -9,72 +9,49 @@ import SwiftUI
 
 let pageStates: [String] = ["About", "Medical"]
 
-struct AboutView: View {
+struct ProfileHeader: View {
+    var dogImage: String
+    var dogName: String
+    var dogLocation: String
+    var dogGender: String
+    
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("About").font(.system(size: 24, weight: .semibold, design: .default))
-            Text("Meet Puppy, a charming Golden Retriever with a penchant for lounging and an insatiable desire to find love. With his fluffy coat and soulful eyes, Puppy may prefer naps over fetch, but his heart is as golden as his fur. Despite his relaxed demeanor, he dreams of finding a mate to share cuddles and lazy days with. Puppy's loyalty and gentle nature make him a delightful companion, always ready to brighten your days with his affectionate personality.").foregroundColor(.gray)
-            HStack() {
-                VStack(spacing: 8) {
-                    Text("BREED").font(.system(size: 16)).foregroundStyle(.gray)
-                    Text("Retriever").font(.system(size: 20, weight: .semibold))
-                }
-                Spacer()
-                Rectangle().fill(Color.gray).frame(width: 1, height: 64)
-                Spacer()
-                VStack(spacing: 8) {
-                    Text("AGE").font(.system(size: 16)).foregroundStyle(.gray)
-                    Text("31 mo").font(.system(size: 20, weight: .semibold))
-                }
-                Spacer()
-                Rectangle().fill(Color.gray).frame(width: 1, height: 64)
-                Spacer()
-                VStack(spacing: 8) {
-                    Text("WEIGHT").font(.system(size: 16)).foregroundStyle(.gray)
-                    Text("45 lbs").font(.system(size: 20, weight: .semibold))
+        HStack(alignment: .top, spacing: 16) {
+            ZStack(alignment: .bottomTrailing) {
+                Image(dogImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 120, height: 120)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                
+                Image(systemName: dogGender == "Male" ? "pawprint" : "pawprint.fill")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .foregroundStyle(dogGender == "Male" ? .teal : .red)
+                    .aspectRatio(contentMode: .fit)
+                    .padding(8)
+                    .background(.white)
+                    .clipShape(Circle())
+                    .offset(x: 10, y: 10)
+                    .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+            }
+        
+            VStack(alignment: .leading) {
+                Text(dogName).font(.title)
+                Text(dogLocation).font(.subheadline)
+                Button(action: {
+                    // ACTION
+                }) {
+                    HStack {
+                        Image(systemName: "location.fill")
+                        Text("See Dog Location")
+                    }
+                    .padding(10)
+                    .background(Color.teal)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
                 }
             }
-            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
-            .padding()
-            .background(.yellow)
-            .cornerRadius(20)
-        }
-    }
-}
-
-struct MedicalView: View {
-    var body: some View {
-        List {
-            NavigationLink(destination: MedicalDocumentView()) {
-                HStack {
-                    Image(systemName: "doc.text")
-                        .foregroundColor(.teal)
-                    VStack(alignment: .leading, content: {
-                        Text("Vaccination").font(.headline)
-                        Text("See Vaccination Document").font(.system(size: 12))
-                    })
-                }
-            }.padding(.vertical, 8)
-            NavigationLink(destination: MedicalDocumentView()) {
-                HStack {
-                    Image(systemName: "doc.text")
-                        .foregroundColor(.teal)
-                    VStack(alignment: .leading, content: {
-                        Text("Medical Record").font(.headline)
-                        Text("See Medical Record").font(.system(size: 12))
-                    })
-                }
-            }.padding(.vertical, 8)
-            NavigationLink(destination: MedicalDocumentView()) {
-                HStack {
-                    Image(systemName: "doc.text")
-                        .foregroundColor(.teal)
-                    VStack(alignment: .leading, content: {
-                        Text("Stamboom").font(.headline)
-                        Text("See Stamboom Document").font(.system(size: 12))
-                    })
-                }
-            }.padding(.vertical, 8)
         }
     }
 }
@@ -86,26 +63,12 @@ struct ProfileView: View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 20) {
                 // PROFILE IMAGE
-                HStack(alignment: .firstTextBaseline) {
-                    Image(systemName: "person.circle.fill")
-                        .font(.title)
-                    VStack(alignment: .leading) {
-                        Text("Dog's Name").font(.title)
-                        Text("Location")
-                        Button(action: {
-                            // ACTION
-                        }) {
-                            HStack {
-                                Image(systemName: "location.fill")
-                                Text("See Dog Location")
-                            }
-                            .padding(10)
-                            .background(Color.teal)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                        }
-                    }
-                }
+                ProfileHeader(
+                    dogImage: "dog_profile",
+                    dogName: "Puppy",
+                    dogLocation: "Surabaya, Indonesia",
+                    dogGender: "Male"
+                )
                 
                 // SEGMENTED CONTROLS
                 Picker("Filter", selection: $pageState) {
@@ -119,10 +82,8 @@ struct ProfileView: View {
                 if pageState == "About" {
                     AboutView()
                 } else {
-                    MedicalView()
+                    MedicalView().clipShape(RoundedRectangle(cornerRadius: 20))
                 }
-                
-                Spacer()
             }
             .padding(24)
             .navigationBarTitle("Profile", displayMode: .inline)
