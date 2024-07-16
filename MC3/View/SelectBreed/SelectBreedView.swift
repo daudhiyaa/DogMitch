@@ -10,7 +10,10 @@ import SwiftUI
 struct SelectBreedView: View {
     let dogBreed = ["Labrador Retriever", "German Shepherd", "Golden Retriever", "Bulldog", "Siberian Husky", "Pomeranian", "Australian Shepherd", "Chihuahua"]
     @State private var isChosen: Bool = false
+    @State private var selected: String = ""
     @State private var searchText = ""
+    let colorYellow = Colors.yellow
+    let colorBrown = Colors.brown
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 20) {
@@ -21,9 +24,14 @@ struct SelectBreedView: View {
                         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
                             ForEach(searchResults, id: \.self) { name in
                                 Button(action: {
-                                                      isChosen.toggle()
+                                    isChosen = true
+                                    selected = name
                                 }) {
-                                    SelectBreedCard(name: name, isChosen: isChosen)
+                                    if selected==name{
+                                        SelectBreedCard(name: name,  color:colorBrown)
+                                    }else{
+                                        SelectBreedCard(name: name,  color:colorYellow)
+                                    }
                                 }
                             }.padding(.top)
                         }
@@ -34,6 +42,7 @@ struct SelectBreedView: View {
                     if isChosen{
                         Button(action: {
                             // ACTION
+                            print(selected)
                         }) {
                             Text("Next") .font(.system(size: 17)).fontWeight(.semibold)
                                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)

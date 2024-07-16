@@ -23,4 +23,5 @@ class Colors {
     static let tosca = Color(hex: "#06CACD")
     static let yellow = Color(hex: "#FABC07")
     static let lightpink = Color(hex: "#FF5353")
+    static let brown = Color(hex: "#B78905")
 }
