@@ -51,7 +51,7 @@ struct Dog: Identifiable{
         "stamboom" : stamboom,
         "medicalRecord" : medicalRecord,
         "location" : location,
-        "personality" : "personality",
+        "personality" : personality.map { $0.value },
         "weight" : weight,
         "readyToBreed" : readyToBreed,
         "contact" : contact,
