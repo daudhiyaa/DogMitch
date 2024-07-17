@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		06477ABB2C4542F5006F4C79 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06477ABA2C4542F5006F4C79 /* Color.swift */; };
 		06477ABF2C4548F6006F4C79 /* ForYouCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06477ABE2C4548F6006F4C79 /* ForYouCard.swift */; };
-		06477AC22C455CC4006F4C79 /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06477AC12C455CC4006F4C79 /* Dog.swift */; };
 		06477AC52C458023006F4C79 /* SelectBreedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06477AC42C458023006F4C79 /* SelectBreedView.swift */; };
 		06477AC72C4584C4006F4C79 /* SelectBreedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06477AC62C4584C4006F4C79 /* SelectBreedCard.swift */; };
+		B4A4AA672C47683900F471E6 /* MedicalDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A4AA652C47683900F471E6 /* MedicalDocumentView.swift */; };
+		B4A4AA6F2C476A8A00F471E6 /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A4AA6E2C476A8A00F471E6 /* Dog.swift */; };
 		B4B5EE182C440D240035D40F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B5EE172C440D240035D40F /* ProfileView.swift */; };
 		B4B5EE1C2C440FDE0035D40F /* DogsMateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B5EE1B2C440FDE0035D40F /* DogsMateView.swift */; };
 		B4B5EE1E2C440FEF0035D40F /* ForYouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B5EE1D2C440FEF0035D40F /* ForYouView.swift */; };
-		B4B5EE212C441E4C0035D40F /* MedicalDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B5EE202C441E4C0035D40F /* MedicalDocumentView.swift */; };
 		B4D297242C40DDD80075B940 /* MC3App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D297232C40DDD80075B940 /* MC3App.swift */; };
 		B4D297262C40DDD80075B940 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D297252C40DDD80075B940 /* ContentView.swift */; };
 		B4D297282C40DDD80075B940 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D297272C40DDD80075B940 /* Item.swift */; };
@@ -33,10 +33,11 @@
 		06477AC12C455CC4006F4C79 /* Dog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
 		06477AC42C458023006F4C79 /* SelectBreedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectBreedView.swift; sourceTree = "<group>"; };
 		06477AC62C4584C4006F4C79 /* SelectBreedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectBreedCard.swift; sourceTree = "<group>"; };
+		B4A4AA652C47683900F471E6 /* MedicalDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicalDocumentView.swift; sourceTree = "<group>"; };
+		B4A4AA6E2C476A8A00F471E6 /* Dog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
 		B4B5EE172C440D240035D40F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		B4B5EE1B2C440FDE0035D40F /* DogsMateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogsMateView.swift; sourceTree = "<group>"; };
 		B4B5EE1D2C440FEF0035D40F /* ForYouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForYouView.swift; sourceTree = "<group>"; };
-		B4B5EE202C441E4C0035D40F /* MedicalDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalDocumentView.swift; sourceTree = "<group>"; };
 		B4D297202C40DDD80075B940 /* MC3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MC3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4D297232C40DDD80075B940 /* MC3App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MC3App.swift; sourceTree = "<group>"; };
 		B4D297252C40DDD80075B940 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -68,14 +69,6 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
-		06477AC02C455CB9006F4C79 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				06477AC12C455CC4006F4C79 /* Dog.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		06477AC32C457FFF006F4C79 /* SelectBreed */ = {
 			isa = PBXGroup;
 			children = (
@@ -85,11 +78,26 @@
 			path = SelectBreed;
 			sourceTree = "<group>";
 		};
+		B4A4AA642C47681900F471E6 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				06477AC12C455CC4006F4C79 /* Dog.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		B4A4AA662C47683900F471E6 /* MedicalDocument */ = {
+			isa = PBXGroup;
+			children = (
+				B4A4AA652C47683900F471E6 /* MedicalDocumentView.swift */,
+			);
+			path = MedicalDocument;
+			sourceTree = "<group>";
+		};
 		B4B5EE152C440CBD0035D40F /* View */ = {
 			isa = PBXGroup;
 			children = (
 				06477AC32C457FFF006F4C79 /* SelectBreed */,
-				B4B5EE1F2C441E3D0035D40F /* MedicalDocument */,
 				B4B5EE1A2C440FC00035D40F /* DogsMate */,
 				B4B5EE192C440FBA0035D40F /* ForYou */,
 				B4B5EE162C440D110035D40F /* Profile */,
@@ -100,7 +108,7 @@
 		B4B5EE162C440D110035D40F /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				B4B5EE1F2C441E3D0035D40F /* MedicalDocument */,
+				B4A4AA662C47683900F471E6 /* MedicalDocument */,
 				B4DBEE762C460E12002C5231 /* Medical */,
 				B4DBEE752C460E0E002C5231 /* About */,
 				B4B5EE172C440D240035D40F /* ProfileView.swift */,
@@ -125,19 +133,12 @@
 			path = DogsMate;
 			sourceTree = "<group>";
 		};
-		B4B5EE1F2C441E3D0035D40F /* MedicalDocument */ = {
-			isa = PBXGroup;
-			children = (
-				B4B5EE202C441E4C0035D40F /* MedicalDocumentView.swift */,
-			);
-			path = MedicalDocument;
-			sourceTree = "<group>";
-		};
 		B4D297172C40DDD80075B940 = {
 			isa = PBXGroup;
 			children = (
 				B4D297222C40DDD80075B940 /* MC3 */,
 				B4D297212C40DDD80075B940 /* Products */,
+				B4A4AA642C47681900F471E6 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -200,6 +201,7 @@
 		B4DBEE852C465265002C5231 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B4A4AA6E2C476A8A00F471E6 /* Dog.swift */,
 				B4DBEE862C465275002C5231 /* Personality.swift */,
 			);
 			path = Model;
@@ -279,7 +281,6 @@
 				06477ABF2C4548F6006F4C79 /* ForYouCard.swift in Sources */,
 				06477AC52C458023006F4C79 /* SelectBreedView.swift in Sources */,
 				B4D297262C40DDD80075B940 /* ContentView.swift in Sources */,
-				B4B5EE212C441E4C0035D40F /* MedicalDocumentView.swift in Sources */,
 				B4B5EE1E2C440FEF0035D40F /* ForYouView.swift in Sources */,
 				B4DBEE7A2C460E4D002C5231 /* AboutView.swift in Sources */,
 				B4B5EE1C2C440FDE0035D40F /* DogsMateView.swift in Sources */,
@@ -287,9 +288,10 @@
 				B4D297282C40DDD80075B940 /* Item.swift in Sources */,
 				B4DBEE782C460E25002C5231 /* MedicalView.swift in Sources */,
 				B4DBEE872C465275002C5231 /* Personality.swift in Sources */,
-                06477ABB2C4542F5006F4C79 /* Color.swift in Sources */,
-                06477AC72C4584C4006F4C79 /* SelectBreedCard.swift in Sources */,
-                06477AC22C455CC4006F4C79 /* Dog.swift in Sources */,
+				06477ABB2C4542F5006F4C79 /* Color.swift in Sources */,
+				06477AC72C4584C4006F4C79 /* SelectBreedCard.swift in Sources */,
+				B4A4AA672C47683900F471E6 /* MedicalDocumentView.swift in Sources */,
+				B4A4AA6F2C476A8A00F471E6 /* Dog.swift in Sources */,
 				B4D297242C40DDD80075B940 /* MC3App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,7 +426,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = 7573MGT656;
+				DEVELOPMENT_TEAM = S929UZL64F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -453,7 +455,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = 7573MGT656;
+				DEVELOPMENT_TEAM = S929UZL64F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
