@@ -24,9 +24,9 @@ struct SelectBreedView: View {
                                     selected = name
                                 }) {
                                     if selected==name{
-                                        SelectBreedCard(name: name,  color:Colors.brown)
+                                        SelectBreedCard(name: name,  isChosen: false)
                                     }else{
-                                        SelectBreedCard(name: name,  color:Colors.yellow)
+                                        SelectBreedCard(name: name,  isChosen: true)
                                     }
                                 }
                             }.padding(.top)
