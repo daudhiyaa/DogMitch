@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyC3U-9MielD_jtOf7CnGTjdUH7xYhDKJfw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1019785662837</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.cip.dogmitch</string>
+	<key>PROJECT_ID</key>
+	<string>dogmitch-678da</string>
+	<key>STORAGE_BUCKET</key>
+	<string>dogmitch-678da.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1019785662837:ios:126f918e1938ab3d4d433c</string>
+</dict>
+</plist>
