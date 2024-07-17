@@ -23,7 +23,12 @@ struct MedicalView: View {
         List {
             Section{
                 ForEach(menuItems, id: \.title) { item in
-                    NavigationLink(destination: Text(item.title)) {
+                    NavigationLink(
+                        destination: MedicalDocumentView(
+                            pageTitle: item.title,
+                            documentImage: "dog_profile"
+                        )
+                    ) {
                         HStack {
                             Image(item.iconName)
                             VStack(alignment: .leading) {
