@@ -27,7 +27,7 @@ struct ForYouCard: View {
                     .padding(20)
                     Text(dog.name).font(.system(size: 36)).foregroundColor(Color.white).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     Text(dog.breed).font(.system(size: 24)).foregroundColor(Color.white).fontWeight(.regular)
-                    Text(dog.age).font(.system(size: 17)).foregroundColor(Color.white).fontWeight(.regular).padding(.bottom,50)
+                    Text(dog.birthday).font(.system(size: 17)).foregroundColor(Color.white).fontWeight(.regular).padding(.bottom,50)
                 }.background(Colors.yellow)
                     .cornerRadius(40)
                     .overlay(alignment:.topLeading){
