@@ -11,7 +11,6 @@
 		06477ABF2C4548F6006F4C79 /* ForYouCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06477ABE2C4548F6006F4C79 /* ForYouCard.swift */; };
 		06477AC52C458023006F4C79 /* SelectBreedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06477AC42C458023006F4C79 /* SelectBreedView.swift */; };
 		06477AC72C4584C4006F4C79 /* SelectBreedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06477AC62C4584C4006F4C79 /* SelectBreedCard.swift */; };
-		0679CC4F2C47578300A3E9C9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0679CC4E2C47578300A3E9C9 /* GoogleService-Info.plist */; };
 		0679CC522C475A8E00A3E9C9 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 0679CC512C475A8E00A3E9C9 /* FirebaseAppCheck */; };
 		0679CC542C475A8E00A3E9C9 /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 0679CC532C475A8E00A3E9C9 /* FirebaseAppDistribution-Beta */; };
 		0679CC562C475A8E00A3E9C9 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0679CC552C475A8E00A3E9C9 /* FirebaseAuth */; };
@@ -39,6 +38,7 @@
 		0679CC842C47709D00A3E9C9 /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A4AA6E2C476A8A00F471E6 /* Dog.swift */; };
 		0679CC852C4770A000A3E9C9 /* MedicalDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A4AA652C47683900F471E6 /* MedicalDocumentView.swift */; };
 		0679CC892C477ECB00A3E9C9 /* DogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0679CC882C477ECB00A3E9C9 /* DogViewModel.swift */; };
+		06A5412C2C47A67D00FCA154 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 06A5412B2C47A67D00FCA154 /* GoogleService-Info.plist */; };
 		B4B5EE182C440D240035D40F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B5EE172C440D240035D40F /* ProfileView.swift */; };
 		B4B5EE1C2C440FDE0035D40F /* DogsMateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B5EE1B2C440FDE0035D40F /* DogsMateView.swift */; };
 		B4B5EE1E2C440FEF0035D40F /* ForYouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B5EE1D2C440FEF0035D40F /* ForYouView.swift */; };
@@ -59,8 +59,8 @@
 		06477AC12C455CC4006F4C79 /* Dog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
 		06477AC42C458023006F4C79 /* SelectBreedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectBreedView.swift; sourceTree = "<group>"; };
 		06477AC62C4584C4006F4C79 /* SelectBreedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectBreedCard.swift; sourceTree = "<group>"; };
-		0679CC4E2C47578300A3E9C9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0679CC882C477ECB00A3E9C9 /* DogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogViewModel.swift; sourceTree = "<group>"; };
+		06A5412B2C47A67D00FCA154 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B4A4AA652C47683900F471E6 /* MedicalDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicalDocumentView.swift; sourceTree = "<group>"; };
 		B4A4AA6E2C476A8A00F471E6 /* Dog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
 		B4B5EE172C440D240035D40F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -222,7 +222,7 @@
 				B4D297252C40DDD80075B940 /* ContentView.swift */,
 				B4D297272C40DDD80075B940 /* Item.swift */,
 				B4D297292C40DDD90075B940 /* Assets.xcassets */,
-				0679CC4E2C47578300A3E9C9 /* GoogleService-Info.plist */,
+				06A5412B2C47A67D00FCA154 /* GoogleService-Info.plist */,
 				B4D2972B2C40DDD90075B940 /* Preview Content */,
 			);
 			path = MC3;
@@ -357,8 +357,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4D2972D2C40DDD90075B940 /* Preview Assets.xcassets in Resources */,
+				06A5412C2C47A67D00FCA154 /* GoogleService-Info.plist in Resources */,
 				B4D2972A2C40DDD90075B940 /* Assets.xcassets in Resources */,
-				0679CC4F2C47578300A3E9C9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -519,7 +519,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = S929UZL64F;
+				DEVELOPMENT_TEAM = 7573MGT656;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -549,7 +549,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = S929UZL64F;
+				DEVELOPMENT_TEAM = 7573MGT656;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

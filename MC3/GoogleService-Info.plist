@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.cip.dogmitch</string>
+	<string>com.daudhiyaa.DogMitch</string>
 	<key>PROJECT_ID</key>
 	<string>dogmitch-678da</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1019785662837:ios:126f918e1938ab3d4d433c</string>
+	<string>1:1019785662837:ios:310c1ab2f246025a4d433c</string>
 </dict>
 </plist>
