@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SelectBreedView: View {
-    let dogBreed = ["Labrador Retriever", "German Shepherd", "Golden Retriever", "Bulldog", "Siberian Husky", "Pomeranian", "Australian Shepherd", "Chihuahua"]
+    let dogBreed = ["Labrador Retriever", "German Shepherd", "Golden Retriever", "Bulldog", "Siberian Husky", "Pomeranian", "Australian Shepherd", "Chihuahua", "Toy Poodle", "Miniature Poodle","Standard Poodle","Dachshund", "Pug", "Rottweiler", "Maltese", "Corgi"]
     @State private var selected: String = ""
     @State private var searchText = ""
     var body: some View {
