@@ -10,4 +10,8 @@ import Foundation
 struct Personality: Identifiable, Hashable {
     let id = UUID()
     let value: String
+    
+    init(value: String) {
+        self.value = value
+    }
 }
