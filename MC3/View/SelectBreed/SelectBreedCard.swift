@@ -30,16 +30,18 @@ struct SelectBreedCard: View {
                                 .renderingMode(.original)
                                 .grayscale(1)
                                 .scaledToFit()
-                                .offset(x: -10, y: -25)
+                                .offset(x: -8, y: -24)
                         }else{
                             Image(name)
                                 .resizable()
                                 .scaledToFit()
-                                .offset(x: -10, y: -25)
+                                .offset(x: -8, y: -24)
                         }
-                    }
-                    Text(name).font(.system(size: 17)).foregroundColor(Color.white).fontWeight(.semibold)
-                        .offset(x: -10, y: -15)
+                    }.frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/).multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+                    VStack{
+                        Text(name).font(.system(size: 17)).foregroundColor(Color.white).fontWeight(.semibold)
+                            .offset(x: -10, y: -15)
+                    }.frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/).multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                 }
             }
         }.frame(maxWidth: 170, maxHeight: 120, alignment: .bottom)
@@ -47,6 +49,6 @@ struct SelectBreedCard: View {
 }
 
 #Preview {
-    SelectBreedCard(name: "German Shepherd", isChosen: true)
+    SelectBreedCard(name: "Maltese",  isChosen: false)
 }
 
