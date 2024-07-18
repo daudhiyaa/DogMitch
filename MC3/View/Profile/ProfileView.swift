@@ -18,17 +18,19 @@ struct ProfileHeader: View {
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
             ZStack(alignment: .bottomTrailing) {
-                Image(dogImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 120, height: 120)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                AsyncImage(url: URL(string: dogImage)){ result in
+                    result.image?
+                        .resizable()
+                        .scaledToFill()
+                }
+                .centerCropped()
+                .frame(width: 120, height: 120)
+                .cornerRadius(10)
                 
-                Image(systemName: dogGender == "Male" ? "pawprint" : "pawprint.fill")
+                Image(dogGender)
                     .resizable()
-                    .frame(width: 20, height: 20)
-                    .foregroundStyle(dogGender == "Male" ? .teal : .red)
-                    .aspectRatio(contentMode: .fit)
+                    .scaledToFit()
+                    .frame(width: 16, height: 16)
                     .padding(8)
                     .background(.white)
                     .clipShape(Circle())
@@ -59,15 +61,17 @@ struct ProfileHeader: View {
 struct ProfileView: View {
     @State private var pageState: String = "About"
     
+    var dog: Dog
+    
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 20) {
                 // PROFILE IMAGE
                 ProfileHeader(
-                    dogImage: "dog_profile",
-                    dogName: "Puppy",
-                    dogLocation: "Surabaya, Indonesia",
-                    dogGender: "Male"
+                    dogImage: dog.picture,
+                    dogName: dog.name,
+                    dogLocation: dog.location,
+                    dogGender: dog.gender
                 )
                 
                 // SEGMENTED CONTROLS
@@ -80,9 +84,9 @@ struct ProfileView: View {
                 
                 // PAGE CONTENT
                 if pageState == "About" {
-                    AboutView()
+                    AboutView(dog: dog)
                 } else {
-                    MedicalView().clipShape(RoundedRectangle(cornerRadius: 20))
+                    MedicalView(dog: dog).clipShape(RoundedRectangle(cornerRadius: 20))
                 }
             }
             .padding(24)
@@ -92,5 +96,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView()
+    ProfileView(dog: Dog.sampleDogList[1])
 }

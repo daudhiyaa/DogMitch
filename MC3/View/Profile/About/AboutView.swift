@@ -8,36 +8,9 @@
 import SwiftUI
 
 struct AboutView: View {
-    let personalities: [Personality] = [
-        Personality(value: "Friendly"),
-        Personality(value: "Energetic"),
-        Personality(value: "Loyal"),
-        Personality(value: "Protective"),
-        Personality(value: "Playful"),
-        Personality(value: "Intelligent"),
-        Personality(value: "Affectionate"),
-        Personality(value: "Curious"),
-        Personality(value: "Gentle"),
-        Personality(value: "Independent"),
-        Personality(value: "Alert"),
-        Personality(value: "Sociable"),
-        Personality(value: "Brave"),
-        Personality(value: "Calm"),
-        Personality(value: "Cheerful"),
-        Personality(value: "Confident"),
-        Personality(value: "Obedient"),
-        Personality(value: "Quiet"),
-        Personality(value: "Stubborn"),
-        Personality(value: "Mischievous"),
-        Personality(value: "Stubborn"),
-        Personality(value: "Mischievous")
-    ]
+    var dog: Dog
     
-    let dogDetails: [(title: String, value: String)] = [
-            ("BREED", "Retriever"),
-            ("AGE", "31 mo"),
-            ("WEIGHT", "45 lbs")
-        ]
+    let rows = [GridItem(.flexible()), GridItem(.fixed(1)), GridItem(.flexible()), GridItem(.fixed(1)), GridItem(.flexible())]
 
     var body: some View {
         ScrollView {
@@ -45,7 +18,7 @@ struct AboutView: View {
                 Text("Personality")
                     .font(.system(size: 24, weight: .semibold))
                 
-                FlowLayout(personalities) { tag in
+                FlowLayout(dog.personality) { tag in
                     Text(tag.value)
                         .foregroundColor(.black)
                         .padding(.horizontal, 12)
@@ -54,63 +27,84 @@ struct AboutView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                 }
                 
+                // BREED, AGE, WEIGHT
                 Spacer().frame(height: 16)
-                HStack() {
-                    ForEach(0..<dogDetails.count) { index in
+                GeometryReader { geometry in
+                    HStack {
                         VStack(spacing: 8) {
-                            Text(dogDetails[index].title)
+                            Text("BREED")
                                 .font(.system(size: 16))
                                 .foregroundColor(.gray)
-                            Text(dogDetails[index].value)
+                            Text(dog.breed)
                                 .font(.system(size: 20, weight: .semibold))
-                        }
+                        }.frame(maxWidth: geometry.size.width / 3)
                         
-                        if index < dogDetails.count - 1 {
-                            Spacer()
-                            Rectangle()
-                                .fill(Color.gray)
-                                .frame(width: 1, height: 64)
-                            Spacer()
-                        }
+                        Rectangle()
+                            .fill(Color.gray)
+                            .frame(width: 1, height: 64)
+                        
+                        VStack(spacing: 8) {
+                            Text("AGE")
+                                .font(.system(size: 16))
+                                .foregroundColor(.gray)
+                            Text(dog.birthday)
+                                .font(.system(size: 20, weight: .semibold))
+                        }.frame(maxWidth: geometry.size.width / 3)
+                        
+                        Rectangle()
+                            .fill(Color.gray)
+                            .frame(width: 1, height: 64)
+                        
+                        VStack(spacing: 8) {
+                            Text("WEIGHT")
+                                .font(.system(size: 16))
+                                .foregroundColor(.gray)
+                            Text("\(String(dog.weight)) lbs")
+                                .font(.system(size: 20, weight: .semibold))
+                        }.frame(maxWidth: geometry.size.width / 3)
                     }
+                    .padding(.vertical, 16)
+                    .padding(.horizontal, 28)
+                    .background(.yellow.opacity(0.5))
+                    .cornerRadius(20)
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 16)
-                .padding(.horizontal, 28)
-                .background(.yellow.opacity(0.5))
-                .cornerRadius(20)
-                Spacer().frame(height: 16)
+                Spacer().frame(height: 108)
                 
                 // GALLERY VIEW
                 HStack(spacing: 16) {
                     GeometryReader { geometry in
-                        Image("dog_profile")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(
-                                width: geometry.size.width,
-                                height: geometry.size.width
-                            )
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        AsyncImage(url: URL(string: dog.picture)){ result in
+                            result.image?
+                                .resizable()
+                                .scaledToFill()
+                        }
+                        .centerCropped()
+                        .frame(
+                            width: geometry.size.width,
+                            height: geometry.size.width
+                        )
+                        .cornerRadius(10)
                     }
                     
                     GeometryReader { geometry in
-                        Image("dog_profile")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(
-                                width: geometry.size.width,
-                                height: geometry.size.width
-                            )
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        AsyncImage(url: URL(string: dog.picture)){ result in
+                            result.image?
+                                .resizable()
+                                .scaledToFill()
+                        }
+                        .centerCropped()
+                        .frame(
+                            width: geometry.size.width,
+                            height: geometry.size.width
+                        )
+                        .cornerRadius(10)
                     }
-                    .frame(height: UIScreen.main.bounds.width / 2)
-                }
+                }.frame(height: UIScreen.main.bounds.width / 2)
             }
         }
     }
 }
 
 #Preview {
-    AboutView()
+    AboutView(dog: Dog.sampleDogList[1])
 }
