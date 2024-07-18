@@ -21,6 +21,21 @@
 		B4D297282C40DDD80075B940 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D297272C40DDD80075B940 /* Item.swift */; };
 		B4D2972A2C40DDD90075B940 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4D297292C40DDD90075B940 /* Assets.xcassets */; };
 		B4D2972D2C40DDD90075B940 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4D2972C2C40DDD90075B940 /* Preview Assets.xcassets */; };
+		D9871C8F2C460C210082E8BE /* DogsInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871C8E2C460C210082E8BE /* DogsInformationView.swift */; };
+		D9871C932C4768110082E8BE /* DatePickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871C922C4768110082E8BE /* DatePickerTextField.swift */; };
+		D9871C952C4814BF0082E8BE /* CustomSegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871C942C4814BF0082E8BE /* CustomSegmentedPicker.swift */; };
+		D9871C992C48534D0082E8BE /* PersonalityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871C982C48534D0082E8BE /* PersonalityListView.swift */; };
+		D9871CA12C48AB0F0082E8BE /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = D9871CA02C48AB0F0082E8BE /* GoogleMaps */; };
+		D9871CA52C48C68A0082E8BE /* PhoneNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CA42C48C68A0082E8BE /* PhoneNumberView.swift */; };
+		D9871CA72C48C6B10082E8BE /* CPData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CA62C48C6B10082E8BE /* CPData.swift */; };
+		D9871CA92C48C6C20082E8BE /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CA82C48C6C20082E8BE /* Decoder.swift */; };
+		D9871CAB2C48C7050082E8BE /* CountryNumbers.json in Resources */ = {isa = PBXBuildFile; fileRef = D9871CAA2C48C7050082E8BE /* CountryNumbers.json */; };
+		D9871CAD2C48D3690082E8BE /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CAC2C48D3690082E8BE /* ImagePicker.swift */; };
+		D9871CB02C4935EE0082E8BE /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CAF2C4935EE0082E8BE /* SearchView.swift */; };
+		D9871CB22C4937450082E8BE /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CB12C4937450082E8BE /* LocationManager.swift */; };
+		D9871CB42C496ACA0082E8BE /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CB32C496ACA0082E8BE /* FlowLayout.swift */; };
+		D9871CB82C497A640082E8BE /* Personality.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CB72C497A640082E8BE /* Personality.swift */; };
+		D9871CBA2C498BE70082E8BE /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CB92C498BE70082E8BE /* CustomSegmentedControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +54,21 @@
 		B4D297272C40DDD80075B940 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		B4D297292C40DDD90075B940 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B4D2972C2C40DDD90075B940 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D9871C8E2C460C210082E8BE /* DogsInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogsInformationView.swift; sourceTree = "<group>"; };
+		D9871C922C4768110082E8BE /* DatePickerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerTextField.swift; sourceTree = "<group>"; };
+		D9871C942C4814BF0082E8BE /* CustomSegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedPicker.swift; sourceTree = "<group>"; };
+		D9871C982C48534D0082E8BE /* PersonalityListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalityListView.swift; sourceTree = "<group>"; };
+		D9871C9A2C487CEF0082E8BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D9871CA42C48C68A0082E8BE /* PhoneNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberView.swift; sourceTree = "<group>"; };
+		D9871CA62C48C6B10082E8BE /* CPData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPData.swift; sourceTree = "<group>"; };
+		D9871CA82C48C6C20082E8BE /* Decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
+		D9871CAA2C48C7050082E8BE /* CountryNumbers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CountryNumbers.json; sourceTree = "<group>"; };
+		D9871CAC2C48D3690082E8BE /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		D9871CAF2C4935EE0082E8BE /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		D9871CB12C4937450082E8BE /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		D9871CB32C496ACA0082E8BE /* FlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
+		D9871CB72C497A640082E8BE /* Personality.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Personality.swift; sourceTree = "<group>"; };
+		D9871CB92C498BE70082E8BE /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9871CA12C48AB0F0082E8BE /* GoogleMaps in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +94,7 @@
 		06477AC02C455CB9006F4C79 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D9871CB72C497A640082E8BE /* Personality.swift */,
 				06477AC12C455CC4006F4C79 /* Dog.swift */,
 			);
 			path = Model;
@@ -80,6 +112,7 @@
 		B4B5EE152C440CBD0035D40F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D9871C8D2C460BFB0082E8BE /* DogsInformation */,
 				06477AC32C457FFF006F4C79 /* SelectBreed */,
 				B4B5EE1F2C441E3D0035D40F /* MedicalDocument */,
 				B4B5EE1A2C440FC00035D40F /* DogsMate */,
@@ -141,6 +174,7 @@
 		B4D297222C40DDD80075B940 /* MC3 */ = {
 			isa = PBXGroup;
 			children = (
+				D9871C9A2C487CEF0082E8BE /* Info.plist */,
 				06477AC02C455CB9006F4C79 /* Model */,
 				06477AB92C4542E8006F4C79 /* Helper */,
 				B4B5EE152C440CBD0035D40F /* View */,
@@ -161,6 +195,34 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		D9871C8D2C460BFB0082E8BE /* DogsInformation */ = {
+			isa = PBXGroup;
+			children = (
+				D9871CB32C496ACA0082E8BE /* FlowLayout.swift */,
+				D9871CAE2C4935D70082E8BE /* Map */,
+				D9871CAC2C48D3690082E8BE /* ImagePicker.swift */,
+				D9871CAA2C48C7050082E8BE /* CountryNumbers.json */,
+				D9871C8E2C460C210082E8BE /* DogsInformationView.swift */,
+				D9871C922C4768110082E8BE /* DatePickerTextField.swift */,
+				D9871C942C4814BF0082E8BE /* CustomSegmentedPicker.swift */,
+				D9871C982C48534D0082E8BE /* PersonalityListView.swift */,
+				D9871CA42C48C68A0082E8BE /* PhoneNumberView.swift */,
+				D9871CA62C48C6B10082E8BE /* CPData.swift */,
+				D9871CA82C48C6C20082E8BE /* Decoder.swift */,
+				D9871CB92C498BE70082E8BE /* CustomSegmentedControl.swift */,
+			);
+			path = DogsInformation;
+			sourceTree = "<group>";
+		};
+		D9871CAE2C4935D70082E8BE /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				D9871CAF2C4935EE0082E8BE /* SearchView.swift */,
+				D9871CB12C4937450082E8BE /* LocationManager.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -177,6 +239,9 @@
 			dependencies = (
 			);
 			name = MC3;
+			packageProductDependencies = (
+				D9871CA02C48AB0F0082E8BE /* GoogleMaps */,
+			);
 			productName = MC3;
 			productReference = B4D297202C40DDD80075B940 /* MC3.app */;
 			productType = "com.apple.product-type.application";
@@ -205,6 +270,9 @@
 				Base,
 			);
 			mainGroup = B4D297172C40DDD80075B940;
+			packageReferences = (
+				D9871C9F2C48AB0F0082E8BE /* XCRemoteSwiftPackageReference "ios-maps-sdk" */,
+			);
 			productRefGroup = B4D297212C40DDD80075B940 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -219,6 +287,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9871CAB2C48C7050082E8BE /* CountryNumbers.json in Resources */,
 				B4D2972D2C40DDD90075B940 /* Preview Assets.xcassets in Resources */,
 				B4D2972A2C40DDD90075B940 /* Assets.xcassets in Resources */,
 			);
@@ -231,18 +300,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9871C8F2C460C210082E8BE /* DogsInformationView.swift in Sources */,
 				B4B5EE182C440D240035D40F /* ProfileView.swift in Sources */,
 				06477ABF2C4548F6006F4C79 /* ForYouCard.swift in Sources */,
+				D9871CA52C48C68A0082E8BE /* PhoneNumberView.swift in Sources */,
 				06477AC52C458023006F4C79 /* SelectBreedView.swift in Sources */,
+				D9871CA72C48C6B10082E8BE /* CPData.swift in Sources */,
 				B4D297262C40DDD80075B940 /* ContentView.swift in Sources */,
 				B4B5EE212C441E4C0035D40F /* MedicalDocumentView.swift in Sources */,
 				B4B5EE1E2C440FEF0035D40F /* ForYouView.swift in Sources */,
 				B4B5EE1C2C440FDE0035D40F /* DogsMateView.swift in Sources */,
 				06477ABB2C4542F5006F4C79 /* Color.swift in Sources */,
+				D9871CB22C4937450082E8BE /* LocationManager.swift in Sources */,
+				D9871CA92C48C6C20082E8BE /* Decoder.swift in Sources */,
+				D9871CB02C4935EE0082E8BE /* SearchView.swift in Sources */,
 				06477AC72C4584C4006F4C79 /* SelectBreedCard.swift in Sources */,
 				B4D297282C40DDD80075B940 /* Item.swift in Sources */,
+				D9871C952C4814BF0082E8BE /* CustomSegmentedPicker.swift in Sources */,
+				D9871C932C4768110082E8BE /* DatePickerTextField.swift in Sources */,
+				D9871CB42C496ACA0082E8BE /* FlowLayout.swift in Sources */,
 				06477AC22C455CC4006F4C79 /* Dog.swift in Sources */,
+				D9871CAD2C48D3690082E8BE /* ImagePicker.swift in Sources */,
 				B4D297242C40DDD80075B940 /* MC3App.swift in Sources */,
+				D9871CB82C497A640082E8BE /* Personality.swift in Sources */,
+				D9871CBA2C498BE70082E8BE /* CustomSegmentedControl.swift in Sources */,
+				D9871C992C48534D0082E8BE /* PersonalityListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,6 +461,8 @@
 				DEVELOPMENT_TEAM = 7573MGT656;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MC3/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -408,6 +492,8 @@
 				DEVELOPMENT_TEAM = 7573MGT656;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MC3/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -448,6 +534,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D9871C9F2C48AB0F0082E8BE /* XCRemoteSwiftPackageReference "ios-maps-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-maps-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D9871CA02C48AB0F0082E8BE /* GoogleMaps */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9871C9F2C48AB0F0082E8BE /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMaps;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B4D297182C40DDD80075B940 /* Project object */;
 }

@@ -14,9 +14,9 @@ struct ContentView: View {
                 Label("Dog's Mate", systemImage: "pawprint")
             }
             
-            ForYouView().tabItem {
-                Label("For You", systemImage: "hands.and.sparkles")
-            }
+//            ForYouView().tabItem {
+//                Label("For You", systemImage: "hands.and.sparkles")
+//            }
             
             ProfileView().tabItem {
                 Label("Profile", systemImage: "person")

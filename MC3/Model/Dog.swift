@@ -7,32 +7,54 @@
 
 import Foundation
 
-struct Dog : Identifiable, Codable {
-    var id : UUID
+struct Dog: Identifiable{
+    let id : UUID
     var picture : String
     var name : String
     var breed : String
-    var age : String
+    var birthday : String
     var gender : String
+    var vaccine: String
+    var stamboom: String
+    var medicalRecord: String
+    var location: String
+    var personality: [Personality]
+    var weight: Float
+    var readyToBreed: Bool
+    var contact: String
     
-    init(id: UUID  = UUID(), picture: String, name: String, breed: String, age: String, gender: String) {
+    init(id: UUID  = UUID(), picture: String, name: String, breed: String, birthday: String, gender: String, vaccine: String,  stamboom: String, medicalRecord: String, location: String, personality: [Personality],  weight: Float, readyToBreed: Bool, contact: String) {
         self.id = id
         self.picture = picture
         self.name = name
         self.breed = breed
-        self.age = age
+        self.birthday = birthday
         self.gender = gender
+        self.vaccine = vaccine
+        self.stamboom = stamboom
+        self.medicalRecord = medicalRecord
+        self.location = location
+        self.personality = personality
+        self.weight = weight
+        self.readyToBreed = readyToBreed
+        self.contact = contact
     }
-}
-
-//dummy data
-extension Dog{
-    static let sampleDogList: [Dog] =
-    [
-        Dog(picture: "https://www.akc.org/wp-content/uploads/2020/07/Golden-Retriever-puppy-standing-outdoors-500x486.jpg", name: "Blacky", breed: "Golden Retriever", age: "24 Month Old", gender: "male"),
-        Dog(picture: "https://www.pdsa.org.uk/media/7646/golden-retriever-gallery-2.jpg?anchor=center&mode=crop&quality=100&height=500&bgcolor=fff&rnd=133020229510000000", name: "Momo", breed: "Golden Retriever", age: "36 Month Old", gender: "female"),
-        Dog(picture: "https://d1vbn70lmn1nqe.cloudfront.net/prod/wp-content/uploads/2021/08/20065849/Ini-X-Gangguan-Kesehatan-yang-Umumnya-Dialami-Anjing-Golden.jpg.webp", name: "Perry Platypus", breed: "Golden Retriever", age: "39 Month Old", gender: "female")
-        
-    ]
     
+    var dictionary: [String: Any] {
+       return [
+            "picture" : picture,
+            "name" : name,
+            "breed" : breed,
+            "birthday" : birthday,
+            "gender" : gender,
+            "vaccine" : vaccine,
+            "stamboom" : stamboom,
+            "medicalRecord" : medicalRecord,
+            "location" : location,
+            "personality" : personality.map { $0.value },
+            "weight" : weight,
+            "readyToBreed" : readyToBreed,
+            "contact" : contact,
+       ]
+    }
 }
