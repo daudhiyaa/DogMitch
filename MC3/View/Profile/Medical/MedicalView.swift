@@ -7,45 +7,44 @@
 
 import SwiftUI
 
-struct MenuItem {
-    let iconName: String
-    let title: String
-}
-
-let menuItems = [
-    MenuItem(iconName: "medical_icon", title: "Vaccination"),
-    MenuItem(iconName: "medical_icon", title: "Stamboom"),
-    MenuItem(iconName: "medical_icon", title: "Medical Record")
+let menuItems: [String] = [
+    "Vaccination",
+    "Stamboom",
+    "Medical Record"
 ]
 
 struct MedicalView: View {
+    var dog: Dog
+    
     var body: some View {
         List {
-            Section{
-                ForEach(menuItems, id: \.title) { item in
-                    NavigationLink(
-                        destination: MedicalDocumentView(
-                            pageTitle: item.title,
-                            documentImage: "dog_profile"
-                        )
-                    ) {
-                        HStack {
-                            Image(item.iconName)
-                            VStack(alignment: .leading) {
-                                Text(item.title).font(.headline)
-                                Text("See \(item.title) Document")
-                                    .font(.system(size: 12))
-                                    .foregroundColor(.gray)
-                            }
+            ForEach(menuItems, id: \.self) { item in
+                NavigationLink(
+                    destination: MedicalDocumentView(
+                        pageTitle: item,
+                        documentImage: 
+                            item == menuItems[0] ? dog.vaccine :
+                            item == menuItems[1] ? dog.stamboom :
+                            dog.medicalRecord
+                    )
+                ) {
+                    HStack {
+                        Image("medical_icon")
+                        VStack(alignment: .leading) {
+                            Text(item).font(.headline)
+                            Text("See \(item) Document")
+                                .font(.system(size: 12))
+                                .foregroundColor(.gray)
                         }
-                    }.padding(.vertical, 8)
-                        // .listRowBackground(Color.gray.opacity(0.1))
+                    }
                 }
+                .padding(.vertical, 8)
+                // .listRowBackground(Color.gray.opacity(0.1))
             }
         }.clipShape(RoundedRectangle(cornerRadius: 20)).listStyle(.plain)
     }
 }
 
 #Preview {
-    MedicalView()
+    MedicalView(dog: Dog.sampleDogList[1])
 }

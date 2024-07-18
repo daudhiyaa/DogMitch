@@ -16,11 +16,14 @@ struct MedicalDocumentView: View {
             VStack(alignment: .leading, spacing: 20) {
                 ZStack (alignment: .topTrailing) {
                     GeometryReader { geometry in
-                        Image(documentImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: geometry.size.width, height: geometry.size.width * 1.5)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        AsyncImage(url: URL(string: documentImage)){ result in
+                            result.image?
+                                .resizable()
+                                .scaledToFit()
+                        }
+                        .centerCropped()
+                        .frame(width: geometry.size.width, height: geometry.size.width * 1.5)
+                        .cornerRadius(10)
                     }
                     
                     Button (action: {
@@ -28,7 +31,7 @@ struct MedicalDocumentView: View {
                     }, label: {
                         Image(systemName: "pencil")
                             .resizable()
-                            .frame(width: 20, height: 20)
+                            .frame(width: 16, height: 16)
                             .foregroundStyle(.teal)
                             .aspectRatio(contentMode: .fit)
                             .padding(8)
@@ -46,5 +49,8 @@ struct MedicalDocumentView: View {
 }
 
 #Preview {
-    MedicalDocumentView(pageTitle: "Dummy Title", documentImage: "dog_profile")
+    MedicalDocumentView(
+        pageTitle: "Dummy Title",
+        documentImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThJb3Aueh4k2-eOO3DgTZMUAFjtyvwArQChA&s"
+    )
 }

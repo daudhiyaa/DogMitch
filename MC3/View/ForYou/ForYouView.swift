@@ -15,9 +15,9 @@ struct ForYouView: View {
                 HStack(alignment: .top) {
                     ForEach(dogViewModel.showDogs) { dog in
                         NavigationLink(
-                            destination: ProfileView(),
+                            destination: ProfileView(dog: dog),
                             label: {
-                                ForYouCard( dog: dog)
+                                ForYouCard(dog: dog)
                             })
                     } .listRowSeparator(.hidden)
                 }
