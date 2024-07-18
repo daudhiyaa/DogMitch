@@ -56,7 +56,6 @@
 /* Begin PBXFileReference section */
 		06477ABA2C4542F5006F4C79 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		06477ABE2C4548F6006F4C79 /* ForYouCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForYouCard.swift; sourceTree = "<group>"; };
-		06477AC12C455CC4006F4C79 /* Dog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
 		06477AC42C458023006F4C79 /* SelectBreedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectBreedView.swift; sourceTree = "<group>"; };
 		06477AC62C4584C4006F4C79 /* SelectBreedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectBreedCard.swift; sourceTree = "<group>"; };
 		0679CC882C477ECB00A3E9C9 /* DogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogViewModel.swift; sourceTree = "<group>"; };
@@ -198,7 +197,6 @@
 			children = (
 				B4D297222C40DDD80075B940 /* MC3 */,
 				B4D297212C40DDD80075B940 /* Products */,
-				B4A4AA642C47681900F471E6 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -522,6 +520,7 @@
 				DEVELOPMENT_TEAM = 7573MGT656;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = DogMitch;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -533,7 +532,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.daudhiyaa.MC3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.daudhiyaa.DogMitch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -552,6 +551,7 @@
 				DEVELOPMENT_TEAM = 7573MGT656;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = DogMitch;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -563,7 +563,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.daudhiyaa.MC3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.daudhiyaa.DogMitch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
