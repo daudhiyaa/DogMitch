@@ -9,8 +9,12 @@ import SwiftUI
 
 struct SelectBreedView: View {
     let dogBreed = ["Labrador Retriever", "German Shepherd", "Golden Retriever", "Bulldog", "Siberian Husky", "Pomeranian", "Australian Shepherd", "Chihuahua", "Toy Poodle", "Miniature Poodle","Standard Poodle","Dachshund", "Pug", "Rottweiler", "Maltese", "Corgi"]
+    
     @State private var selected: String = ""
     @State private var searchText = ""
+    
+    @State private var isNavigationActive = false
+    
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 20) {
@@ -23,46 +27,39 @@ struct SelectBreedView: View {
                                 Button(action: {
                                     selected = name
                                 }) {
-                                    if selected==name{
+                                    if selected == name{
                                         SelectBreedCard(name: name,  isChosen: false)
                                     }else{
                                         SelectBreedCard(name: name,  isChosen: true)
                                     }
                                 }
                             }.padding(.top)
-                        }
-                        .padding(.top,8)
+                        }.padding(.top,8)
                     }
                 }
                 VStack{
-                    if selected.isEmpty{
-                        Button(action: {
-                            // ACTION
-                        }) {
-                            Text("Next") .font(.system(size: 17)).fontWeight(.semibold)
-                                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
-                                .padding(12)
-                                .background(Color(hex: "#D9D9D9"))
-                                .cornerRadius(30)
-                                .foregroundColor(.white)
-                        }.disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
-                    }else{
-                        Button(action: {
-                            // ACTION
-                            print(selected)
-                        }) {
-                            Text("Next") .font(.system(size: 17)).fontWeight(.semibold)
-                                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
-                                .padding(12)
-                                .background(Colors.tosca)
-                                .cornerRadius(30)
-                                .foregroundColor(.white)
-                        }
-                    }
+                    Button(action: {
+                        isNavigationActive = true
+                    }) {
+                        Text("Next") .font(.system(size: 17)).fontWeight(.semibold)
+                            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+                            .padding(12)
+                            .background(selected.isEmpty ? Color(hex: "#D9D9D9") : Colors.tosca)
+                            .cornerRadius(30)
+                            .foregroundColor(.white)
+                    }.disabled(selected.isEmpty)
                 }
-            }.padding(18)
-                .navigationBarTitle("Select Your Dog Breed", displayMode: .inline)
-        }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+            }
+            .padding(18)
+            .navigationBarTitle("Select Your Dog Breed", displayMode: .inline)
+            .overlay {
+                NavigationLink("select-breed-dog", destination: DogsInformationView(dogBreed: selected), isActive: $isNavigationActive).hidden()
+            }
+        }
+        .searchable(
+            text: $searchText,
+            placement:.navigationBarDrawer(displayMode: .always)
+        )
     }
     var searchResults: [String] {
         if searchText.isEmpty {

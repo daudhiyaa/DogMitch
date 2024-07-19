@@ -37,7 +37,7 @@ struct MC3App: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SelectBreedView()
         }
         .modelContainer(sharedModelContainer)
     }
