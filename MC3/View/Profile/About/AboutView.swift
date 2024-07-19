@@ -20,7 +20,6 @@ struct AboutView: View {
                 
                 FlowLayout(dog.personality) { tag in
                     Text(tag.value)
-                        .foregroundColor(.black)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
                         .background(.gray.opacity(0.1))
