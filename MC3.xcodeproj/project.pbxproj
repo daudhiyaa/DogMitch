@@ -52,6 +52,19 @@
 		B4DBEE7A2C460E4D002C5231 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DBEE792C460E4D002C5231 /* AboutView.swift */; };
 		B4DBEE842C46509A002C5231 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DBEE832C46509A002C5231 /* FlowLayout.swift */; };
 		B4DBEE872C465275002C5231 /* Personality.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DBEE862C465275002C5231 /* Personality.swift */; };
+		D9871CCA2C4A1EA80082E8BE /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CBD2C4A1EA80082E8BE /* Decoder.swift */; };
+		D9871CCB2C4A1EA80082E8BE /* PhoneNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CBE2C4A1EA80082E8BE /* PhoneNumberView.swift */; };
+		D9871CCC2C4A1EA80082E8BE /* CPData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CBF2C4A1EA80082E8BE /* CPData.swift */; };
+		D9871CCD2C4A1EA80082E8BE /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CC02C4A1EA80082E8BE /* CustomSegmentedControl.swift */; };
+		D9871CCE2C4A1EA80082E8BE /* CountryNumbers.json in Resources */ = {isa = PBXBuildFile; fileRef = D9871CC12C4A1EA80082E8BE /* CountryNumbers.json */; };
+		D9871CD02C4A1EA80082E8BE /* DogsInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CC32C4A1EA80082E8BE /* DogsInformationView.swift */; };
+		D9871CD12C4A1EA80082E8BE /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CC52C4A1EA80082E8BE /* SearchView.swift */; };
+		D9871CD22C4A1EA80082E8BE /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CC62C4A1EA80082E8BE /* LocationManager.swift */; };
+		D9871CD32C4A1EA80082E8BE /* PersonalityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CC72C4A1EA80082E8BE /* PersonalityListView.swift */; };
+		D9871CD42C4A1EA80082E8BE /* CustomSegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CC82C4A1EA80082E8BE /* CustomSegmentedPicker.swift */; };
+		D9871CD52C4A1EA80082E8BE /* DatePickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CC92C4A1EA80082E8BE /* DatePickerTextField.swift */; };
+		D9871CD82C4A1EAE0082E8BE /* MedicalUploadDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CD72C4A1EAE0082E8BE /* MedicalUploadDocumentView.swift */; };
+		D9871CDB2C4A1EC40082E8BE /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CDA2C4A1EC40082E8BE /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +90,19 @@
 		B4DBEE792C460E4D002C5231 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		B4DBEE832C46509A002C5231 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
 		B4DBEE862C465275002C5231 /* Personality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Personality.swift; sourceTree = "<group>"; };
+		D9871CBD2C4A1EA80082E8BE /* Decoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
+		D9871CBE2C4A1EA80082E8BE /* PhoneNumberView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberView.swift; sourceTree = "<group>"; };
+		D9871CBF2C4A1EA80082E8BE /* CPData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPData.swift; sourceTree = "<group>"; };
+		D9871CC02C4A1EA80082E8BE /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
+		D9871CC12C4A1EA80082E8BE /* CountryNumbers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CountryNumbers.json; sourceTree = "<group>"; };
+		D9871CC32C4A1EA80082E8BE /* DogsInformationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogsInformationView.swift; sourceTree = "<group>"; };
+		D9871CC52C4A1EA80082E8BE /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		D9871CC62C4A1EA80082E8BE /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		D9871CC72C4A1EA80082E8BE /* PersonalityListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalityListView.swift; sourceTree = "<group>"; };
+		D9871CC82C4A1EA80082E8BE /* CustomSegmentedPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSegmentedPicker.swift; sourceTree = "<group>"; };
+		D9871CC92C4A1EA80082E8BE /* DatePickerTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerTextField.swift; sourceTree = "<group>"; };
+		D9871CD72C4A1EAE0082E8BE /* MedicalUploadDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicalUploadDocumentView.swift; sourceTree = "<group>"; };
+		D9871CDA2C4A1EC40082E8BE /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +168,7 @@
 		B493C18A2C48BCFF00E8509B /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				D9871CC12C4A1EA80082E8BE /* CountryNumbers.json */,
 				B493C18B2C48BD0E00E8509B /* DummyDogData.swift */,
 			);
 			path = Data;
@@ -158,6 +185,8 @@
 		B4B5EE152C440CBD0035D40F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D9871CD62C4A1EAE0082E8BE /* MedicalUploadDocumentView */,
+				D9871CBC2C4A1EA80082E8BE /* DogsInformation */,
 				06477AC32C457FFF006F4C79 /* SelectBreed */,
 				B4B5EE1A2C440FC00035D40F /* DogsMate */,
 				B4B5EE192C440FBA0035D40F /* ForYou */,
@@ -218,6 +247,7 @@
 				B4DBEE852C465265002C5231 /* Model */,
 				B4DBEE7B2C460E6C002C5231 /* Components */,
 				06477AB92C4542E8006F4C79 /* Helper */,
+				D9871CD92C4A1EC40082E8BE /* Utils */,
 				B4B5EE152C440CBD0035D40F /* View */,
 				B4D297232C40DDD80075B940 /* MC3App.swift */,
 				B4D297252C40DDD80075B940 /* ContentView.swift */,
@@ -256,6 +286,9 @@
 		B4DBEE7B2C460E6C002C5231 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				D9871CC92C4A1EA80082E8BE /* DatePickerTextField.swift */,
+				D9871CC82C4A1EA80082E8BE /* CustomSegmentedPicker.swift */,
+				D9871CC02C4A1EA80082E8BE /* CustomSegmentedControl.swift */,
 				B4DBEE832C46509A002C5231 /* FlowLayout.swift */,
 			);
 			path = Components;
@@ -264,11 +297,51 @@
 		B4DBEE852C465265002C5231 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D9871CBF2C4A1EA80082E8BE /* CPData.swift */,
 				B4A4AA6E2C476A8A00F471E6 /* Dog.swift */,
 				B4DBEE862C465275002C5231 /* Personality.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
+		};
+		D9871CBC2C4A1EA80082E8BE /* DogsInformation */ = {
+			isa = PBXGroup;
+			children = (
+				D9871CC42C4A1EA80082E8BE /* Map */,
+				D9871CBE2C4A1EA80082E8BE /* PhoneNumberView.swift */,
+				D9871CC32C4A1EA80082E8BE /* DogsInformationView.swift */,
+				D9871CC72C4A1EA80082E8BE /* PersonalityListView.swift */,
+			);
+			path = DogsInformation;
+			sourceTree = "<group>";
+		};
+		D9871CC42C4A1EA80082E8BE /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				D9871CC52C4A1EA80082E8BE /* SearchView.swift */,
+				D9871CC62C4A1EA80082E8BE /* LocationManager.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		D9871CD62C4A1EAE0082E8BE /* MedicalUploadDocumentView */ = {
+			isa = PBXGroup;
+			children = (
+				D9871CD72C4A1EAE0082E8BE /* MedicalUploadDocumentView.swift */,
+			);
+			name = MedicalUploadDocumentView;
+			path = MC3/View/MedicalUploadDocumentView;
+			sourceTree = SOURCE_ROOT;
+		};
+		D9871CD92C4A1EC40082E8BE /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D9871CBD2C4A1EA80082E8BE /* Decoder.swift */,
+				D9871CDA2C4A1EC40082E8BE /* ImagePicker.swift */,
+			);
+			name = Utils;
+			path = MC3/Utils;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -360,6 +433,7 @@
 				B4D2972D2C40DDD90075B940 /* Preview Assets.xcassets in Resources */,
 				06A5412C2C47A67D00FCA154 /* GoogleService-Info.plist in Resources */,
 				B4D2972A2C40DDD90075B940 /* Assets.xcassets in Resources */,
+				D9871CCE2C4A1EA80082E8BE /* CountryNumbers.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,18 +446,30 @@
 			files = (
 				0679CC852C4770A000A3E9C9 /* MedicalDocumentView.swift in Sources */,
 				0679CC842C47709D00A3E9C9 /* Dog.swift in Sources */,
+				D9871CD02C4A1EA80082E8BE /* DogsInformationView.swift in Sources */,
 				B4B5EE182C440D240035D40F /* ProfileView.swift in Sources */,
+				D9871CCA2C4A1EA80082E8BE /* Decoder.swift in Sources */,
+				D9871CD32C4A1EA80082E8BE /* PersonalityListView.swift in Sources */,
 				06477ABF2C4548F6006F4C79 /* ForYouCard.swift in Sources */,
+				D9871CD82C4A1EAE0082E8BE /* MedicalUploadDocumentView.swift in Sources */,
 				0679CC892C477ECB00A3E9C9 /* DogViewModel.swift in Sources */,
+				D9871CCB2C4A1EA80082E8BE /* PhoneNumberView.swift in Sources */,
+				D9871CCD2C4A1EA80082E8BE /* CustomSegmentedControl.swift in Sources */,
+				D9871CD42C4A1EA80082E8BE /* CustomSegmentedPicker.swift in Sources */,
 				06477AC52C458023006F4C79 /* SelectBreedView.swift in Sources */,
 				B4D297262C40DDD80075B940 /* ContentView.swift in Sources */,
+				D9871CD22C4A1EA80082E8BE /* LocationManager.swift in Sources */,
 				B4B5EE1E2C440FEF0035D40F /* ForYouView.swift in Sources */,
 				B4DBEE7A2C460E4D002C5231 /* AboutView.swift in Sources */,
 				B4B5EE1C2C440FDE0035D40F /* DogsMateView.swift in Sources */,
+				D9871CD12C4A1EA80082E8BE /* SearchView.swift in Sources */,
 				B4DBEE842C46509A002C5231 /* FlowLayout.swift in Sources */,
 				B4D297282C40DDD80075B940 /* Item.swift in Sources */,
 				B4DBEE782C460E25002C5231 /* MedicalView.swift in Sources */,
+				D9871CDB2C4A1EC40082E8BE /* ImagePicker.swift in Sources */,
+				D9871CCC2C4A1EA80082E8BE /* CPData.swift in Sources */,
 				B4DBEE872C465275002C5231 /* Personality.swift in Sources */,
+				D9871CD52C4A1EA80082E8BE /* DatePickerTextField.swift in Sources */,
 				06477ABB2C4542F5006F4C79 /* Color.swift in Sources */,
 				06477AC72C4584C4006F4C79 /* SelectBreedCard.swift in Sources */,
 				B4D297242C40DDD80075B940 /* MC3App.swift in Sources */,
@@ -525,6 +611,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = DogMitch;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -556,6 +643,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = DogMitch;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
