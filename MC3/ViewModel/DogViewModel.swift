@@ -36,7 +36,7 @@ class DogViewModel: ObservableObject{
         case medicalRecord
         case vaccine
     }
-    
+
     func uploadFile(fileUrl: URL, imageName: ImageType){
         do {
             let fileExtension = fileUrl.pathExtension
@@ -45,9 +45,13 @@ class DogViewModel: ObservableObject{
             let metadata = StorageMetadata()
             metadata.contentType = "image/png"
             let storageReference = Storage.storage().reference().child("images/\(UUID().uuidString).png")
+            let bookmarkData = try? fileUrl.bookmarkData()
             if let fileURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "com.daudhiyaa.DogMitch") {
-                if fileUrl.startAccessingSecurityScopedResource() {
-                    if let data = try? Data(contentsOf: fileUrl){
+                if let data = bookmarkData{
+                    var stale = false
+                    if let url = try? URL(resolvingBookmarkData: data, bookmarkDataIsStale: &stale),
+                       stale == false,
+                       url.startAccessingSecurityScopedResource() {
                         let filename = fileUrl.lastPathComponent
                         let uploadTask = storageReference.putData(data, metadata: metadata,completion: { (metadata,error) in
                             guard let metadata = metadata else{

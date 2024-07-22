@@ -9,12 +9,12 @@ import SwiftUI
 import UIKit
 import Combine
 import MapKit
+import Photos
 
 struct DogsInformationView: View {
     @State var dog: Dog?
     @EnvironmentObject var dogViewModel: DogViewModel
     var dogBreed: String
-    
     @State private var isNavigationActive = false
     
     init(dogBreed : String){
@@ -664,10 +664,12 @@ struct DogsInformationView: View {
             ImagePicker(selectedImage: $selectedImages)
         }
         .sheet(isPresented: $isImagePickerPresented2) {
+//            DocumentPicker(url:  $selectedImages1 )
             ImagePicker(selectedImage: $selectedImages1 )
         }
         .sheet(isPresented: $isImagePickerPresented3) {
-            ImagePicker(selectedImage: $selectedImages2 )
+//            DocumentPicker(url:  $selectedImages2 )
+            ImagePicker(selectedImage:  $selectedImages2 )
         }
         .sheet(isPresented: $isShowingLocationModal) {
             SearchView( isShowingLocationModal: $isShowingLocationModal, isShowingLocationModa2: $isShowingLocationModa2, dogLocation: $dogLocation, dogCoordinate: $dogCoordinate)
@@ -678,6 +680,29 @@ struct DogsInformationView: View {
                 Text("Continue?")
                     .hidden()
             }
+            .onAppear{
+                requestPhotoLibraryPermission()
+            }
+    }
+    
+    func requestPhotoLibraryPermission() {
+      PHPhotoLibrary.requestAuthorization { status in
+        switch status {
+        case .authorized:
+          // Permission granted, proceed with image picker
+            print("Authorized")
+        case .denied, .restricted:
+          // Permission denied or restricted, handle error
+          print("Photos access denied")
+        case .notDetermined:
+          // Not yet decided, do nothing or prompt again later
+          break
+        case .limited:
+            break
+        @unknown default:
+            break
+        }
+      }
     }
     
     func applyPatternOnNumbers(_ stringvar: inout String, pattern: String, replacementCharacter: Character) {
@@ -750,6 +775,8 @@ struct ModalView: View {
         self.selectedOption = nil
         self.searchText = ""
     }
+
+
 }
 
 struct SearchBar: View {
@@ -772,3 +799,4 @@ struct SearchBar: View {
         .cornerRadius(8)
     }
 }
+

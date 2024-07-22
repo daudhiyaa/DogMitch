@@ -70,6 +70,7 @@ struct MedicalUploadDocumentView: View {
                         print("medical:\(dogViewModel.dogs)")
                         dogViewModel.addDog(newDog: dogViewModel.dogs)
                         if dogViewModel.dogs.stamboom != "" && dogViewModel.dogs.medicalRecord != "" && dogViewModel.dogs.vaccine != ""{
+                            
                             isNavigationActive = true
                         }
                     }) {
@@ -93,6 +94,8 @@ struct MedicalUploadDocumentView: View {
         .sheet(isPresented: $isImagePickerPresentedMedical) {
             ImagePicker(selectedImage: $MedicalImage)
                 .ignoresSafeArea()
+//            DocumentPicker(url:  $MedicalImage)
+//                .ignoresSafeArea()
         }
         .sheet(isPresented: $isImagePickerPresentedVaccine) {
             ImagePicker(selectedImage: $VaccineImage)
