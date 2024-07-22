@@ -1,4 +1,4 @@
-//
+
 //  MedicalDocumentView.swift
 //  MC3
 //
@@ -15,10 +15,9 @@ struct MedicalUploadDocumentView: View {
     @State private var isImagePickerPresentedVaccine = false
     @State private var isImagePickerPresentedStamboom = false
     
-    @State private var MedicalImage: UIImage?
-    @State private var VaccineImage: UIImage?
-    @State private var StamboomImage: UIImage?
-    
+    @State private var MedicalImage: URL?
+    @State private var VaccineImage: URL?
+    @State private var StamboomImage: URL?
     var dog: Dog
     
     var isFormValid: Bool {
@@ -57,9 +56,23 @@ struct MedicalUploadDocumentView: View {
                     Button(action: {
                         // Action for upload
                         // Handle the upload logic here
-                       
-//                        dogViewModel.addDog(newDog: dog)
-                        isNavigationActive = true
+                        dogViewModel.dogs = dog
+                        print(dogViewModel.dogs.profilePicture)
+                        if let url = MedicalImage{
+                            dogViewModel.uploadFile(fileUrl: url, imageName: .medicalRecord)
+                        }
+                        if let url = StamboomImage{
+                            dogViewModel.uploadFile(fileUrl: url, imageName: .stamboom)
+                        }
+                        if let url = VaccineImage{
+                            dogViewModel.uploadFile(fileUrl: url, imageName: .vaccine)
+                        }
+                        print("medical:\(dogViewModel.dogs)")
+                        dogViewModel.addDog(newDog: dogViewModel.dogs)
+                        if dogViewModel.dogs.stamboom != "" && dogViewModel.dogs.medicalRecord != "" && dogViewModel.dogs.vaccine != ""{
+                            
+                            isNavigationActive = true
+                        }
                     }) {
                         Text("Upload")
                             .font(.system(size: 17))
@@ -76,22 +89,28 @@ struct MedicalUploadDocumentView: View {
                 .padding(.vertical, 16)
             }
             .navigationBarTitle("Health Verification", displayMode: .inline)
-            .overlay {
-                NavigationLink("content-view", destination: ContentView(), isActive: $isNavigationActive).hidden()
-            }
+           
         }
         .sheet(isPresented: $isImagePickerPresentedMedical) {
-            ImagePicker(selectedImage: self.$MedicalImage)
+            ImagePicker(selectedImage: $MedicalImage)
                 .ignoresSafeArea()
+//            DocumentPicker(url:  $MedicalImage)
+//                .ignoresSafeArea()
         }
         .sheet(isPresented: $isImagePickerPresentedVaccine) {
-            ImagePicker(selectedImage: self.$VaccineImage)
+            ImagePicker(selectedImage: $VaccineImage)
                 .ignoresSafeArea()
         }
         .sheet(isPresented: $isImagePickerPresentedStamboom) {
-            ImagePicker(selectedImage: self.$StamboomImage)
+            ImagePicker(selectedImage: $StamboomImage)
                 .ignoresSafeArea()
         }
+        .navigationDestination(
+            isPresented: $isNavigationActive) {
+                ContentView()
+                Text("Continue?")
+                    .hidden()
+            }
     }
     
     private var medicalRecordSection: some View {
@@ -157,9 +176,13 @@ struct MedicalUploadDocumentView: View {
         }
     }
     
-    private func resizableImage(image: UIImage) -> some View {
-        Image(uiImage: image)
-            .resizable()
+    private func resizableImage(image: URL) -> some View {
+        AsyncImage(url: image){ result in
+            result.image?
+                .resizable()
+                .scaledToFill()
+        }
+            .centerCropped()
             .scaledToFit()
             .frame(maxWidth: .infinity)
             .cornerRadius(16)

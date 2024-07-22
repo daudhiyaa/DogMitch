@@ -52,9 +52,12 @@ struct SelectBreedView: View {
             }
             .padding(18)
             .navigationBarTitle("Select Your Dog Breed", displayMode: .inline)
-            .overlay {
-                NavigationLink("select-breed-dog", destination: DogsInformationView(dogBreed: selected), isActive: $isNavigationActive).hidden()
-            }
+            .navigationDestination(
+                isPresented: $isNavigationActive) {
+                    DogsInformationView(dogBreed: selected).environmentObject(DogViewModel())
+                    Text("Continue?")
+                        .hidden()
+                }
         }
         .searchable(
             text: $searchText,

@@ -68,7 +68,7 @@ struct ProfileView: View {
             VStack(alignment: .leading, spacing: 20) {
                 // PROFILE IMAGE
                 ProfileHeader(
-                    dogImage: dog.picture,
+                    dogImage: dog.profilePicture,
                     dogName: dog.name,
                     dogLocation: dog.location,
                     dogGender: dog.gender
