@@ -31,7 +31,8 @@ struct DogsInformationView: View {
     @State private var isComplete = false
     @State private var showDatePicker = false
     
-    @ObservedObject var weight = NumbersOnly()
+//    @ObservedObject var weight = NumbersOnly()
+    @State var weight = ""
     weak var dateTextField: UITextField!
     @State private var gender = 0
     var genderChoice = ["Male","Female"]
@@ -49,7 +50,8 @@ struct DogsInformationView: View {
     @State private var isShowingLocationModa2 = false
     @State private var city = ""
     @State private var dogLocation = ""
-    @State private var dogCoordinate : CLLocation = CLLocation()
+//    @State private var dogCoordinate : CLLocation = CLLocation()
+    @State private var dogCoordinate : String = ""
     
     
     //Phone Number
@@ -96,12 +98,14 @@ struct DogsInformationView: View {
         Personality(value: "Logical")
     ]
     
+    @State private var isKeyboardVisible: Bool = false
+    
     
     private func isFormValid() -> Bool {
         return !dogName.isEmpty &&
         birthdayDate != nil &&
         gender >= 0 && gender < genderChoice.count &&
-        !(weight.value > 0) &&
+        !weight.isEmpty &&
         !selectedPersonalities.isEmpty &&
         !dogLocation.isEmpty &&
         !mobPhoneNumber.isEmpty &&
@@ -144,7 +148,7 @@ struct DogsInformationView: View {
         NavigationStack {
             VStack(alignment: .leading) {
                 
-                ScrollView(){
+                ScrollView{
                     // Name
                     HStack{
                         Text("Name")
@@ -203,10 +207,13 @@ struct DogsInformationView: View {
                         Spacer()
                     }
                     HStack{
-                        TextField("Enter your dog's weight", text: $weight.stringValue)
+                        TextField("Enter your dog's weight", text: $weight)
                             .multilineTextAlignment(.leading)
                             .padding(.leading)
                             .keyboardType(.decimalPad)
+                            .onReceive(Just(weight)) { newValue in
+                                            validateWeightInput(newValue: newValue)
+                                        }
                         
                         //                        Divider()
                         //                                       .frame(height: 30)
@@ -340,7 +347,6 @@ struct DogsInformationView: View {
                             }
                             
                         }
-                        .border(Color.white) // Tambahkan border.padding(.bottom, 5)
                         .onTapGesture {
                             // Ketika bagian Personality di-tap, tampilkan modal
                             isShowingLocationModal = true
@@ -389,7 +395,7 @@ struct DogsInformationView: View {
                         
                         TextField("Phone number", text: $mobPhoneNumber)
                             .focused($keyIsFocused)
-                            .keyboardType(.numbersAndPunctuation)
+                            .keyboardType(.numberPad)
                             .onReceive(Just(mobPhoneNumber)) { _ in
                                 applyPatternOnNumbers(&mobPhoneNumber, pattern: countryPattern, replacementCharacter: "#")
                             }
@@ -508,41 +514,8 @@ struct DogsInformationView: View {
                                 self.isImagePickerPresented3.toggle()
                                 print(isFormValid())
                                 print("selesai")
-                                if !isFormValid() {
-                                    print("Form validation failed. Missing or invalid:")
-                                    if dogName.isEmpty {
-                                        print("- Dog Name")
-                                    }
-                                    if birthdayDate == nil {
-                                        print("- Date")
-                                    }
-                                    
-                                    if !(gender >= 0 && gender < genderChoice.count) {
-                                        print("- Gender")
-                                    }
-                                    if weight.value>0 {
-                                        print("- Weight")
-                                    }
-                                    if selectedPersonalities.isEmpty {
-                                        print("- Selected Personalities")
-                                    }
-                                    if dogLocation.isEmpty {
-                                        print("- Dog Location")
-                                    }
-                                    if mobPhoneNumber.isEmpty {
-                                        print("- Phone Number")
-                                    }
-                                    
-//                                    if selectedImages.count == 0 {
-//                                        print("- Selected Image")
-//                                    }
-                                }
+                                
                             }) {
-//                                AsyncImage(url: image)
-//                                    .resizable()
-//                                    .scaledToFill()
-//                                    .cornerRadius(16)
-//                                    .frame(width: 100, height: 100)
                                 AsyncImage(url: image){ result in
                                     result.image?
                                         .resizable()
@@ -594,7 +567,7 @@ struct DogsInformationView: View {
                         let formattedDate = dateFormatter.string(from: birthdayDate!)
                         dogViewModel.dogs.birthday = formattedDate
                         dogViewModel.dogs.gender = genderChoice[gender]
-                        dogViewModel.dogs.weight = weight.value
+                        dogViewModel.dogs.weight = Float(weight)!
                         dogViewModel.dogs.personality = convertToPersonalityArray(from: selectedPersonalities)
                         func convertToPersonalityArray(from strings: [String]) -> [Personality] {
                             return strings.map { Personality(value: $0) }
@@ -612,9 +585,6 @@ struct DogsInformationView: View {
                             dogViewModel.uploadFile(fileUrl: url, imageName: .picture2)
                         }
                         print(dogViewModel.dogs)
-//                        if dogViewModel.dogs.selectedImages2 != ""{
-//                            isNavigationActive = true
-//                        }
                         if dogViewModel.dogs.profilePicture != ""{
                             isNavigationActive = true
                         }
@@ -626,11 +596,36 @@ struct DogsInformationView: View {
                             .cornerRadius(30)
                             .foregroundColor(.white)
                     }.disabled(!isFormValid())
+
                 }
+               
+//                .opacity(isKeyboardVisible ? 0 : 1) // Hide VStack when keyboard is visible
+               
             }
             .padding(18)
             .navigationBarTitle("Dog's Informations", displayMode: .inline)
         }
+//        .ignoresSafeArea(.keyboard)
+//        .onTapGesture {
+//                        UIApplication.shared.endEditing()
+//                    }
+    
+//                .onAppear {
+//                    NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
+//                        withAnimation {
+//                            isKeyboardVisible = true
+//                        }
+//                    }
+//                    NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+//                        withAnimation {
+//                            isKeyboardVisible = false
+//                        }
+//                    }
+//                }
+//                .onDisappear {
+//                    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+//                    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+//                }
         
         .sheet(isPresented: $isShowingPersonalityList, content: {
             PersonalityListView(selectedPersonalities: $selectedPersonalities)
@@ -720,6 +715,34 @@ struct DogsInformationView: View {
         }
         stringvar = pureNumber
     }
+    
+    private func validateWeightInput(newValue: String) {
+            var filtered = newValue.filter { "0123456789,.".contains($0) }
+            let decimalSeparators = [",", "."]
+            let decimalCount = filtered.filter { decimalSeparators.contains(String($0)) }.count
+
+            // If there are more than one decimal separator, remove the excess ones
+            if decimalCount > 1 {
+                var separatorFound = false
+                filtered = filtered.filter {
+                    if decimalSeparators.contains(String($0)) {
+                        if separatorFound {
+                            return false
+                        } else {
+                            separatorFound = true
+                            return true
+                        }
+                    }
+                    return true
+                }
+            }
+
+            // Update the weight only if the filtered value is different from the newValue
+            if filtered != newValue {
+                weight = filtered
+            }
+        }
+    
 }
 
 extension UIApplication {
@@ -769,6 +792,7 @@ struct ModalView: View {
             }
             )
         }
+        
     }
     
     private func dismiss() {
@@ -799,4 +823,5 @@ struct SearchBar: View {
         .cornerRadius(8)
     }
 }
+
 
