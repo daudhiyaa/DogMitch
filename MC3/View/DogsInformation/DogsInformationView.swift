@@ -12,6 +12,7 @@ import MapKit
 
 struct DogsInformationView: View {
     @State var dog: Dog?
+    @EnvironmentObject var dogViewModel: DogViewModel
     var dogBreed: String
     
     @State private var isNavigationActive = false
@@ -64,15 +65,12 @@ struct DogsInformationView: View {
     @FocusState private var keyIsFocused: Bool
     
     // Image
-    @State private var selectedImage: UIImage?
     @State private var isImagePickerPresented1 = false
     @State private var isImagePickerPresented2 = false
     @State private var isImagePickerPresented3 = false
-    @State private var selectedImages: [UIImage?] = [
-        UIImage(named: "image1"),
-        UIImage(named: "image2"),
-        UIImage(named: "image3")
-    ]
+    @State private var selectedImages: URL?
+    @State private var selectedImages1: URL?
+    @State private var selectedImages2: URL?
     @State private var imageKe : Int = 4
     
     let personalities: [Personality] = [
@@ -107,7 +105,7 @@ struct DogsInformationView: View {
         !selectedPersonalities.isEmpty &&
         !dogLocation.isEmpty &&
         !mobPhoneNumber.isEmpty &&
-        (  (selectedImages[0] != nil) || (selectedImages[1] != nil)  || (selectedImages[2] != nil) )
+        (  (selectedImages != nil) || (selectedImages1 != nil)  || (selectedImages2 != nil) )
     }
     
     var filteredResorts: [CPData] {
@@ -418,16 +416,20 @@ struct DogsInformationView: View {
                     
                     HStack {
                         Spacer()
-                        if let image = selectedImages[0] {
+                        if let image = selectedImages {
                             Button(action: {
                                 imageKe = 0
                                 self.isImagePickerPresented1.toggle()
                             }) {
-                                Image(uiImage: image)
-                                    .resizable()
+                                AsyncImage(url: image){ result in
+                                    result.image?
+                                        .resizable()
+                                        .scaledToFill()
+                                }
+                                    .centerCropped()
                                     .scaledToFill()
-                                    .cornerRadius(16)
                                     .frame(width: 100, height: 100)
+                                    .cornerRadius(16)
                             }
                             .padding()
                             .frame(width: 100, height: 100)
@@ -456,18 +458,22 @@ struct DogsInformationView: View {
                         }
                         Spacer()
                         
-                        if let image = selectedImages[1] {
+                        if let image = selectedImages1 {
                             Button(action: {
                                 imageKe = 1
                                 self.isImagePickerPresented2.toggle()
                                 
                             })
                             {
-                                Image(uiImage: image)
-                                    .resizable()
+                                AsyncImage(url: image){ result in
+                                    result.image?
+                                        .resizable()
+                                        .scaledToFill()
+                                }
+                                    .centerCropped()
                                     .scaledToFill()
-                                    .cornerRadius(16)
                                     .frame(width: 100, height: 100)
+                                    .cornerRadius(16)
                             }
                             .padding()
                             .frame(width: 100, height: 100)
@@ -496,7 +502,7 @@ struct DogsInformationView: View {
                         }
                         Spacer()
                         
-                        if let image = selectedImages[2] {
+                        if let image = selectedImages2 {
                             Button(action: {
                                 imageKe = 2
                                 self.isImagePickerPresented3.toggle()
@@ -526,16 +532,27 @@ struct DogsInformationView: View {
                                     if mobPhoneNumber.isEmpty {
                                         print("- Phone Number")
                                     }
-                                    if selectedImages.count == 0 {
-                                        print("- Selected Image")
-                                    }
+                                    
+//                                    if selectedImages.count == 0 {
+//                                        print("- Selected Image")
+//                                    }
                                 }
                             }) {
-                                Image(uiImage: image)
-                                    .resizable()
+//                                AsyncImage(url: image)
+//                                    .resizable()
+//                                    .scaledToFill()
+//                                    .cornerRadius(16)
+//                                    .frame(width: 100, height: 100)
+                                AsyncImage(url: image){ result in
+                                    result.image?
+                                        .resizable()
+                                        .scaledToFill()
+                                }
+                                    .centerCropped()
                                     .scaledToFill()
-                                    .cornerRadius(16)
                                     .frame(width: 100, height: 100)
+                                    .cornerRadius(16)
+
                             }
                             .padding()
                             .frame(width: 100, height: 100)
@@ -570,19 +587,37 @@ struct DogsInformationView: View {
                 VStack{
                     Button(action: {
                         // ACTION
-                        dog?.name = dogName
+                        print(dogViewModel.dogs.medicalRecord)
+                        dogViewModel.dogs.name = dogName
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "yyyy-MM-dd"
                         let formattedDate = dateFormatter.string(from: birthdayDate!)
-                        dog?.birthday = formattedDate
-                        dog?.gender = genderChoice[gender]
-                        dog?.weight = weight.value
-                        dog?.personality = convertToPersonalityArray(from: selectedPersonalities)
+                        dogViewModel.dogs.birthday = formattedDate
+                        dogViewModel.dogs.gender = genderChoice[gender]
+                        dogViewModel.dogs.weight = weight.value
+                        dogViewModel.dogs.personality = convertToPersonalityArray(from: selectedPersonalities)
                         func convertToPersonalityArray(from strings: [String]) -> [Personality] {
                             return strings.map { Personality(value: $0) }
                         }
-                        dog?.location = dogLocation
-                        dog?.breed = dogBreed
+                        dogViewModel.dogs.contact = phoneNumber
+                        dogViewModel.dogs.location = dogLocation
+                        dogViewModel.dogs.breed = dogBreed
+                        if let url = selectedImages{
+                            dogViewModel.uploadFile(fileUrl: url, imageName: .profilePicture)
+                        }
+                        if let url = selectedImages1{
+                            dogViewModel.uploadFile(fileUrl: url, imageName: .picture1)
+                        }
+                        if let url = selectedImages2{
+                            dogViewModel.uploadFile(fileUrl: url, imageName: .picture2)
+                        }
+                        print(dogViewModel.dogs)
+//                        if dogViewModel.dogs.selectedImages2 != ""{
+//                            isNavigationActive = true
+//                        }
+                        if dogViewModel.dogs.profilePicture != ""{
+                            isNavigationActive = true
+                        }
                     }) {
                         Text("Create Profile") .font(.system(size: 17)).fontWeight(.semibold)
                             .frame(maxWidth: .infinity)
@@ -595,13 +630,6 @@ struct DogsInformationView: View {
             }
             .padding(18)
             .navigationBarTitle("Dog's Informations", displayMode: .inline)
-            .overlay {
-                NavigationLink(
-                    "create-profile-dog",
-                    destination: MedicalUploadDocumentView(dog: dog!),
-                    isActive: $isNavigationActive
-                ).hidden()
-            }
         }
         
         .sheet(isPresented: $isShowingPersonalityList, content: {
@@ -633,17 +661,23 @@ struct DogsInformationView: View {
             .presentationDetents([.medium, .large])
         }
         .sheet(isPresented: $isImagePickerPresented1) {
-            ImagePicker(selectedImage: self.$selectedImages[0] )
+            ImagePicker(selectedImage: $selectedImages)
         }
         .sheet(isPresented: $isImagePickerPresented2) {
-            ImagePicker(selectedImage: self.$selectedImages[1] )
+            ImagePicker(selectedImage: $selectedImages1 )
         }
         .sheet(isPresented: $isImagePickerPresented3) {
-            ImagePicker(selectedImage: self.$selectedImages[2] )
+            ImagePicker(selectedImage: $selectedImages2 )
         }
         .sheet(isPresented: $isShowingLocationModal) {
             SearchView( isShowingLocationModal: $isShowingLocationModal, isShowingLocationModa2: $isShowingLocationModa2, dogLocation: $dogLocation, dogCoordinate: $dogCoordinate)
         }
+        .navigationDestination(
+            isPresented: $isNavigationActive) {
+                MedicalUploadDocumentView(dog: dogViewModel.dogs).environmentObject(DogViewModel())
+                Text("Continue?")
+                    .hidden()
+            }
     }
     
     func applyPatternOnNumbers(_ stringvar: inout String, pattern: String, replacementCharacter: Character) {
@@ -737,9 +771,4 @@ struct SearchBar: View {
         .background(Color(UIColor.systemGray6))
         .cornerRadius(8)
     }
-}
-
-
-#Preview {
-    DogsInformationView(dogBreed: "Dummy Breed")
 }

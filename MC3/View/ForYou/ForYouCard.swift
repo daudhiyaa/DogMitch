@@ -14,7 +14,7 @@ struct ForYouCard: View {
         VStack {
             GeometryReader { proxy in
                 VStack(spacing: 8) {
-                    AsyncImage(url: URL(string: dog.picture)){ result in
+                    AsyncImage(url: URL(string: dog.profilePicture)){ result in
                         result.image?
                             .resizable()
                             .scaledToFill()

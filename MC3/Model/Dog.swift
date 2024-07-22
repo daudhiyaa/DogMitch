@@ -9,7 +9,9 @@ import Foundation
 
 struct Dog: Identifiable{
     let id : UUID
-    var picture : String
+    var profilePicture : String
+    var picture1 : String
+    var picture2 : String
     var name : String
     var breed : String
     var birthday : String
@@ -23,9 +25,11 @@ struct Dog: Identifiable{
     var readyToBreed: Bool
     var contact: String
     
-    init(id: UUID  = UUID(), picture: String, name: String, breed: String, birthday: String, gender: String, vaccine: String,  stamboom: String, medicalRecord: String, location: String, personality: [Personality],  weight: Float, readyToBreed: Bool, contact: String) {
+    init(id: UUID  = UUID(), profilePicture: String,picture1: String,picture2: String, name: String, breed: String, birthday: String, gender: String, vaccine: String,  stamboom: String, medicalRecord: String, location: String, personality: [Personality],  weight: Float, readyToBreed: Bool, contact: String) {
         self.id = id
-        self.picture = picture
+        self.profilePicture = profilePicture
+        self.picture1 = picture1
+        self.picture2 = picture2
         self.name = name
         self.breed = breed
         self.birthday = birthday
@@ -42,7 +46,9 @@ struct Dog: Identifiable{
     
     var dictionary: [String: Any] {
        return [
-            "picture" : picture,
+            "profilePicture" : profilePicture,
+            "picture1" : picture1,
+            "picture2" : picture2,
             "name" : name,
             "breed" : breed,
             "birthday" : birthday,

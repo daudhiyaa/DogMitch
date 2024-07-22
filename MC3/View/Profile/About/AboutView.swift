@@ -73,7 +73,7 @@ struct AboutView: View {
                 // GALLERY VIEW
                 HStack(spacing: 16) {
                     GeometryReader { geometry in
-                        AsyncImage(url: URL(string: dog.picture)){ result in
+                        AsyncImage(url: URL(string: dog.picture1)){ result in
                             result.image?
                                 .resizable()
                                 .scaledToFill()
@@ -87,7 +87,7 @@ struct AboutView: View {
                     }
                     
                     GeometryReader { geometry in
-                        AsyncImage(url: URL(string: dog.picture)){ result in
+                        AsyncImage(url: URL(string: dog.picture2)){ result in
                             result.image?
                                 .resizable()
                                 .scaledToFill()
