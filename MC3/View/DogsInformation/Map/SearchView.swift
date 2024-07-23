@@ -17,7 +17,7 @@ struct SearchView: View {
     @Binding var isShowingLocationModal : Bool
     @Binding var isShowingLocationModa2 : Bool
     @Binding var dogLocation : String
-    @Binding var dogCoordinate : CLLocation
+    @Binding var dogCoordinate : String
     @Environment(\.dismiss) var dismiss
     var body: some View {
         NavigationStack {
@@ -161,7 +161,7 @@ struct MapViewSelection: View {
     @Binding var isShowingLocationModal : Bool
     @Binding var isShowingLocationModa2 : Bool
     @Binding var dogLocation : String
-    @Binding var dogCoordinate : CLLocation
+    @Binding var dogCoordinate : String
     @EnvironmentObject var locationManager: LocationManager
     @Environment(\.dismiss) var dismiss
     var body: some View {
@@ -214,7 +214,10 @@ struct MapViewSelection: View {
                             dogLocation = "Location not available"
                         }
                         if let coor = locationManager.dogLocation{
-                            dogCoordinate = coor
+                            let latitudeString = String(coor.coordinate.latitude)
+                            let longitudeString = String(coor.coordinate.longitude)
+                            dogCoordinate = latitudeString + " " + longitudeString
+
                         }
 
                         
@@ -248,6 +251,9 @@ struct MapViewSelection: View {
             locationManager.dogPlaceMark = nil
             
             locationManager.mapView.removeAnnotations(locationManager.mapView.annotations)
+            print(dogCoordinate)
+//            print(dogCoordinate.coordinate.latitude)
+//            print(dogCoordinate.coordinate.longitude)
         }
     }
 }
