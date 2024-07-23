@@ -41,12 +41,12 @@ struct ProfileHeader: View {
                 HStack{
                     Text(dog.name).font(.title)
                     Button {
-                        if !dog.readyToBreed {
+                        if !dog.isReadyToBreed {
                             showAlert = true
                         }
                     } label: {
                         Image(systemName: "checkmark.seal.fill")
-                            .foregroundColor(dog.readyToBreed ? .yellow : .gray.opacity(0.3))
+                            .foregroundColor(dog.isReadyToBreed ? .yellow : .gray.opacity(0.3))
                     }
                 }
                 Text(dog.location).font(.subheadline)

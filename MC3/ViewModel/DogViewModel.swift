@@ -21,8 +21,8 @@ enum ImageType {
 class DogViewModel: ObservableObject{
     @Published var dog = [Dog]()
     @Published var dogs = Dog.emptyDog
-    @Published var image = ""
-    
+    @Published  var uploadStatus: String?
+
     init(){
         dog = Dog.sampleDogList
     }
@@ -65,12 +65,14 @@ class DogViewModel: ObservableObject{
                                     switch imageName {
                                     case .profilePicture:
                                         self.dogs.profilePicture = urls
+                                        self.uploadStatus = "Success"
                                     case .picture1:
                                         self.dogs.picture1 = urls
                                     case .picture2:
                                         self.dogs.picture2 = urls
                                     case .stamboom:
                                         self.dogs.stamboom = urls
+                                        self.uploadStatus = "Success"
                                     case .medicalRecord:
                                         self.dogs.medicalRecord = urls
                                     case .vaccine:
