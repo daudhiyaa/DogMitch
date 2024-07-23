@@ -10,10 +10,6 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView{
-            DogsMateView().tabItem {
-                Label("Dog's Mate", systemImage: "pawprint")
-            }
-            
             ForYouView().tabItem {
                 Label("For You", systemImage: "hands.and.sparkles")
             }.environmentObject(DogViewModel())
