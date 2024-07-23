@@ -22,7 +22,11 @@ class DogViewModel: ObservableObject{
     @Published var dog = [Dog]()
     @Published var dogs = Dog.emptyDog
     @Published  var uploadStatus: String?
-
+    @Published  var uploadCheckerInfo: [String] = []
+    @Published  var uploadCheckerMedical: [String] = []
+    @Published  var uploadCountInfo: Int = 0
+    @Published  var uploadCountMedical: Int = 0
+    
     init(){
         dog = Dog.sampleDogList
     }
@@ -65,19 +69,41 @@ class DogViewModel: ObservableObject{
                                     switch imageName {
                                     case .profilePicture:
                                         self.dogs.profilePicture = urls
-                                        self.uploadStatus = "Success"
+                                        self.uploadCountInfo += 1
+                                        if self.uploadCountInfo == self.uploadCheckerInfo.count{
+                                            self.uploadStatus = "Success"
+                                        }
                                     case .picture1:
                                         self.dogs.picture1 = urls
+                                        self.uploadCountInfo += 1
+                                        if self.uploadCountInfo == self.uploadCheckerInfo.count{
+                                            self.uploadStatus = "Success"
+                                        }
                                     case .picture2:
                                         self.dogs.picture2 = urls
+                                        self.uploadCountInfo += 1
+                                        if self.uploadCountInfo == self.uploadCheckerInfo.count{
+                                            self.uploadStatus = "Success"
+                                        }
                                     case .stamboom:
+                                        print(self.uploadCheckerMedical.count)
                                         self.dogs.stamboom = urls
-                                        self.uploadStatus = "Success"
+                                        self.uploadCountMedical += 1
+                                        if self.uploadCountMedical == self.uploadCheckerMedical.count{
+                                            self.uploadStatus = "Success"
+                                        }
                                     case .medicalRecord:
                                         self.dogs.medicalRecord = urls
+                                        print(self.uploadCheckerMedical.count)
+                                        self.uploadCountMedical += 1
                                     case .vaccine:
                                         self.dogs.vaccine = urls
-                                        
+                                        print(self.uploadCheckerMedical.count)
+                                        self.uploadCountMedical += 1
+                                        print(self.uploadCountMedical)
+                                        if self.uploadCountMedical == self.uploadCheckerMedical.count{
+                                            self.uploadStatus = "Success"
+                                        }
                                     }
                                 }
                             } )

@@ -576,6 +576,19 @@ struct DogsInformationView: View {
                         dogViewModel.dogs.location = dogLocation
                         dogViewModel.dogs.breed = dogBreed
                         isImageUploading = true
+                        
+                        if selectedImages != nil {
+                            dogViewModel.uploadCheckerInfo.append("profilePicture")
+                            if selectedImages1 != nil {
+                                dogViewModel.uploadCheckerInfo.append("picture1")
+                            }
+                            if selectedImages2 != nil {
+                                dogViewModel.uploadCheckerInfo.append("picture2")
+                            }
+                        } else {
+                            dogViewModel.uploadCheckerInfo.append(contentsOf: ["profilePicture", "picture1", "picture2"])
+                        }
+                        
                         if let url = selectedImages{
                             dogViewModel.uploadFile(fileUrl: url, imageName: .profilePicture)
                         }

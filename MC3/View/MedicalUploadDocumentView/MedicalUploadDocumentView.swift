@@ -57,16 +57,23 @@ struct MedicalUploadDocumentView: View {
                             dogViewModel.dogs = dog
                             print(dogViewModel.dogs.profilePicture)
                             isImageUploading = true
+                            
+                            if MedicalImage != nil && VaccineImage != nil {
+                                dogViewModel.uploadCheckerMedical.append(contentsOf: ["medicalRecord", "vaccine"])
+                            } else {
+                                dogViewModel.uploadCheckerMedical.append(contentsOf: ["medicalRecord", "vaccine", "stamboom"])
+                            }
+                            
                             if let url = MedicalImage{
                                 dogViewModel.uploadFile(fileUrl: url, imageName: .medicalRecord)
-                            }
-                            if let url = StamboomImage{
-                                dogViewModel.uploadFile(fileUrl: url, imageName: .stamboom)
                             }
                             if let url = VaccineImage{
                                 dogViewModel.uploadFile(fileUrl: url, imageName: .vaccine)
                             }
-                            
+                            if let url = StamboomImage{
+                                dogViewModel.uploadFile(fileUrl: url, imageName: .stamboom)
+                            }
+                         
                             print("medical:\(dogViewModel.dogs)")
                         }) {
                             Text("Upload")
@@ -90,13 +97,13 @@ struct MedicalUploadDocumentView: View {
                             Color(white: 0, opacity: 0.75)
                             ProgressView().tint(.white)
                         }.ignoresSafeArea()
-                        if let upload =  dogViewModel.uploadStatus {
-                            Text(upload).hidden()
+                            if let upload =  dogViewModel.uploadStatus {
+                                Text(upload).hidden()
                                     .onAppear{
                                         dogViewModel.addDog(newDog: dogViewModel.dogs)
                                         isNavigationActive = true
                                     }
-                        }
+                            }
                     }
                 }) 
                 .navigationDestination(
