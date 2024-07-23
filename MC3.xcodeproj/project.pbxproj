@@ -48,6 +48,7 @@
 		B4D297282C40DDD80075B940 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D297272C40DDD80075B940 /* Item.swift */; };
 		B4D2972A2C40DDD90075B940 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4D297292C40DDD90075B940 /* Assets.xcassets */; };
 		B4D2972D2C40DDD90075B940 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4D2972C2C40DDD90075B940 /* Preview Assets.xcassets */; };
+		DAA9993B2C48A94A00834022 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA9993A2C48A94A00834022 /* OnBoardingView.swift */; };
 		B4DBEE782C460E25002C5231 /* MedicalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DBEE772C460E25002C5231 /* MedicalView.swift */; };
 		B4DBEE7A2C460E4D002C5231 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DBEE792C460E4D002C5231 /* AboutView.swift */; };
 		B4DBEE842C46509A002C5231 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DBEE832C46509A002C5231 /* FlowLayout.swift */; };
@@ -86,6 +87,7 @@
 		B4D297272C40DDD80075B940 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		B4D297292C40DDD90075B940 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B4D2972C2C40DDD90075B940 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DAA9993A2C48A94A00834022 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		B4DBEE772C460E25002C5231 /* MedicalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalView.swift; sourceTree = "<group>"; };
 		B4DBEE792C460E4D002C5231 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		B4DBEE832C46509A002C5231 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 		B4B5EE152C440CBD0035D40F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DAA999392C48A91C00834022 /* OnBoarding */,
 				D9871CD62C4A1EAE0082E8BE /* MedicalUploadDocumentView */,
 				D9871CBC2C4A1EA80082E8BE /* DogsInformation */,
 				06477AC32C457FFF006F4C79 /* SelectBreed */,
@@ -267,6 +270,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		DAA999392C48A91C00834022 /* OnBoarding */ = {
+			isa = PBXGroup;
+			children = (
+				DAA9993A2C48A94A00834022 /* OnBoardingView.swift */,
+			);
+			path = OnBoarding;
+			sourceTree = "<group>";
+        };
 		B4DBEE752C460E0E002C5231 /* About */ = {
 			isa = PBXGroup;
 			children = (
@@ -472,8 +483,9 @@
 				D9871CD52C4A1EA80082E8BE /* DatePickerTextField.swift in Sources */,
 				06477ABB2C4542F5006F4C79 /* Color.swift in Sources */,
 				06477AC72C4584C4006F4C79 /* SelectBreedCard.swift in Sources */,
-				B4D297242C40DDD80075B940 /* MC3App.swift in Sources */,
+				DAA9993B2C48A94A00834022 /* OnBoardingView.swift in Sources */,
 				B493C18C2C48BD0E00E8509B /* DummyDogData.swift in Sources */,
+				DAA9993B2C48A94A00834022 /* OnBoardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
