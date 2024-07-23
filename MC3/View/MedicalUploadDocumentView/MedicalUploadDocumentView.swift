@@ -21,7 +21,7 @@ struct MedicalUploadDocumentView: View {
     var dog: Dog
     
     var isFormValid: Bool {
-        return MedicalImage != nil && VaccineImage != nil && StamboomImage != nil
+        return MedicalImage != nil && VaccineImage != nil
     }
     
     var body: some View {
@@ -40,7 +40,6 @@ struct MedicalUploadDocumentView: View {
                 
                 HStack {
                     Button(action: {
-//                        dogViewModel.addDog(newDog: dog)
                         isNavigationActive = true
                     }) {
                         Text("Later")
@@ -48,14 +47,14 @@ struct MedicalUploadDocumentView: View {
                             .fontWeight(.semibold)
                             .frame(maxWidth: .infinity)
                             .padding(12)
-                            .background(Color(hex: "#D9D9D9"))
-                            .cornerRadius(30)
-                            .foregroundColor(.white)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 30)
+                                    .stroke(Colors.tosca, lineWidth: 2)
+                            )
+                            .foregroundColor(Colors.tosca)
                     }
                     
                     Button(action: {
-                        // Action for upload
-                        // Handle the upload logic here
                         dogViewModel.dogs = dog
                         print(dogViewModel.dogs.profilePicture)
                         if let url = MedicalImage{
@@ -69,7 +68,7 @@ struct MedicalUploadDocumentView: View {
                         }
                         print("medical:\(dogViewModel.dogs)")
                         dogViewModel.addDog(newDog: dogViewModel.dogs)
-                        if dogViewModel.dogs.stamboom != "" && dogViewModel.dogs.medicalRecord != "" && dogViewModel.dogs.vaccine != ""{
+                        if dogViewModel.dogs.medicalRecord != "" && dogViewModel.dogs.vaccine != ""{
                             
                             isNavigationActive = true
                         }
@@ -94,8 +93,6 @@ struct MedicalUploadDocumentView: View {
         .sheet(isPresented: $isImagePickerPresentedMedical) {
             ImagePicker(selectedImage: $MedicalImage)
                 .ignoresSafeArea()
-//            DocumentPicker(url:  $MedicalImage)
-//                .ignoresSafeArea()
         }
         .sheet(isPresented: $isImagePickerPresentedVaccine) {
             ImagePicker(selectedImage: $VaccineImage)
@@ -182,17 +179,17 @@ struct MedicalUploadDocumentView: View {
                 .resizable()
                 .scaledToFill()
         }
-            .centerCropped()
-            .scaledToFit()
-            .frame(maxWidth: .infinity)
-            .cornerRadius(16)
-            .clipped()
-            .overlay(
-                RoundedRectangle(cornerRadius: 16)
-                    .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
-                    .foregroundColor(.teal)
-            )
-            .padding(.bottom, 16)
+        .centerCropped()
+        .scaledToFit()
+        .frame(maxWidth: .infinity)
+        .cornerRadius(16)
+        .clipped()
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                .foregroundColor(.teal)
+        )
+        .padding(.bottom, 16)
     }
     
     private func placeholderButton(action: @escaping () -> Void) -> some View {
