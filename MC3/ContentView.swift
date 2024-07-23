@@ -14,7 +14,7 @@ struct ContentView: View {
                 Label("For You", systemImage: "hands.and.sparkles")
             }.environmentObject(DogViewModel())
             
-            ProfileView(dog: Dog.sampleDogList[0]).tabItem {
+            ProfileView(dog: Dog.sampleDogList[0], isMyProfile: true).tabItem {
                 Label("Profile", systemImage: "person")
             }
         }

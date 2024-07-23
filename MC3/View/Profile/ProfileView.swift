@@ -70,6 +70,7 @@ struct ProfileView: View {
     @State private var showAlert = false
     
     var dog: Dog
+    var isMyProfile: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -92,7 +93,8 @@ struct ProfileView: View {
                 if pageState == "About" {
                     AboutView(dog: dog)
                 } else {
-                    MedicalView(dog: dog).clipShape(RoundedRectangle(cornerRadius: 20))
+                    MedicalView(dog: dog, isMyProfile: isMyProfile)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
                 }
             }
             .padding(24)
