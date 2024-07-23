@@ -16,7 +16,7 @@ struct DogsInformationView: View {
     @EnvironmentObject var dogViewModel: DogViewModel
     var dogBreed: String
     @State private var isNavigationActive = false
-    
+    @State private var isImageUploading = false
     init(dogBreed : String){
         UISegmentedControl.appearance().selectedSegmentTintColor = .white
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor : UIColor.blue], for: .selected)
@@ -575,6 +575,20 @@ struct DogsInformationView: View {
                         dogViewModel.dogs.contact = phoneNumber
                         dogViewModel.dogs.location = dogLocation
                         dogViewModel.dogs.breed = dogBreed
+                        isImageUploading = true
+                        
+                        if selectedImages != nil {
+                            dogViewModel.uploadCheckerInfo.append("profilePicture")
+                            if selectedImages1 != nil {
+                                dogViewModel.uploadCheckerInfo.append("picture1")
+                            }
+                            if selectedImages2 != nil {
+                                dogViewModel.uploadCheckerInfo.append("picture2")
+                            }
+                        } else {
+                            dogViewModel.uploadCheckerInfo.append(contentsOf: ["profilePicture", "picture1", "picture2"])
+                        }
+                        
                         if let url = selectedImages{
                             dogViewModel.uploadFile(fileUrl: url, imageName: .profilePicture)
                         }
@@ -585,9 +599,6 @@ struct DogsInformationView: View {
                             dogViewModel.uploadFile(fileUrl: url, imageName: .picture2)
                         }
                         print(dogViewModel.dogs)
-                        if dogViewModel.dogs.profilePicture != ""{
-                            isNavigationActive = true
-                        }
                     }) {
                         Text("Create Profile") .font(.system(size: 17)).fontWeight(.semibold)
                             .frame(maxWidth: .infinity)
@@ -655,19 +666,34 @@ struct DogsInformationView: View {
             }
             .presentationDetents([.medium, .large])
         }
+        .overlay(content: {
+            if isImageUploading{
+                ZStack {
+                    Color(white: 0, opacity: 0.75)
+                    ProgressView().tint(.white)
+                }.ignoresSafeArea()
+                if let upload =  dogViewModel.uploadStatus {
+                    Text(upload).hidden()
+                        .onAppear{
+                            dogViewModel.addDog(newDog: dogViewModel.dogs)
+                            isNavigationActive = true
+                        }
+                }
+            }
+        }) 
         .sheet(isPresented: $isImagePickerPresented1) {
             ImagePicker(selectedImage: $selectedImages)
         }
         .sheet(isPresented: $isImagePickerPresented2) {
-//            DocumentPicker(url:  $selectedImages1 )
             ImagePicker(selectedImage: $selectedImages1 )
         }
         .sheet(isPresented: $isImagePickerPresented3) {
-//            DocumentPicker(url:  $selectedImages2 )
             ImagePicker(selectedImage:  $selectedImages2 )
         }
         .sheet(isPresented: $isShowingLocationModal) {
             SearchView( isShowingLocationModal: $isShowingLocationModal, isShowingLocationModa2: $isShowingLocationModa2, dogLocation: $dogLocation, dogCoordinate: $dogCoordinate)
+        }.onAppear{
+            requestPhotoLibraryPermission()
         }
         .navigationDestination(
             isPresented: $isNavigationActive) {

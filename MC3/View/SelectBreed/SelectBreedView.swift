@@ -38,30 +38,16 @@ struct SelectBreedView: View {
                     }
                 }
                 VStack{
-                    if selected.isEmpty{
-                        Button(action: {
-                            // ACTION
-                        }) {
-                            Text("Next") .font(.system(size: 17)).fontWeight(.semibold)
-                                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
-                                .padding(12)
-                                .background(Colors.gray)
-                                .cornerRadius(30)
-                                .foregroundColor(.white)
-                        }.disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
-                    }else{
-                        Button(action: {
-                            // ACTION
-                            print(selected)
-                        }) {
-                            Text("Next") .font(.system(size: 17)).fontWeight(.semibold)
-                                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
-                                .padding(12)
-                                .background(Colors.tosca)
-                                .cornerRadius(30)
-                                .foregroundColor(.white)
-                        }
-                    }
+                    Button(action: {
+                        isNavigationActive = true
+                    }) {
+                        Text("Next") .font(.system(size: 17)).fontWeight(.semibold)
+                            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+                            .padding(12)
+                            .background(selected.isEmpty ? Color(hex: "#D9D9D9") : Colors.tosca)
+                            .cornerRadius(30)
+                            .foregroundColor(.white)
+                    }.disabled(selected.isEmpty)
                 }
             }
             .padding(18)
