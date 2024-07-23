@@ -39,8 +39,13 @@ struct SelectBreedCard: View {
                         }
                     }.frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/).multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                     VStack{
-                        Text(name).font(.system(size: 17)).foregroundColor(Color.white).fontWeight(.semibold)
-                            .offset(x: -10, y: -15)
+                        if isChosen{
+                            Text(name).font(.system(size: 17)).foregroundColor(Color(hex: "5D5D5D")).fontWeight(.semibold)
+                                .offset(x: -10, y: -15)
+                        }else{
+                            Text(name).font(.system(size: 17)).foregroundColor(Color.black).fontWeight(.semibold)
+                                .offset(x: -10, y: -15)
+                        }
                     }.frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/).multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                 }
             }

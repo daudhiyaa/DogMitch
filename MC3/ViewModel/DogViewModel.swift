@@ -9,6 +9,15 @@ import Foundation
 import FirebaseFirestore
 import FirebaseStorage
 
+enum ImageType {
+    case profilePicture
+    case picture1
+    case picture2
+    case stamboom
+    case medicalRecord
+    case vaccine
+}
+
 class DogViewModel: ObservableObject{
     @Published var dog = [Dog]()
     @Published var dogs = Dog.emptyDog
@@ -26,15 +35,6 @@ class DogViewModel: ObservableObject{
         let collection = Firestore.firestore().collection("dog")
         collection.addDocument(data: newDog.dictionary)
         dog.append(newDog)
-    }
-    
-    enum ImageType {
-        case profilePicture
-        case picture1
-        case picture2
-        case stamboom
-        case medicalRecord
-        case vaccine
     }
 
     func uploadFile(fileUrl: URL, imageName: ImageType){

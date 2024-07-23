@@ -10,15 +10,14 @@ import SwiftUI
 let pageStates: [String] = ["About", "Medical"]
 
 struct ProfileHeader: View {
-    var dogImage: String
-    var dogName: String
-    var dogLocation: String
-    var dogGender: String
+    @Binding var showAlert: Bool
+
+    var dog: Dog
     
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
             ZStack(alignment: .bottomTrailing) {
-                AsyncImage(url: URL(string: dogImage)){ result in
+                AsyncImage(url: URL(string: dog.profilePicture)){ result in
                     result.image?
                         .resizable()
                         .scaledToFill()
@@ -27,7 +26,7 @@ struct ProfileHeader: View {
                 .frame(width: 120, height: 120)
                 .cornerRadius(10)
                 
-                Image(dogGender)
+                Image(dog.gender)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 16, height: 16)
@@ -39,14 +38,22 @@ struct ProfileHeader: View {
             }
         
             VStack(alignment: .leading) {
-                Text(dogName).font(.title)
-                Text(dogLocation).font(.subheadline)
-                Button(action: {
-                    // ACTION
-                }) {
+                HStack{
+                    Text(dog.name).font(.title)
+                    Button {
+                        if !dog.readyToBreed {
+                            showAlert = true
+                        }
+                    } label: {
+                        Image(systemName: "checkmark.seal.fill")
+                            .foregroundColor(dog.readyToBreed ? .yellow : .gray.opacity(0.3))
+                    }
+                }
+                Text(dog.location).font(.subheadline)
+                Link(destination: URL(string: "https://api.whatsapp.com/send?phone=\(dog.contact)")!) {
                     HStack {
-                        Image(systemName: "location.fill")
-                        Text("See Dog Location")
+                        Image(systemName: "bubble.left.and.bubble.right")
+                        Text("Chat Owner")
                     }
                     .padding(10)
                     .background(Color.teal)
@@ -60,6 +67,7 @@ struct ProfileHeader: View {
 
 struct ProfileView: View {
     @State private var pageState: String = "About"
+    @State private var showAlert = false
     
     var dog: Dog
     
@@ -68,10 +76,8 @@ struct ProfileView: View {
             VStack(alignment: .leading, spacing: 20) {
                 // PROFILE IMAGE
                 ProfileHeader(
-                    dogImage: dog.profilePicture,
-                    dogName: dog.name,
-                    dogLocation: dog.location,
-                    dogGender: dog.gender
+                    showAlert: $showAlert,
+                    dog: dog
                 )
                 
                 // SEGMENTED CONTROLS
@@ -91,6 +97,13 @@ struct ProfileView: View {
             }
             .padding(24)
             .navigationBarTitle("Profile", displayMode: .inline)
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Not Verified"),
+                    message: Text("Upload & verify all medical document"),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
     }
 }
