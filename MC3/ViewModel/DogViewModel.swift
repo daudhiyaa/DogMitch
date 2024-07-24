@@ -45,19 +45,20 @@ class DogViewModel: ObservableObject{
         dog.append(newDog)
     }
     
-    func fetchAllDogs() {
-//        var fetchedDogs: [Dog] = []
-        let collection = db.collection("dog")
-        
-        collection.addSnapshotListener { (querySnapshot, error) in
-            guard let documents = querySnapshot?.documents else {
-                print("No documents")
-                return
-            }
+    func fetchDogs() async {
+        do {
+            let querySnapshot = try await db.collection("dog").getDocuments()
+            var newDogs: [Dog] = []
             
-            self.fetchedDogs = documents.map { (queryDocumentSnapshot) -> Dog in
-                let data = queryDocumentSnapshot.data()
-                return Dog(
+            for document in querySnapshot.documents {
+                let data = document.data()
+                
+                var newPersonality: [Personality] = []
+                for personality in data["personality"] as? [String] ?? [] {
+                    newPersonality.append(Personality(value: personality))
+                }
+                
+                newDogs.append(Dog(
                     profilePicture: data["profilePicture"] as? String ?? "",
                     picture1: data["picture1"] as? String ?? "",
                     picture2: data["picture2"] as? String ?? "",
@@ -69,42 +70,24 @@ class DogViewModel: ObservableObject{
                     stamboom: data["stamboom"] as? String ?? "",
                     medicalRecord: data["medicalRecord"] as? String ?? "",
                     location: data["location"] as? String ?? "",
-                    personality: data["personality"] as? [Personality] ?? [],
+                    latitude: data["latitude"] as? String ?? "",
+                    longitude: data["longitude"] as? String ?? "",
+                    personality: newPersonality,
                     weight: data["weight"] as? Float ?? 0.0,
-                    readyToBreed: data["readyToBreed"] as? Bool ?? false,
+                    isReadyToBreed: data["isReadyToBreed"] as? Bool ?? false,
+                    isMedicalVerified: data["isMedicalVerified"] as? Bool ?? false,
+                    isVaccineVerified: data["isVaccineVerified"] as? Bool ?? false,
+                    isStamboomVerified: data["isStamboomVerified"] as? Bool ?? false,
                     contact: data["contact"] as? String ?? ""
-                )
+                ))
             }
             
-//            if let error = error {
-//                print("Error getting documents: \(error)")
-//            } else {
-//                for document in querySnapshot!.documents {
-//                    let data = document.data()
-//                    let dog = Dog(
-//                        profilePicture: data["profilePicture"] as? String ?? "",
-//                        picture1: data["picture1"] as? String ?? "",
-//                        picture2: data["picture2"] as? String ?? "",
-//                        name: data["name"] as? String ?? "Unnamed",
-//                        breed: data["breed"] as? String ?? "",
-//                        birthday: data["birthday"] as? String ?? "",
-//                        gender: data["gender"] as? String ?? "",
-//                        vaccine: data["vaccine"] as? String ?? "",
-//                        stamboom: data["stamboom"] as? String ?? "",
-//                        medicalRecord: data["medicalRecord"] as? String ?? "",
-//                        location: data["location"] as? String ?? "",
-//                        personality: data["personality"] as? [Personality] ?? [],
-//                        weight: data["weight"] as? Float ?? 0.0,
-//                        readyToBreed: data["readyToBreed"] as? Bool ?? false,
-//                        contact: data["contact"] as? String ?? ""
-//                    )
-//                    
-//                    fetchedDogs.append(dog)
-//                }
-//            }
+            DispatchQueue.main.async {
+                self.fetchedDogs = newDogs
+            }
+        } catch {
+            print("Error getting documents: \(error)")
         }
-        
-//        return fetchedDogs
     }
 
     func uploadFile(fileUrl: URL, imageName: ImageType){
@@ -114,20 +97,23 @@ class DogViewModel: ObservableObject{
             let metadata = StorageMetadata()
             metadata.contentType = "image/\(fileExtension)"
             let storageReference = Storage.storage().reference().child("\(imageName)/\(UUID().uuidString).\(fileExtension)")
+
             if let fileURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "com.daudhiyaa.DogMitch") {
                 let bookmarkData = try? fileUrl.bookmarkData()
+
                 if let datas = bookmarkData{
                     var stale = false
+    
                     if let url = try? URL(resolvingBookmarkData: datas, bookmarkDataIsStale: &stale),
                        stale == false,
                        url.startAccessingSecurityScopedResource() {
                         if let data = try? Data(contentsOf: fileUrl){
-                            let uploadTask = storageReference.putData(data, metadata: metadata,completion: { (metadata,error) in
-                                guard let metadata = metadata else{
+                            storageReference.putData(data, metadata: metadata,completion: { (metadata,error) in
+                                guard metadata != nil else{
                                     return
                                 }
                                 storageReference.downloadURL { url, error in
-                                    if let error = error {
+                                    if error != nil {
                                         return
                                     }
                                     urls = url!.description
@@ -176,8 +162,8 @@ class DogViewModel: ObservableObject{
                         }
                         let filename = fileUrl.lastPathComponent
                   
-                        print("Data Byte",datas)
-                        print("filename",filename)
+                        print("Data Byte", datas)
+                        print("filename", filename)
                     }
                     fileURL.stopAccessingSecurityScopedResource()
                 } else {

@@ -111,8 +111,9 @@ struct ProfileView: View {
         }
         .task {
             if isMyProfile{
-                dogViewModel.fetchAllDogs()
-                print(dogViewModel.fetchedDogs)
+                await dogViewModel.fetchDogs()
+                print(dogViewModel.fetchedDogs[1])
+                dog = dogViewModel.fetchedDogs[1]
             }
         }
     }
