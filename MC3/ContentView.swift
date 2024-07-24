@@ -16,7 +16,7 @@ struct ContentView: View {
             
             ProfileView(dog: Dog.sampleDogList[0], isMyProfile: true).tabItem {
                 Label("Profile", systemImage: "person")
-            }
+            }.environmentObject(DogViewModel())
         }
     }
 }

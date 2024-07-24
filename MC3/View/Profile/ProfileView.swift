@@ -66,10 +66,12 @@ struct ProfileHeader: View {
 }
 
 struct ProfileView: View {
+    @EnvironmentObject var dogViewModel: DogViewModel
+    
     @State private var pageState: String = "About"
     @State private var showAlert = false
     
-    var dog: Dog
+    @State var dog: Dog
     var isMyProfile: Bool = false
     
     var body: some View {
@@ -105,6 +107,12 @@ struct ProfileView: View {
                     message: Text("Upload & verify all medical document"),
                     dismissButton: .default(Text("OK"))
                 )
+            }
+        }
+        .task {
+            if isMyProfile{
+                dogViewModel.fetchAllDogs()
+                print(dogViewModel.fetchedDogs)
             }
         }
     }

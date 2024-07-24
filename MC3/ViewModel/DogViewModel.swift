@@ -21,11 +21,15 @@ enum ImageType {
 class DogViewModel: ObservableObject{
     @Published var dog = [Dog]()
     @Published var dogs = Dog.emptyDog
-    @Published  var uploadStatus: String?
-    @Published  var uploadCheckerInfo: [String] = []
-    @Published  var uploadCheckerMedical: [String] = []
-    @Published  var uploadCountInfo: Int = 0
-    @Published  var uploadCountMedical: Int = 0
+    @Published var uploadStatus: String?
+    @Published var uploadCheckerInfo: [String] = []
+    @Published var uploadCheckerMedical: [String] = []
+    @Published var uploadCountInfo: Int = 0
+    @Published var uploadCountMedical: Int = 0
+    @Published var image = ""
+    @Published var fetchedDogs = [Dog]()
+    
+    let db = Firestore.firestore()
     
     init(){
         dog = Dog.sampleDogList
@@ -36,9 +40,71 @@ class DogViewModel: ObservableObject{
     }
     
     func addDog(newDog: Dog){
-        let collection = Firestore.firestore().collection("dog")
+        let collection = db.collection("dog")
         collection.addDocument(data: newDog.dictionary)
         dog.append(newDog)
+    }
+    
+    func fetchAllDogs() {
+//        var fetchedDogs: [Dog] = []
+        let collection = db.collection("dog")
+        
+        collection.addSnapshotListener { (querySnapshot, error) in
+            guard let documents = querySnapshot?.documents else {
+                print("No documents")
+                return
+            }
+            
+            self.fetchedDogs = documents.map { (queryDocumentSnapshot) -> Dog in
+                let data = queryDocumentSnapshot.data()
+                return Dog(
+                    profilePicture: data["profilePicture"] as? String ?? "",
+                    picture1: data["picture1"] as? String ?? "",
+                    picture2: data["picture2"] as? String ?? "",
+                    name: data["name"] as? String ?? "Unnamed",
+                    breed: data["breed"] as? String ?? "",
+                    birthday: data["birthday"] as? String ?? "",
+                    gender: data["gender"] as? String ?? "",
+                    vaccine: data["vaccine"] as? String ?? "",
+                    stamboom: data["stamboom"] as? String ?? "",
+                    medicalRecord: data["medicalRecord"] as? String ?? "",
+                    location: data["location"] as? String ?? "",
+                    personality: data["personality"] as? [Personality] ?? [],
+                    weight: data["weight"] as? Float ?? 0.0,
+                    readyToBreed: data["readyToBreed"] as? Bool ?? false,
+                    contact: data["contact"] as? String ?? ""
+                )
+            }
+            
+//            if let error = error {
+//                print("Error getting documents: \(error)")
+//            } else {
+//                for document in querySnapshot!.documents {
+//                    let data = document.data()
+//                    let dog = Dog(
+//                        profilePicture: data["profilePicture"] as? String ?? "",
+//                        picture1: data["picture1"] as? String ?? "",
+//                        picture2: data["picture2"] as? String ?? "",
+//                        name: data["name"] as? String ?? "Unnamed",
+//                        breed: data["breed"] as? String ?? "",
+//                        birthday: data["birthday"] as? String ?? "",
+//                        gender: data["gender"] as? String ?? "",
+//                        vaccine: data["vaccine"] as? String ?? "",
+//                        stamboom: data["stamboom"] as? String ?? "",
+//                        medicalRecord: data["medicalRecord"] as? String ?? "",
+//                        location: data["location"] as? String ?? "",
+//                        personality: data["personality"] as? [Personality] ?? [],
+//                        weight: data["weight"] as? Float ?? 0.0,
+//                        readyToBreed: data["readyToBreed"] as? Bool ?? false,
+//                        contact: data["contact"] as? String ?? ""
+//                    )
+//                    
+//                    fetchedDogs.append(dog)
+//                }
+//            }
+        }
+        
+//        return fetchedDogs
     }
 
     func uploadFile(fileUrl: URL, imageName: ImageType){
