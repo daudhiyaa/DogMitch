@@ -15,7 +15,7 @@ struct DogsInformationView: View {
     @State var dog: Dog?
     @EnvironmentObject var dogViewModel: DogViewModel
     var dogBreed: String
-    @State private var isNavigationActive = false
+    @State private var isNavigationMedActive = false
     @State private var isImageUploading = false
     init(dogBreed : String){
         UISegmentedControl.appearance().selectedSegmentTintColor = .white
@@ -51,11 +51,11 @@ struct DogsInformationView: View {
     @State private var city = ""
     @State private var dogLocation = ""
 //    @State private var dogCoordinate : CLLocation = CLLocation()
-    @State private var dogCoordinate : String = ""
+    @State private var dogCoordinateLatitude : String = ""
+    @State private var dogCoordinateLongitude : String = ""
     
     
     //Phone Number
-    @State private var phoneNumber = ""
     @State var presentSheet = false
     @State var countryCode : String = "+62"
     @State var countryFlag : String = "🇮🇩"
@@ -99,6 +99,7 @@ struct DogsInformationView: View {
     ]
     
     @State private var isKeyboardVisible: Bool = false
+    @State private var isReadyToBread: Bool = false
     
     
     private func isFormValid() -> Bool {
@@ -148,239 +149,23 @@ struct DogsInformationView: View {
         NavigationStack {
             VStack(alignment: .leading) {
                 
-                ScrollView{
-                    // Name
-                    HStack{
-                        Text("Name")
-                            .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        Spacer()
-                    }
-                    //                    .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
-                    TextField("Enter your dog's name", text: $dogName)
-                        .multilineTextAlignment(.leading)
-                        .padding(.leading)
-                        .frame(minWidth: 80, minHeight: 40)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .fill(Color.clear)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .stroke(Color.secondary, lineWidth: 1)
-                        )
-                        .padding(.horizontal,1)
-                    //                                    .border(Color.black)
                     
-                    
-                    
-                    // Birthday
-                    HStack {
-                        Text("Birthday")
-                            .fontWeight(.bold)
-                        Spacer()
-                    }
-                    DatePickerTextField(placeholder: "MM/DD/YYYY", date: self.$birthdayDate)
-                        .padding(.leading)
-                        .frame(minWidth: 80, minHeight: 40)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .fill(Color.clear)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .stroke(Color.secondary, lineWidth: 1)
-                        )
-                        .padding(.horizontal,1)
-                    HStack{
-                        Text("Gender")
-                            .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        Spacer()
-                        CustomSegmentedPicker(selection: $gender, items: genderChoice)
-                        
-                    }
-                    .padding(.vertical)
-                    
-                    // Weight
-                    HStack{
-                        Text("Weight")
-                            .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        Spacer()
-                    }
-                    HStack{
-                        TextField("Enter your dog's weight", text: $weight)
-                            .multilineTextAlignment(.leading)
-                            .padding(.leading)
-                            .keyboardType(.decimalPad)
-                            .onReceive(Just(weight)) { newValue in
-                                            validateWeightInput(newValue: newValue)
-                                        }
-                        
-                        //                        Divider()
-                        //                                       .frame(height: 30)
-                        Rectangle()
-                            .fill(Color(hex: "3C3C43"))
-                            .frame(width: 1)
-                            .padding(.vertical, 10)
-                            .padding(.horizontal,0)
-                        
-                        Text("kg")
-                            .bold()
-                            .padding(.horizontal)
-                    }
-                    .frame(minWidth: 80, minHeight: 40)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(Color.clear)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .stroke(Color.secondary, lineWidth: 1)
-                    )
-                    .padding(.horizontal,1)
-                    
-                    // Personality
-                    HStack {
-                        Text("Personality")
-                            .fontWeight(.bold)
-                        Spacer()
-                    }
-                    
-                    
-                    .padding(.vertical, 5)
-                    
-                    VStack {
-                        ZStack{
+                    VStack{
+                        ScrollView(){
+                            // Name
                             
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack(spacing: 5) {
-                                    ForEach(selectedPersonalities, id: \.self) { personality in
-                                        HStack {
-                                            Text(personality)
-                                                .padding(.leading, 10)
-                                                .padding(.vertical, 5)
-                                            
-                                            Button(action: {
-                                                selectedPersonalities.removeAll { $0 == personality }
-                                            }) {
-                                                Image(systemName: "xmark.circle")
-                                                    .foregroundColor(.black)
-                                                    .padding(.vertical, 5)
-                                                    .padding(.trailing, 5)
-                                            }
-                                        }
-                                        .background(Color.gray.opacity(0.2))
-                                        .foregroundColor(.black)
-                                        .cornerRadius(20)
-                                        .fixedSize()
-                                        .padding(.vertical, 2)
-                                    }
-                                    
-                                    Button(action: {
-                                        isShowingPersonalityList = true
-                                    }) {
-                                        Text("Add")
-                                            .padding(.leading, 10)
-                                            .padding(.vertical, 5)
-                                        Image(systemName: "plus")
-                                            .foregroundColor(.black)
-                                            .padding(.vertical, 5)
-                                            .padding(.trailing, 5)
-                                    }
-                                    .background(Color.gray.opacity(0.2))
-                                    .foregroundColor(.black)
-                                    .cornerRadius(20)
-                                    .fixedSize()
-                                    .padding(.vertical, 2)
-                                }
+                            HStack{
+                                Text("Name")
+                                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                                Spacer()
                             }
-                            .padding(.horizontal, 10)
-                            HStack {
-                                TextField(selectedPersonalities.isEmpty ? "" : "", text: $kosong)
-                                    .multilineTextAlignment(.leading)
-                                    .padding(.leading)
-                                    .keyboardType(.decimalPad)
-                                    .disabled(true) // Nonaktifkan TextField agar tidak bisa diubah
-                            }
-                            
-                            
-                        }
-                        .frame(minWidth: 80, minHeight: 40)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .fill(Color.clear)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .stroke(Color.secondary, lineWidth: 1)
-                        )
-                        .padding(.horizontal,1)
-                    }
-                    
-                    
-                    // Location
-                    HStack {
-                        Text("Location")
-                            .fontWeight(.bold)
-                        Spacer()
-                    }
-                    
-                    .padding(.vertical, 5)
-                    
-                    VStack {
-                        ZStack{
-                            ScrollView(.horizontal, showsIndicators: false){
-                                
-                            }.onTapGesture {
-                                // Ketika bagian Personality di-tap, tampilkan modal
-                                isShowingLocationModal = true
-                            }
-                            HStack {
-                                TextField("Enter your dog’s location" , text: dogLocation.isEmpty ? $city : $dogLocation)
-                                    .multilineTextAlignment(.leading)
-                                    .padding(.leading)
-                                    .keyboardType(.decimalPad)
-                                    .disabled(true) // Nonaktifkan TextField agar tidak bisa diubah
-                            }
+                            .contentShape(Rectangle())
                             .onTapGesture {
-                                // Ketika bagian Personality di-tap, tampilkan modal
-                                isShowingLocationModal = true
+                                UIApplication.shared.endEditing()
                             }
-                            
-                        }
-                        .onTapGesture {
-                            // Ketika bagian Personality di-tap, tampilkan modal
-                            isShowingLocationModal = true
-                        }
-                        
-                        .frame(minWidth: 80, minHeight: 40)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .fill(Color.clear)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .stroke(Color.secondary, lineWidth: 1)
-                        )
-                        .padding(.horizontal,1)
-                    }
-                    
-                    
-                    
-                    // Phone Number
-                    HStack {
-                        Text("Phone Number")
-                            .fontWeight(.bold)
-                        Spacer()
-                    }
-                    
-                    HStack {
-                        Button {
-                            presentSheet = true
-                            keyIsFocused = false
-                        } label: {
-                            Text("\(countryFlag) \(countryCode)")
-                                .padding(10)
-                                .foregroundColor(foregroundColor)
+                            TextField("Enter your dog's name", text: $dogName)
+                                .multilineTextAlignment(.leading)
+                                .padding(.leading)
                                 .frame(minWidth: 80, minHeight: 40)
                                 .background(
                                     RoundedRectangle(cornerRadius: 10, style: .continuous)
@@ -391,252 +176,564 @@ struct DogsInformationView: View {
                                         .stroke(Color.secondary, lineWidth: 1)
                                 )
                                 .padding(.horizontal,1)
-                        }
-                        
-                        TextField("Phone number", text: $mobPhoneNumber)
-                            .focused($keyIsFocused)
-                            .keyboardType(.numberPad)
-                            .onReceive(Just(mobPhoneNumber)) { _ in
-                                applyPatternOnNumbers(&mobPhoneNumber, pattern: countryPattern, replacementCharacter: "#")
-                            }
-                            .padding(10)
-                            .frame(minWidth: 80, minHeight: 40)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .fill(Color.clear)
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .stroke(Color.secondary, lineWidth: 1)
-                            )
-                            .padding(.horizontal,1)
-                    }
-                    .padding(.bottom, 15)
-                    
-                    // Add Photos
-                    HStack {
-                        Text("Add Photos")
-                            .fontWeight(.bold)
-                        Spacer()
-                    }
-                    
-                    HStack {
-                        Spacer()
-                        if let image = selectedImages {
-                            Button(action: {
-                                imageKe = 0
-                                self.isImagePickerPresented1.toggle()
-                            }) {
-                                AsyncImage(url: image){ result in
-                                    result.image?
-                                        .resizable()
-                                        .scaledToFill()
+                            
+                            // Birthday
+                            VStack{
+                                HStack {
+                                    Text("Birthday")
+                                        .fontWeight(.bold)
+                                    Spacer()
                                 }
-                                    .centerCropped()
-                                    .scaledToFill()
-                                    .frame(width: 100, height: 100)
-                                    .cornerRadius(16)
-                            }
-                            .padding()
-                            .frame(width: 100, height: 100)
-                            .cornerRadius(16)
-                        }
-                        
-                        else {
-                            Button(action: {self.isImagePickerPresented1.toggle()}) {
-                                VStack {
-                                    Image(systemName: "photo.badge.plus")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 40, height: 40)
-                                        .foregroundColor(.teal)
+                                .padding(.top)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    UIApplication.shared.endEditing()
                                 }
-                            }
-                            .padding()
-                            .frame(width: 100, height: 100)
-                            //                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
-                                    .foregroundColor(.teal)
-                            )
-                            .cornerRadius(16)
-                        }
-                        Spacer()
-                        
-                        if let image = selectedImages1 {
-                            Button(action: {
-                                imageKe = 1
-                                self.isImagePickerPresented2.toggle()
+                                DatePickerTextField(placeholder: "MM/DD/YYYY", date: self.$birthdayDate)
+                                    .padding(.leading)
+                                    .frame(minWidth: 80, minHeight: 40)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                            .fill(Color.clear)
+                                    )
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                            .stroke(Color.secondary, lineWidth: 1)
+                                    )
+                                    .padding(.horizontal,1)
                                 
-                            })
-                            {
-                                AsyncImage(url: image){ result in
-                                    result.image?
-                                        .resizable()
-                                        .scaledToFill()
-                                }
-                                    .centerCropped()
-                                    .scaledToFill()
-                                    .frame(width: 100, height: 100)
-                                    .cornerRadius(16)
                             }
-                            .padding()
-                            .frame(width: 100, height: 100)
-                            .cornerRadius(16)
-                        }
-                        
-                        else {
-                            Button(action: {self.isImagePickerPresented2.toggle()}) {
-                                VStack {
-                                    Image(systemName: "photo.badge.plus")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 40, height: 40)
-                                        .foregroundColor(.teal)
+                            
+                            HStack{
+                                HStack{
+                                    Text("Gender")
+                                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                                 }
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    UIApplication.shared.endEditing()
+                                }
+                                Spacer()
+                                VStack{
+                                    CustomSegmentedPicker(selection: $gender, items: genderChoice)
+                                        .frame(maxHeight: .infinity)
+                                }
+                                .padding(.horizontal)
                             }
-                            .padding()
-                            .frame(width: 100, height: 100)
-                            //
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
-                                    .foregroundColor(.teal)
-                            )
-                            .cornerRadius(16)
-                        }
-                        Spacer()
-                        
-                        if let image = selectedImages2 {
-                            Button(action: {
-                                imageKe = 2
-                                self.isImagePickerPresented3.toggle()
-                                print(isFormValid())
-                                print("selesai")
+                            .padding(.top)
+                            
+                            
+                            
+                            // Weight
+                            VStack{
+                                HStack{
+                                    Text("Weight")
+                                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                                    Spacer()
+                                }
+                                .padding(.top)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    UIApplication.shared.endEditing()
+                                }
+                                HStack{
+                                    TextField("Enter your dog's weight", text: $weight)
+                                        .multilineTextAlignment(.leading)
+                                        .padding(.leading)
+                                        .keyboardType(.decimalPad)
+                                        .onReceive(Just(weight)) { newValue in
+                                            validateWeightInput(newValue: newValue)
+                                        }
+                                    
+                                    Rectangle()
+                                        .fill(Color(hex: "3C3C43"))
+                                        .frame(width: 1)
+                                        .padding(.vertical, 10)
+                                        .padding(.horizontal,0)
+                                    
+                                    Text("kg")
+                                        .bold()
+                                        .padding(.horizontal)
+                                }
+                                .frame(minWidth: 80, minHeight: 40)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                        .fill(Color.clear)
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                        .stroke(Color.secondary, lineWidth: 1)
+                                )
+                                .padding(.horizontal,1)
+                            }
+                            
+                            
+                            // Personality
+                            VStack{
+                                HStack {
+                                    Text("Personality")
+                                        .fontWeight(.bold)
+                                    Spacer()
+                                }
+                                .padding(.top)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    UIApplication.shared.endEditing()
+                                }
                                 
-                            }) {
-                                AsyncImage(url: image){ result in
-                                    result.image?
-                                        .resizable()
-                                        .scaledToFill()
-                                }
-                                    .centerCropped()
-                                    .scaledToFill()
-                                    .frame(width: 100, height: 100)
-                                    .cornerRadius(16)
-
-                            }
-                            .padding()
-                            .frame(width: 100, height: 100)
-                            .cornerRadius(16)
-                        }
-                        
-                        else {
-                            Button(action: {self.isImagePickerPresented3.toggle()
-                                print(isFormValid())
-                                print("selesai")}) {
-                                    VStack {
-                                        Image(systemName: "photo.badge.plus")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 40, height: 40)
-                                            .foregroundColor(.teal)
+                                VStack {
+                                    ZStack{
+                                        
+                                        ScrollView(.horizontal, showsIndicators: false) {
+                                            HStack(spacing: 5) {
+                                                ForEach(selectedPersonalities, id: \.self) { personality in
+                                                    HStack {
+                                                        Text(personality)
+                                                            .padding(.leading, 10)
+                                                            .padding(.vertical, 5)
+                                                        
+                                                        Button(action: {
+                                                            UIApplication.shared.endEditing()
+                                                            selectedPersonalities.removeAll { $0 == personality }
+                                                        }) {
+                                                            Image(systemName: "xmark.circle")
+                                                                .foregroundColor(.black)
+                                                                .padding(.vertical, 5)
+                                                                .padding(.trailing, 5)
+                                                        }
+                                                    }
+                                                    .background(Color.gray.opacity(0.2))
+                                                    .foregroundColor(.black)
+                                                    .cornerRadius(20)
+                                                    .fixedSize()
+                                                    .padding(.vertical, 2)
+                                                }
+                                                
+                                                Button(action: {
+                                                    UIApplication.shared.endEditing()
+                                                    isShowingPersonalityList = true
+                                                }) {
+                                                    Text("Add")
+                                                        .padding(.leading, 10)
+                                                        .padding(.vertical, 5)
+                                                    Image(systemName: "plus")
+                                                        .padding(.vertical, 5)
+                                                        .padding(.trailing, 5)
+                                                }
+                                                .background(Color.gray.opacity(0.2))
+                                                .foregroundColor(.secondary)
+                                                .cornerRadius(20)
+                                                .fixedSize()
+                                                .padding(.vertical, 2)
+                                            }
+                                        }
+                                        .padding(.horizontal, 10)
+                                        HStack {
+                                            TextField(selectedPersonalities.isEmpty ? "" : "", text: $kosong)
+                                                .multilineTextAlignment(.leading)
+                                                .padding(.leading)
+                                                .keyboardType(.decimalPad)
+                                                .disabled(true) // Nonaktifkan TextField agar tidak bisa diubah
+                                        }
+                                        
+                                        
                                     }
+                                    .frame(minWidth: 80, minHeight: 40)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                            .fill(Color.clear)
+                                    )
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                            .stroke(Color.secondary, lineWidth: 1)
+                                    )
+                                    .padding(.horizontal,1)
+                                }
+                            }
+                            .contentShape(Rectangle())
+                                .onTapGesture {
+                                    UIApplication.shared.endEditing()
+                                }
+                            
+                            
+                            VStack{
+                                // Location
+                                HStack {
+                                    Text("Location")
+                                        .fontWeight(.bold)
+                                    Spacer()
+                                }
+                                .padding(.top)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    UIApplication.shared.endEditing()
+                                }
+                                
+                                VStack {
+                                    ZStack{
+                                        ScrollView(.horizontal, showsIndicators: false){
+                                            
+                                        }.onTapGesture {
+                                            // Ketika bagian Personality di-tap, tampilkan modal
+                                            UIApplication.shared.endEditing()
+                                            isShowingLocationModal = true
+                                        }
+                                        HStack {
+                                            TextField("Enter your dog’s location" , text: dogLocation.isEmpty ? $city : $dogLocation)
+                                                .multilineTextAlignment(.leading)
+                                                .padding(.leading)
+                                                .keyboardType(.decimalPad)
+                                                .disabled(true)
+                                        }
+                                        .onTapGesture {
+                                            // Ketika bagian Personality di-tap, tampilkan modal
+                                            UIApplication.shared.endEditing()
+                                            isShowingLocationModal = true
+                                        }
+                                        
+                                    }
+                                    .onTapGesture {
+                                        // Ketika bagian Personality di-tap, tampilkan modal
+                                        UIApplication.shared.endEditing()
+                                        isShowingLocationModal = true
+                                    }
+                                    
+                                    .frame(minWidth: 80, minHeight: 40)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                            .fill(Color.clear)
+                                    )
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                            .stroke(Color.secondary, lineWidth: 1)
+                                    )
+                                    .padding(.horizontal,1)
+                                }
+                                
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                UIApplication.shared.endEditing()
+                            }
+                            
+                            
+                            
+                            // Phone Number
+                            
+                            HStack {
+                                Text("Phone Number")
+                                    .fontWeight(.bold)
+                                Spacer()
+                            }
+                            .padding(.top)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                UIApplication.shared.endEditing()
+                            }
+                            
+                            HStack {
+                                Button {
+                                    presentSheet = true
+                                    keyIsFocused = false
+                                } label: {
+                                    Text("\(countryFlag) \(countryCode)")
+                                        .padding(10)
+                                        .foregroundColor(foregroundColor)
+                                        .frame(minWidth: 80, minHeight: 40)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                                .fill(Color.clear)
+                                        )
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                                .stroke(Color.secondary, lineWidth: 1)
+                                        )
+                                        .padding(.horizontal,1)
+                                }
+                                
+                                TextField("Phone number", text: $mobPhoneNumber)
+                                    .focused($keyIsFocused)
+                                    .keyboardType(.numberPad)
+                                    .onReceive(Just(mobPhoneNumber)) { _ in
+                                        applyPatternOnNumbers(&mobPhoneNumber, pattern: countryPattern, replacementCharacter: "#")
+                                    }
+                                    .padding(10)
+                                    .frame(minWidth: 80, minHeight: 40)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                            .fill(Color.clear)
+                                    )
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                            .stroke(Color.secondary, lineWidth: 1)
+                                    )
+                                    .padding(.horizontal,1)
+                            }
+                            
+                            // Add Photos
+                            VStack{
+                                HStack {
+                                    Text("Add Photos")
+                                        .fontWeight(.bold)
+                                    Spacer()
+                                }
+                                .padding(.top)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    UIApplication.shared.endEditing()
+                                }
+                                
+                                HStack {
+                                    Spacer()
+                                    if let image = selectedImages {
+                                        Button(action: {
+                                            imageKe = 0
+                                            self.isImagePickerPresented1.toggle()
+                                        }) {
+                                            AsyncImage(url: image){ result in
+                                                result.image?
+                                                    .resizable()
+                                                    .scaledToFill()
+                                            }
+                                            .centerCropped()
+                                            .scaledToFill()
+                                            .frame(width: 100, height: 100)
+                                            .cornerRadius(16)
+                                        }
+                                        .padding()
+                                        .frame(width: 100, height: 100)
+                                        .cornerRadius(16)
+                                    }
+                                    
+                                    else {
+                                        Button(action: {self.isImagePickerPresented1.toggle()}) {
+                                            VStack {
+                                                Image(systemName: "photo.badge.plus")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 40, height: 40)
+                                                    .foregroundColor(.teal)
+                                            }
+                                        }
+                                        .padding()
+                                        .frame(width: 100, height: 100)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 16)
+                                                .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                                                .foregroundColor(.teal)
+                                        )
+                                        .cornerRadius(16)
+                                    }
+                                    Spacer()
+                                    
+                                    if let image = selectedImages1 {
+                                        Button(action: {
+                                            imageKe = 1
+                                            self.isImagePickerPresented2.toggle()
+                                            
+                                        })
+                                        {
+                                            AsyncImage(url: image){ result in
+                                                result.image?
+                                                    .resizable()
+                                                    .scaledToFill()
+                                            }
+                                            .centerCropped()
+                                            .scaledToFill()
+                                            .frame(width: 100, height: 100)
+                                            .cornerRadius(16)
+                                        }
+                                        .padding()
+                                        .frame(width: 100, height: 100)
+                                        .cornerRadius(16)
+                                    }
+                                    
+                                    else {
+                                        Button(action: {self.isImagePickerPresented2.toggle()}) {
+                                            VStack {
+                                                Image(systemName: "photo.badge.plus")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 40, height: 40)
+                                                    .foregroundColor(.teal)
+                                            }
+                                        }
+                                        .padding()
+                                        .frame(width: 100, height: 100)
+                                        
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 16)
+                                                .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                                                .foregroundColor(.teal)
+                                        )
+                                        .cornerRadius(16)
+                                    }
+                                    Spacer()
+                                    
+                                    if let image = selectedImages2 {
+                                        Button(action: {
+                                            imageKe = 2
+                                            self.isImagePickerPresented3.toggle()
+                                            print(isFormValid())
+                                            print("selesai")
+                                            
+                                        }) {
+                                            AsyncImage(url: image){ result in
+                                                result.image?
+                                                    .resizable()
+                                                    .scaledToFill()
+                                            }
+                                            .centerCropped()
+                                            .scaledToFill()
+                                            .frame(width: 100, height: 100)
+                                            .cornerRadius(16)
+                                            
+                                        }
+                                        .padding()
+                                        .frame(width: 100, height: 100)
+                                        .cornerRadius(16)
+                                    }
+                                    
+                                    else {
+                                        Button(action: {self.isImagePickerPresented3.toggle()
+                                            print(isFormValid())
+                                            print("selesai")}) {
+                                                VStack {
+                                                    Image(systemName: "photo.badge.plus")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: 40, height: 40)
+                                                        .foregroundColor(.teal)
+                                                }
+                                            }
+                                            .padding()
+                                            .frame(width: 100, height: 100)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 16)
+                                                    .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                                                    .foregroundColor(.teal)
+                                            )
+                                            .cornerRadius(16)
+                                    }
+                                    Spacer()
+                                }
+                                Text("*The first photo you add will be set as your primary profile picture.")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                UIApplication.shared.endEditing()
+                            }
+                            
+                            // Ready to breed
+                            HStack {
+                                Text("Ready to Breed?")
+                                    .fontWeight(.bold)
+                                Spacer()
+                                
+                                VStack {
+                                    Toggle(isOn: $isReadyToBread) {
+                                                   EmptyView()
+                                               }
+                                               .toggleStyle(SwitchToggleStyle(tint: .blue))
+                                    
                                 }
                                 .padding()
-                                .frame(width: 100, height: 100)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
-                                        .foregroundColor(.teal)
-                                )
-                                .cornerRadius(16)
+                            }
                         }
-                        Spacer()
+                        
+                        if !isKeyboardVisible {
+                            VStack{
+                                Button(action: {
+                                    // ACTION
+                                    print(dogViewModel.dogs.medicalRecord)
+                                    dogViewModel.dogs.name = dogName
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                                    let formattedDate = dateFormatter.string(from: birthdayDate!)
+                                    dogViewModel.dogs.birthday = formattedDate
+                                    dogViewModel.dogs.gender = genderChoice[gender]
+                                    dogViewModel.dogs.weight = Float(weight)!
+                                    dogViewModel.dogs.personality = convertToPersonalityArray(from: selectedPersonalities)
+                                    func convertToPersonalityArray(from strings: [String]) -> [Personality] {
+                                        return strings.map { Personality(value: $0) }
+                                    }
+                                    dogViewModel.dogs.contact = countryCode + removeSpaces(from: mobPhoneNumber)
+                                    dogViewModel.dogs.location = dogLocation
+                                    dogViewModel.dogs.breed = dogBreed
+                                    dogViewModel.dogs.isReadyToBreed = isReadyToBread
+                                    dogViewModel.dogs.latitude = dogCoordinateLatitude
+                                    dogViewModel.dogs.longitude = dogCoordinateLongitude
+                                    
+                                    isImageUploading = true
+
+                                                            if selectedImages != nil {
+                                                                dogViewModel.uploadCheckerInfo.append("profilePicture")
+                                                                if selectedImages1 != nil {
+                                                                    dogViewModel.uploadCheckerInfo.append("picture1")
+                                                                }
+                                                                if selectedImages2 != nil {
+                                                                    dogViewModel.uploadCheckerInfo.append("picture2")
+                                                                }
+                                                            } else {
+                                                                dogViewModel.uploadCheckerInfo.append(contentsOf: ["profilePicture", "picture1", "picture2"])
+                                                            }
+
+                                    
+                                    if let url = selectedImages{
+                                        dogViewModel.uploadFile(fileUrl: url, imageName: .profilePicture)
+                                    }
+                                    if let url = selectedImages1{
+                                        dogViewModel.uploadFile(fileUrl: url, imageName: .picture1)
+                                    }
+                                    if let url = selectedImages2{
+                                        dogViewModel.uploadFile(fileUrl: url, imageName: .picture2)
+                                    }
+                                    print(dogViewModel.dogs)
+                                }) {
+                                    Text("Create Profile") .font(.system(size: 17)).fontWeight(.semibold)
+                                        .frame(maxWidth: .infinity)
+                                        .padding(12)
+                                        .background(isFormValid() ? Colors.tosca : Color(hex: "#D9D9D9"))
+                                        .cornerRadius(30)
+                                        .foregroundColor(.white)
+                                }.disabled(!isFormValid())
+                                
+                            }
+                        }
+                        
+                    }
+                
+            }
+            .padding(.horizontal,18)
+            .padding(.top,18)
+            .padding(.bottom, !isKeyboardVisible ? 18 : 0)
+            .navigationBarTitle("Dog's Informations", displayMode: .inline)
+            .navigationDestination(
+                isPresented: $isNavigationMedActive) {
+                    MedicalUploadDocumentView(dog: dogViewModel.dogs).environmentObject(DogViewModel())
+                }
+                .onAppear{
+                    requestPhotoLibraryPermission()
+                }
+        }
+        
+        .onAppear {
+                    NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
+                        withAnimation {
+                            isKeyboardVisible = true
+                        }
+                    }
+
+                    NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+                        withAnimation {
+                            isKeyboardVisible = false
+                        }
                     }
                 }
-                
-                VStack{
-                    Button(action: {
-                        // ACTION
-                        print(dogViewModel.dogs.medicalRecord)
-                        dogViewModel.dogs.name = dogName
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "yyyy-MM-dd"
-                        let formattedDate = dateFormatter.string(from: birthdayDate!)
-                        dogViewModel.dogs.birthday = formattedDate
-                        dogViewModel.dogs.gender = genderChoice[gender]
-                        dogViewModel.dogs.weight = Float(weight)!
-                        dogViewModel.dogs.personality = convertToPersonalityArray(from: selectedPersonalities)
-                        func convertToPersonalityArray(from strings: [String]) -> [Personality] {
-                            return strings.map { Personality(value: $0) }
-                        }
-                        dogViewModel.dogs.contact = phoneNumber
-                        dogViewModel.dogs.location = dogLocation
-                        dogViewModel.dogs.breed = dogBreed
-                        isImageUploading = true
-                        
-                        if selectedImages != nil {
-                            dogViewModel.uploadCheckerInfo.append("profilePicture")
-                            if selectedImages1 != nil {
-                                dogViewModel.uploadCheckerInfo.append("picture1")
-                            }
-                            if selectedImages2 != nil {
-                                dogViewModel.uploadCheckerInfo.append("picture2")
-                            }
-                        } else {
-                            dogViewModel.uploadCheckerInfo.append(contentsOf: ["profilePicture", "picture1", "picture2"])
-                        }
-                        
-                        if let url = selectedImages{
-                            dogViewModel.uploadFile(fileUrl: url, imageName: .profilePicture)
-                        }
-                        if let url = selectedImages1{
-                            dogViewModel.uploadFile(fileUrl: url, imageName: .picture1)
-                        }
-                        if let url = selectedImages2{
-                            dogViewModel.uploadFile(fileUrl: url, imageName: .picture2)
-                        }
-                        print(dogViewModel.dogs)
-                    }) {
-                        Text("Create Profile") .font(.system(size: 17)).fontWeight(.semibold)
-                            .frame(maxWidth: .infinity)
-                            .padding(12)
-                            .background(isFormValid() ? Colors.tosca : Color(hex: "#D9D9D9"))
-                            .cornerRadius(30)
-                            .foregroundColor(.white)
-                    }.disabled(!isFormValid())
-
-                }
-               
-//                .opacity(isKeyboardVisible ? 0 : 1) // Hide VStack when keyboard is visible
-               
-            }
-            .padding(18)
-            .navigationBarTitle("Dog's Informations", displayMode: .inline)
-        }
-//        .ignoresSafeArea(.keyboard)
-//        .onTapGesture {
-//                        UIApplication.shared.endEditing()
-//                    }
+        
     
-//                .onAppear {
-//                    NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
-//                        withAnimation {
-//                            isKeyboardVisible = true
-//                        }
-//                    }
-//                    NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
-//                        withAnimation {
-//                            isKeyboardVisible = false
-//                        }
-//                    }
-//                }
-//                .onDisappear {
-//                    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-//                    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-//                }
         
         .sheet(isPresented: $isShowingPersonalityList, content: {
             PersonalityListView(selectedPersonalities: $selectedPersonalities)
@@ -667,20 +764,22 @@ struct DogsInformationView: View {
             .presentationDetents([.medium, .large])
         }
         .overlay(content: {
-            if isImageUploading{
-                ZStack {
-                    Color(white: 0, opacity: 0.75)
-                    ProgressView().tint(.white)
-                }.ignoresSafeArea()
-                if let upload =  dogViewModel.uploadStatus {
-                    Text(upload).hidden()
-                        .onAppear{
-                            dogViewModel.addDog(newDog: dogViewModel.dogs)
-                            isNavigationActive = true
+                    if isImageUploading{
+                        ZStack {
+                            Color(white: 0, opacity: 0.75)
+                            ProgressView().tint(.white)
+                        }.ignoresSafeArea()
+                        if let upload =  dogViewModel.uploadStatus {
+                            Text(upload).hidden()
+                                .onAppear{
+                                    dogViewModel.addDog(newDog: dogViewModel.dogs)
+                                    isNavigationMedActive = true
+                                }
+                            
                         }
-                }
-            }
-        }) 
+                    }
+                })
+
         .sheet(isPresented: $isImagePickerPresented1) {
             ImagePicker(selectedImage: $selectedImages)
         }
@@ -691,19 +790,9 @@ struct DogsInformationView: View {
             ImagePicker(selectedImage:  $selectedImages2 )
         }
         .sheet(isPresented: $isShowingLocationModal) {
-            SearchView( isShowingLocationModal: $isShowingLocationModal, isShowingLocationModa2: $isShowingLocationModa2, dogLocation: $dogLocation, dogCoordinate: $dogCoordinate)
-        }.onAppear{
-            requestPhotoLibraryPermission()
+            SearchView( isShowingLocationModal: $isShowingLocationModal, isShowingLocationModa2: $isShowingLocationModa2, dogLocation: $dogLocation, dogCoordinateLatitude: $dogCoordinateLatitude, dogCoordinateLongitude: $dogCoordinateLongitude)
         }
-        .navigationDestination(
-            isPresented: $isNavigationActive) {
-                MedicalUploadDocumentView(dog: dogViewModel.dogs).environmentObject(DogViewModel())
-                Text("Continue?")
-                    .hidden()
-            }
-            .onAppear{
-                requestPhotoLibraryPermission()
-            }
+        
     }
     
     func requestPhotoLibraryPermission() {
@@ -743,32 +832,53 @@ struct DogsInformationView: View {
     }
     
     private func validateWeightInput(newValue: String) {
-            var filtered = newValue.filter { "0123456789,.".contains($0) }
-            let decimalSeparators = [",", "."]
-            let decimalCount = filtered.filter { decimalSeparators.contains(String($0)) }.count
+        // Filter input to allow only digits and decimal separators
+        var filtered = newValue.filter { "0123456789,.".contains($0) }
+        
+        let decimalSeparators = [",", "."]
+        let decimalCount = filtered.filter { decimalSeparators.contains(String($0)) }.count
 
-            // If there are more than one decimal separator, remove the excess ones
-            if decimalCount > 1 {
-                var separatorFound = false
-                filtered = filtered.filter {
-                    if decimalSeparators.contains(String($0)) {
-                        if separatorFound {
-                            return false
-                        } else {
-                            separatorFound = true
-                            return true
-                        }
+        // If there are more than one decimal separator, remove the excess ones
+        if decimalCount > 1 {
+            var separatorFound = false
+            filtered = filtered.filter {
+                if decimalSeparators.contains(String($0)) {
+                    if separatorFound {
+                        return false
+                    } else {
+                        separatorFound = true
+                        return true
                     }
-                    return true
                 }
-            }
-
-            // Update the weight only if the filtered value is different from the newValue
-            if filtered != newValue {
-                weight = filtered
+                return true
             }
         }
-    
+
+        // Replace commas with periods to ensure proper float conversion
+        filtered = filtered.replacingOccurrences(of: ",", with: ".")
+
+        // Remove leading zeros unless it's a zero before a decimal point
+        while filtered.hasPrefix("0") && !filtered.hasPrefix("0.") && filtered.count > 1 {
+            filtered.removeFirst()
+        }
+        
+        // If the filtered string starts with a decimal separator, add a leading zero
+        if filtered.hasPrefix(".") {
+            filtered = "0" + filtered
+        }
+
+        // If the filtered string is not valid, set it to an empty string
+        if filtered == "0" || filtered == "." {
+            filtered = ""
+        }
+
+        // Update the weight only if the filtered value is different from the newValue
+        if filtered != newValue {
+            weight = filtered
+        }
+    }
+
+
 }
 
 extension UIApplication {
@@ -850,4 +960,6 @@ struct SearchBar: View {
     }
 }
 
-
+private func removeSpaces(from text: String) -> String {
+    return text.replacingOccurrences(of: " ", with: "")
+}

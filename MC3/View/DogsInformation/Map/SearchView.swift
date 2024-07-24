@@ -17,14 +17,15 @@ struct SearchView: View {
     @Binding var isShowingLocationModal : Bool
     @Binding var isShowingLocationModa2 : Bool
     @Binding var dogLocation : String
-    @Binding var dogCoordinate : String
+    @Binding var dogCoordinateLatitude : String
+    @Binding var dogCoordinateLongitude : String
     @Environment(\.dismiss) var dismiss
     var body: some View {
         NavigationStack {
             VStack{
                 HStack(spacing: 15){
 //                    Button{
-//                        
+//
 //                    } label: {
 //                        Image(systemName: "chevron.left")
 //                            .font(.title3)
@@ -98,6 +99,7 @@ struct SearchView: View {
                             locationManager.mapView.region = .init(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
                             locationManager.addDraggablePin(coordinate: coordinate)
                             locationManager.updatePlacemark(location: .init(latitude: coordinate.latitude, longitude: coordinate.longitude))
+                            locationManager.dogLocation = locationManager.userLocation
                         }
                         
                         // MARK: Navigating to MapView
@@ -142,7 +144,7 @@ struct SearchView: View {
 //            .labelsHidden()
 //        }
         .sheet(isPresented: $isShowingLocationModa2, content: {
-            MapViewSelection(isShowingLocationModal: $isShowingLocationModal, isShowingLocationModa2: $isShowingLocationModa2, dogLocation: $dogLocation, dogCoordinate: $dogCoordinate)
+            MapViewSelection(isShowingLocationModal: $isShowingLocationModal, isShowingLocationModa2: $isShowingLocationModa2, dogLocation: $dogLocation, dogCoordinateLatitude: $dogCoordinateLatitude, dogCoordinateLongitude: $dogCoordinateLongitude)
                                 .environmentObject(locationManager)
                                 .navigationBarHidden(true)
                })
@@ -161,7 +163,8 @@ struct MapViewSelection: View {
     @Binding var isShowingLocationModal : Bool
     @Binding var isShowingLocationModa2 : Bool
     @Binding var dogLocation : String
-    @Binding var dogCoordinate : String
+    @Binding var dogCoordinateLatitude : String
+    @Binding var dogCoordinateLongitude : String
     @EnvironmentObject var locationManager: LocationManager
     @Environment(\.dismiss) var dismiss
     var body: some View {
@@ -214,9 +217,9 @@ struct MapViewSelection: View {
                             dogLocation = "Location not available"
                         }
                         if let coor = locationManager.dogLocation{
-                            let latitudeString = String(coor.coordinate.latitude)
-                            let longitudeString = String(coor.coordinate.longitude)
-                            dogCoordinate = latitudeString + " " + longitudeString
+                            dogCoordinateLatitude = String(coor.coordinate.latitude)
+                            dogCoordinateLongitude = String(coor.coordinate.longitude)
+                            
 
                         }
 
@@ -251,7 +254,7 @@ struct MapViewSelection: View {
             locationManager.dogPlaceMark = nil
             
             locationManager.mapView.removeAnnotations(locationManager.mapView.annotations)
-            print(dogCoordinate)
+//            print(dogCoordinate)
 //            print(dogCoordinate.coordinate.latitude)
 //            print(dogCoordinate.coordinate.longitude)
         }
