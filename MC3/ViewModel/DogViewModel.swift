@@ -21,11 +21,15 @@ enum ImageType {
 class DogViewModel: ObservableObject{
     @Published var dog = [Dog]()
     @Published var dogs = Dog.emptyDog
-    @Published  var uploadStatus: String?
-    @Published  var uploadCheckerInfo: [String] = []
-    @Published  var uploadCheckerMedical: [String] = []
-    @Published  var uploadCountInfo: Int = 0
-    @Published  var uploadCountMedical: Int = 0
+    @Published var uploadStatus: String?
+    @Published var uploadCheckerInfo: [String] = []
+    @Published var uploadCheckerMedical: [String] = []
+    @Published var uploadCountInfo: Int = 0
+    @Published var uploadCountMedical: Int = 0
+    @Published var image = ""
+    @Published var fetchedDogs = [Dog]()
+    
+    let db = Firestore.firestore()
     
     init(){
         dog = Dog.sampleDogList
@@ -36,9 +40,57 @@ class DogViewModel: ObservableObject{
     }
     
     func addDog(newDog: Dog){
-        let collection = Firestore.firestore().collection("dog")
+        let collection = db.collection("dog")
         collection.addDocument(data: newDog.dictionary)
         dog.append(newDog)
+    }
+    
+    func fetchDogs() async {
+        do {
+            let querySnapshot = try await db.collection("dog").getDocuments()
+            var newDogs: [Dog] = []
+            
+            for document in querySnapshot.documents {
+                let data = document.data()
+                
+                var newPersonality: [Personality] = []
+                for personality in data["personality"] as? [String] ?? [] {
+                    newPersonality.append(Personality(value: personality))
+                }
+                
+                let birthDate: Date = convertToDate(dateString: data["birthday"] as? String ?? "") ?? Date()
+                let dogAge: Int = calculateAge(from: birthDate) ?? 0
+                
+                newDogs.append(Dog(
+                    profilePicture: data["profilePicture"] as? String ?? "",
+                    picture1: data["picture1"] as? String ?? "",
+                    picture2: data["picture2"] as? String ?? "",
+                    name: data["name"] as? String ?? "Unnamed",
+                    breed: data["breed"] as? String ?? "",
+                    birthday: "\(dogAge/12) yr \(dogAge%12) mo",
+                    gender: data["gender"] as? String ?? "",
+                    vaccine: data["vaccine"] as? String ?? "",
+                    stamboom: data["stamboom"] as? String ?? "",
+                    medicalRecord: data["medicalRecord"] as? String ?? "",
+                    location: data["location"] as? String ?? "",
+                    latitude: data["latitude"] as? String ?? "",
+                    longitude: data["longitude"] as? String ?? "",
+                    personality: newPersonality,
+                    weight: data["weight"] as? Float ?? 0.0,
+                    isReadyToBreed: data["isReadyToBreed"] as? Bool ?? false,
+                    isMedicalVerified: data["isMedicalVerified"] as? Bool ?? false,
+                    isVaccineVerified: data["isVaccineVerified"] as? Bool ?? false,
+                    isStamboomVerified: data["isStamboomVerified"] as? Bool ?? false,
+                    contact: data["contact"] as? String ?? ""
+                ))
+            }
+            
+            DispatchQueue.main.async {
+                self.fetchedDogs = newDogs
+            }
+        } catch {
+            print("Error getting documents: \(error)")
+        }
     }
 
     func uploadFile(fileUrl: URL, imageName: ImageType){
@@ -48,20 +100,23 @@ class DogViewModel: ObservableObject{
             let metadata = StorageMetadata()
             metadata.contentType = "image/\(fileExtension)"
             let storageReference = Storage.storage().reference().child("\(imageName)/\(UUID().uuidString).\(fileExtension)")
+
             if let fileURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "com.daudhiyaa.DogMitch") {
                 let bookmarkData = try? fileUrl.bookmarkData()
+
                 if let datas = bookmarkData{
                     var stale = false
+    
                     if let url = try? URL(resolvingBookmarkData: datas, bookmarkDataIsStale: &stale),
                        stale == false,
                        url.startAccessingSecurityScopedResource() {
                         if let data = try? Data(contentsOf: fileUrl){
-                            let uploadTask = storageReference.putData(data, metadata: metadata,completion: { (metadata,error) in
-                                guard let metadata = metadata else{
+                            storageReference.putData(data, metadata: metadata,completion: { (metadata,error) in
+                                guard metadata != nil else{
                                     return
                                 }
                                 storageReference.downloadURL { url, error in
-                                    if let error = error {
+                                    if error != nil {
                                         return
                                     }
                                     urls = url!.description
@@ -110,8 +165,8 @@ class DogViewModel: ObservableObject{
                         }
                         let filename = fileUrl.lastPathComponent
                   
-                        print("Data Byte",datas)
-                        print("filename",filename)
+                        print("Data Byte", datas)
+                        print("filename", filename)
                     }
                     fileURL.stopAccessingSecurityScopedResource()
                 } else {

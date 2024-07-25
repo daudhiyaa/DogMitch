@@ -93,17 +93,15 @@ struct MedicalUploadDocumentView: View {
                 .navigationBarTitle("Health Verification", displayMode: .inline)
                 .overlay(content: {
                     if isImageUploading{
-                        ZStack {
-                            Color(white: 0, opacity: 0.75)
-                            ProgressView().tint(.white)
-                        }.ignoresSafeArea()
-                            if let upload =  dogViewModel.uploadStatus {
-                                Text(upload).hidden()
-                                    .onAppear{
-                                        dogViewModel.addDog(newDog: dogViewModel.dogs)
-                                        isNavigationActive = true
-                                    }
-                            }
+                        LoadingView()
+                        
+                        if let upload =  dogViewModel.uploadStatus {
+                            Text(upload).hidden()
+                                .onAppear{
+                                    dogViewModel.addDog(newDog: dogViewModel.dogs)
+                                    isNavigationActive = true
+                                }
+                        }
                     }
                 }) 
                 .navigationDestination(

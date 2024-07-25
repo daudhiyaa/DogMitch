@@ -11,6 +11,7 @@ let pageStates: [String] = ["About", "Medical"]
 
 struct ProfileHeader: View {
     @Binding var showAlert: Bool
+    @Binding var isLoading: Bool
 
     var dog: Dog
     
@@ -22,6 +23,32 @@ struct ProfileHeader: View {
                         .resizable()
                         .scaledToFill()
                 }
+//                AsyncImage(url: URL(string: dog.profilePicture)) { phase in
+//                    switch phase {
+//                    case .empty:
+//                        EmptyView()
+//                    case .success(let image):
+//                        image
+//                            .resizable()
+//                            .scaledToFill()
+//                            .onAppear {
+//                                isLoading = false
+//                            }
+//                    case .failure:
+//                        Image(systemName: "exclamationmark.triangle.fill")
+//                            .resizable()
+//                            .scaledToFit()
+//                            .foregroundColor(.red)
+//                            .onAppear {
+//                                isLoading = true
+//                            }
+//                    @unknown default:
+//                        EmptyView()
+//                            .onAppear {
+//                                isLoading = true
+//                            }
+//                    }
+//                }
                 .centerCropped()
                 .frame(width: 120, height: 120)
                 .cornerRadius(10)
@@ -66,10 +93,13 @@ struct ProfileHeader: View {
 }
 
 struct ProfileView: View {
+    @EnvironmentObject var dogViewModel: DogViewModel
+    
     @State private var pageState: String = "About"
     @State private var showAlert = false
+    @State private var isLoading = true
     
-    var dog: Dog
+    @State var dog: Dog
     var isMyProfile: Bool = false
     
     var body: some View {
@@ -78,6 +108,7 @@ struct ProfileView: View {
                 // PROFILE IMAGE
                 ProfileHeader(
                     showAlert: $showAlert,
+                    isLoading: $isLoading,
                     dog: dog
                 )
                 
@@ -98,6 +129,11 @@ struct ProfileView: View {
                 }
             }
             .padding(24)
+            .overlay(content: {
+                if isLoading {
+                    LoadingView()
+                }
+            })
             .navigationBarTitle("Profile", displayMode: .inline)
             .alert(isPresented: $showAlert) {
                 Alert(
@@ -105,6 +141,13 @@ struct ProfileView: View {
                     message: Text("Upload & verify all medical document"),
                     dismissButton: .default(Text("OK"))
                 )
+            }
+        }
+        .task {
+            if isMyProfile{
+                await dogViewModel.fetchDogs()
+                dog = dogViewModel.fetchedDogs[1]
+                isLoading = false
             }
         }
     }

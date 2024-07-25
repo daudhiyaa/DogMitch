@@ -8,13 +8,25 @@
 import SwiftUI
 import SwiftData
 import FirebaseCore
+import FirebaseAppCheck
+
+class DogMitchCheckProviderFactory: NSObject, AppCheckProviderFactory {
+  func createProvider(with app: FirebaseApp) -> AppCheckProvider? {
+    return AppAttestProvider(app: app)
+  }
+}
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-  func application(_ application: UIApplication,
-                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    FirebaseApp.configure()
+  func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
+  ) -> Bool {
+        let providerFactory = DogMitchCheckProviderFactory()
+        AppCheck.setAppCheckProviderFactory(providerFactory)
 
-    return true
+        FirebaseApp.configure()
+
+        return true
   }
 }
 
@@ -37,7 +49,7 @@ struct MC3App: App {
     
     var body: some Scene {
         WindowGroup {
-            SelectBreedView()
+            ContentView()
         }
         .modelContainer(sharedModelContainer)
     }
