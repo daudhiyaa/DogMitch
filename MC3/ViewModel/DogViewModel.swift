@@ -58,13 +58,16 @@ class DogViewModel: ObservableObject{
                     newPersonality.append(Personality(value: personality))
                 }
                 
+                let birthDate: Date = convertToDate(dateString: data["birthday"] as? String ?? "") ?? Date()
+                let dogAge: Int = calculateAge(from: birthDate) ?? 0
+                
                 newDogs.append(Dog(
                     profilePicture: data["profilePicture"] as? String ?? "",
                     picture1: data["picture1"] as? String ?? "",
                     picture2: data["picture2"] as? String ?? "",
                     name: data["name"] as? String ?? "Unnamed",
                     breed: data["breed"] as? String ?? "",
-                    birthday: data["birthday"] as? String ?? "",
+                    birthday: "\(dogAge/12) yr \(dogAge%12) mo",
                     gender: data["gender"] as? String ?? "",
                     vaccine: data["vaccine"] as? String ?? "",
                     stamboom: data["stamboom"] as? String ?? "",
