@@ -20,37 +20,38 @@ struct MedicalDocumentView: View {
             VStack(alignment: .leading, spacing: 20) {
                 ZStack (alignment: .topTrailing) {
                     GeometryReader { geometry in
-                        if let image = selectedImages {
-                            AsyncImage(url: image){ result in
-                                result.image?
-                                    .resizable()
-                                    .scaledToFit()
-                            }.centerCropped()
-                            .onAppear{
-                                isImageUploading = true
-                                if let url = selectedImages{
-                                    if pageTitle == menuItems[0] {
-                                        dogViewModel.updateDocument(fileUrl: url, imageName: .vaccine, uuid: "1KRIa0X7NCt9yUqHkD5B")
-                                    }else if pageTitle == menuItems[0]{
-                                        dogViewModel.updateDocument(fileUrl: url, imageName: .stamboom, uuid: "1KRIa0X7NCt9yUqHkD5B")
-                                    }else{
-                                        dogViewModel.updateDocument(fileUrl: url, imageName: .medicalRecord, uuid: "1KRIa0X7NCt9yUqHkD5B")
+                            if let image = selectedImages {
+                                AsyncImage(url: image){ result in
+                                    result.image?
+                                        .resizable()
+                                        .scaledToFit()
+                                }.centerCropped()
+                                    .onAppear{
+                                        isImageUploading = true
+                                        if let url = selectedImages{
+                                            if pageTitle == menuItems[0] {
+                                                dogViewModel.updateDocument(fileUrl: url, imageName: .vaccine, uuid: "1KRIa0X7NCt9yUqHkD5B")
+                                            }else if pageTitle == menuItems[1]{
+                                                dogViewModel.updateDocument(fileUrl: url, imageName: .stamboom, uuid: "1KRIa0X7NCt9yUqHkD5B")
+                                            }else{
+                                                dogViewModel.updateDocument(fileUrl: url, imageName: .medicalRecord, uuid: "1KRIa0X7NCt9yUqHkD5B")
+                                            }
+                                        }
                                     }
+                                    .frame(width: geometry.size.width, height: geometry.size.width * 1.5)
+                                    .cornerRadius(10)
+                            }else{
+                                AsyncImage(url: URL(string: documentImage)){ image in
+                                    image.resizable()
+                                        .scaledToFit()
+                                }placeholder: {
+                                    ProgressView()
                                 }
+                                .centerCropped()
+                                .frame(width: geometry.size.width, height: geometry.size.width * 1.5)
+                                .cornerRadius(10)
                             }
-                            .frame(width: geometry.size.width, height: geometry.size.width * 1.5)
-                            .cornerRadius(10)
-                        }else{
-                            AsyncImage(url: URL(string: documentImage)){ result in
-                                result.image?
-                                    .resizable()
-                                    .scaledToFit()
-                            }
-                            .centerCropped()
-                            .frame(width: geometry.size.width, height: geometry.size.width * 1.5)
-                            .cornerRadius(10)
                         }
-                    }
                     
                     Button (action: {
                         // 
