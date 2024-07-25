@@ -43,6 +43,7 @@
 		B442E9482C51E98800129FA2 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B442E9472C51E98800129FA2 /* DateConverter.swift */; };
 		B442E94A2C51E99100129FA2 /* AgeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B442E9492C51E99100129FA2 /* AgeCalculator.swift */; };
 		B442E94C2C51FFE700129FA2 /* VerificationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B442E94B2C51FFE700129FA2 /* VerificationState.swift */; };
+		166EC8F02C4F69D90077606B /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166EC8EF2C4F69D90077606B /* VerificationView.swift */; };
 		B493C18C2C48BD0E00E8509B /* DummyDogData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493C18B2C48BD0E00E8509B /* DummyDogData.swift */; };
 		B4B5EE182C440D240035D40F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B5EE172C440D240035D40F /* ProfileView.swift */; };
 		B4B5EE1C2C440FDE0035D40F /* DogsMateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B5EE1B2C440FDE0035D40F /* DogsMateView.swift */; };
@@ -87,6 +88,7 @@
 		B442E9472C51E98800129FA2 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
 		B442E9492C51E99100129FA2 /* AgeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeCalculator.swift; sourceTree = "<group>"; };
 		B442E94B2C51FFE700129FA2 /* VerificationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationState.swift; sourceTree = "<group>"; };
+		166EC8EF2C4F69D90077606B /* VerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
 		B493C18B2C48BD0E00E8509B /* DummyDogData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyDogData.swift; sourceTree = "<group>"; };
 		B4A4AA652C47683900F471E6 /* MedicalDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicalDocumentView.swift; sourceTree = "<group>"; };
 		B4A4AA6E2C476A8A00F471E6 /* Dog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 				D9871CBE2C4A1EA80082E8BE /* PhoneNumberView.swift */,
 				D9871CC32C4A1EA80082E8BE /* DogsInformationView.swift */,
 				D9871CC72C4A1EA80082E8BE /* PersonalityListView.swift */,
+				166EC8EF2C4F69D90077606B /* VerificationView.swift */,
 			);
 			path = DogsInformation;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 				0679CC892C477ECB00A3E9C9 /* DogViewModel.swift in Sources */,
 				D9871CCB2C4A1EA80082E8BE /* PhoneNumberView.swift in Sources */,
 				D9871CCD2C4A1EA80082E8BE /* CustomSegmentedControl.swift in Sources */,
+				166EC8F02C4F69D90077606B /* VerificationView.swift in Sources */,
 				D9871CD42C4A1EA80082E8BE /* CustomSegmentedPicker.swift in Sources */,
 				06477AC52C458023006F4C79 /* SelectBreedView.swift in Sources */,
 				DAFC42CC2C508BA000F5D029 /* ReminderPopUpView.swift in Sources */,
