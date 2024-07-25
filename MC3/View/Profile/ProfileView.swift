@@ -11,6 +11,7 @@ let pageStates: [String] = ["About", "Medical"]
 
 struct ProfileHeader: View {
     @Binding var showAlert: Bool
+    @Binding var isLoading: Bool
 
     var dog: Dog
     
@@ -22,6 +23,32 @@ struct ProfileHeader: View {
                         .resizable()
                         .scaledToFill()
                 }
+//                AsyncImage(url: URL(string: dog.profilePicture)) { phase in
+//                    switch phase {
+//                    case .empty:
+//                        EmptyView()
+//                    case .success(let image):
+//                        image
+//                            .resizable()
+//                            .scaledToFill()
+//                            .onAppear {
+//                                isLoading = false
+//                            }
+//                    case .failure:
+//                        Image(systemName: "exclamationmark.triangle.fill")
+//                            .resizable()
+//                            .scaledToFit()
+//                            .foregroundColor(.red)
+//                            .onAppear {
+//                                isLoading = true
+//                            }
+//                    @unknown default:
+//                        EmptyView()
+//                            .onAppear {
+//                                isLoading = true
+//                            }
+//                    }
+//                }
                 .centerCropped()
                 .frame(width: 120, height: 120)
                 .cornerRadius(10)
@@ -70,6 +97,7 @@ struct ProfileView: View {
     
     @State private var pageState: String = "About"
     @State private var showAlert = false
+    @State private var isLoading = true
     
     @State var dog: Dog
     var isMyProfile: Bool = false
@@ -80,6 +108,7 @@ struct ProfileView: View {
                 // PROFILE IMAGE
                 ProfileHeader(
                     showAlert: $showAlert,
+                    isLoading: $isLoading,
                     dog: dog
                 )
                 
@@ -100,6 +129,11 @@ struct ProfileView: View {
                 }
             }
             .padding(24)
+            .overlay(content: {
+                if isLoading {
+                    LoadingView()
+                }
+            })
             .navigationBarTitle("Profile", displayMode: .inline)
             .alert(isPresented: $showAlert) {
                 Alert(
@@ -112,8 +146,8 @@ struct ProfileView: View {
         .task {
             if isMyProfile{
                 await dogViewModel.fetchDogs()
-                print(dogViewModel.fetchedDogs[1])
                 dog = dogViewModel.fetchedDogs[1]
+                isLoading = false
             }
         }
     }
