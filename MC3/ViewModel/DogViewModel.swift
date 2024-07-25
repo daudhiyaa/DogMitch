@@ -42,6 +42,7 @@ class DogViewModel: ObservableObject{
     func addDog(newDog: Dog){
         let collection = db.collection("dog")
         collection.addDocument(data: newDog.dictionary)
+        print(newDog)
         dog.append(newDog)
     }
     
@@ -92,81 +93,53 @@ class DogViewModel: ObservableObject{
             print("Error getting documents: \(error)")
         }
     }
-
-    func uploadFile(fileUrl: URL, imageName: ImageType){
+    func updateDog(uuid: String, imageName: ImageType, value: String){
+        let updateRef = Firestore.firestore().collection("dog").document(uuid)
+        let updateData = ["\(imageName)": value]
+        updateRef.updateData(updateData) { error in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                print("Image name successfully updated!")
+            }
+        }
+    }
+        
+    func updateDocument(fileUrl: URL, imageName: ImageType, uuid: String){
         do {
             let fileExtension = fileUrl.pathExtension
             var urls = ""
             let metadata = StorageMetadata()
             metadata.contentType = "image/\(fileExtension)"
             let storageReference = Storage.storage().reference().child("\(imageName)/\(UUID().uuidString).\(fileExtension)")
-
             if let fileURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "com.daudhiyaa.DogMitch") {
                 let bookmarkData = try? fileUrl.bookmarkData()
-
                 if let datas = bookmarkData{
                     var stale = false
-    
                     if let url = try? URL(resolvingBookmarkData: datas, bookmarkDataIsStale: &stale),
                        stale == false,
                        url.startAccessingSecurityScopedResource() {
                         if let data = try? Data(contentsOf: fileUrl){
-                            storageReference.putData(data, metadata: metadata,completion: { (metadata,error) in
-                                guard metadata != nil else{
+                            let uploadTask = storageReference.putData(data, metadata: metadata,completion: { (metadata,error) in
+                                guard let metadata = metadata else{
                                     return
                                 }
                                 storageReference.downloadURL { url, error in
-                                    if error != nil {
+                                    if let error = error {
                                         return
                                     }
                                     urls = url!.description
                                     print("Url",urls)
-                                    switch imageName {
-                                    case .profilePicture:
-                                        self.dogs.profilePicture = urls
-                                        self.uploadCountInfo += 1
-                                        if self.uploadCountInfo == self.uploadCheckerInfo.count{
-                                            self.uploadStatus = "Success"
-                                        }
-                                    case .picture1:
-                                        self.dogs.picture1 = urls
-                                        self.uploadCountInfo += 1
-                                        if self.uploadCountInfo == self.uploadCheckerInfo.count{
-                                            self.uploadStatus = "Success"
-                                        }
-                                    case .picture2:
-                                        self.dogs.picture2 = urls
-                                        self.uploadCountInfo += 1
-                                        if self.uploadCountInfo == self.uploadCheckerInfo.count{
-                                            self.uploadStatus = "Success"
-                                        }
-                                    case .stamboom:
-                                        print(self.uploadCheckerMedical.count)
-                                        self.dogs.stamboom = urls
-                                        self.uploadCountMedical += 1
-                                        if self.uploadCountMedical == self.uploadCheckerMedical.count{
-                                            self.uploadStatus = "Success"
-                                        }
-                                    case .medicalRecord:
-                                        self.dogs.medicalRecord = urls
-                                        print(self.uploadCheckerMedical.count)
-                                        self.uploadCountMedical += 1
-                                    case .vaccine:
-                                        self.dogs.vaccine = urls
-                                        print(self.uploadCheckerMedical.count)
-                                        self.uploadCountMedical += 1
-                                        print(self.uploadCountMedical)
-                                        if self.uploadCountMedical == self.uploadCheckerMedical.count{
-                                            self.uploadStatus = "Success"
-                                        }
-                                    }
+                                    self.updateDog(uuid: uuid, imageName: imageName, value: urls)
+                                    self.uploadStatus = "Success"
                                 }
-                            } )
+                            }
+                            )
                         }
                         let filename = fileUrl.lastPathComponent
-                  
-                        print("Data Byte", datas)
-                        print("filename", filename)
+                        
+                        print("Data Byte",datas)
+                        print("filename",filename)
                     }
                     fileURL.stopAccessingSecurityScopedResource()
                 } else {
@@ -175,4 +148,88 @@ class DogViewModel: ObservableObject{
             }
         }
     }
-}
+        
+        func uploadFile(fileUrl: URL, imageName: ImageType){
+            do {
+                let fileExtension = fileUrl.pathExtension
+                var urls = ""
+                let metadata = StorageMetadata()
+                metadata.contentType = "image/\(fileExtension)"
+                let storageReference = Storage.storage().reference().child("\(imageName)/\(UUID().uuidString).\(fileExtension)")
+                
+                if let fileURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "com.daudhiyaa.DogMitch") {
+                    let bookmarkData = try? fileUrl.bookmarkData()
+                    
+                    if let datas = bookmarkData{
+                        var stale = false
+                        
+                        if let url = try? URL(resolvingBookmarkData: datas, bookmarkDataIsStale: &stale),
+                           stale == false,
+                           url.startAccessingSecurityScopedResource() {
+                            if let data = try? Data(contentsOf: fileUrl){
+                                storageReference.putData(data, metadata: metadata,completion: { (metadata,error) in
+                                    guard metadata != nil else{
+                                        return
+                                    }
+                                    storageReference.downloadURL { url, error in
+                                        if error != nil {
+                                            return
+                                        }
+                                        urls = url!.description
+                                        print("Url",urls)
+                                        switch imageName {
+                                        case .profilePicture:
+                                            self.dogs.profilePicture = urls
+                                            self.uploadCountInfo += 1
+                                            if self.uploadCountInfo == self.uploadCheckerInfo.count{
+                                                self.uploadStatus = "Success"
+                                            }
+                                        case .picture1:
+                                            self.dogs.picture1 = urls
+                                            self.uploadCountInfo += 1
+                                            if self.uploadCountInfo == self.uploadCheckerInfo.count{
+                                                self.uploadStatus = "Success"
+                                            }
+                                        case .picture2:
+                                            self.dogs.picture2 = urls
+                                            self.uploadCountInfo += 1
+                                            if self.uploadCountInfo == self.uploadCheckerInfo.count{
+                                                self.uploadStatus = "Success"
+                                            }
+                                        case .stamboom:
+                                            print(self.uploadCheckerMedical.count)
+                                            self.dogs.stamboom = urls
+                                            self.uploadCountMedical += 1
+                                            if self.uploadCountMedical == self.uploadCheckerMedical.count{
+                                                self.uploadStatus = "Success"
+                                            }
+                                        case .medicalRecord:
+                                            self.dogs.medicalRecord = urls
+                                            print(self.uploadCheckerMedical.count)
+                                            self.uploadCountMedical += 1
+                                        case .vaccine:
+                                            self.dogs.vaccine = urls
+                                            print(self.uploadCheckerMedical.count)
+                                            self.uploadCountMedical += 1
+                                            print(self.uploadCountMedical)
+                                            if self.uploadCountMedical == self.uploadCheckerMedical.count{
+                                                self.uploadStatus = "Success"
+                                            }
+                                        }
+                                    }
+                                } )
+                            }
+                            let filename = fileUrl.lastPathComponent
+                            
+                            print("Data Byte", datas)
+                            print("filename", filename)
+                        }
+                        fileURL.stopAccessingSecurityScopedResource()
+                    } else {
+                        print("Failed to obtain access to the security-scoped resource.")
+                    }
+                }
+            }
+        }
+    }
+
