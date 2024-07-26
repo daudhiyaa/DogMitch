@@ -120,12 +120,12 @@ class DogViewModel: ObservableObject{
                        stale == false,
                        url.startAccessingSecurityScopedResource() {
                         if let data = try? Data(contentsOf: fileUrl){
-                            let uploadTask = storageReference.putData(data, metadata: metadata,completion: { (metadata,error) in
-                                guard let metadata = metadata else{
+                            storageReference.putData(data, metadata: metadata,completion: { (metadata,error) in
+                                guard metadata != nil else{
                                     return
                                 }
                                 storageReference.downloadURL { url, error in
-                                    if let error = error {
+                                    if error != nil {
                                         return
                                     }
                                     urls = url!.description

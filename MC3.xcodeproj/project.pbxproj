@@ -73,7 +73,7 @@
 		DAFC42C62C4F70F200F5D029 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFC42C52C4F70F200F5D029 /* OnBoardingView.swift */; };
 		DAFC42C92C4F752000F5D029 /* VerificationDoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFC42C82C4F752000F5D029 /* VerificationDoneView.swift */; };
 		DAFC42CC2C508BA000F5D029 /* ReminderPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFC42CB2C508BA000F5D029 /* ReminderPopUpView.swift */; };
-		DAFC42CE2C509DFC00F5D029 /* BlankProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFC42CD2C509DFC00F5D029 /* BlankProfileView.swift */; };
+		DAFC42CE2C509DFC00F5D029 /* EmptyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFC42CD2C509DFC00F5D029 /* EmptyProfileView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,7 +120,7 @@
 		DAFC42C52C4F70F200F5D029 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		DAFC42C82C4F752000F5D029 /* VerificationDoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationDoneView.swift; sourceTree = "<group>"; };
 		DAFC42CB2C508BA000F5D029 /* ReminderPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderPopUpView.swift; sourceTree = "<group>"; };
-		DAFC42CD2C509DFC00F5D029 /* BlankProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankProfileView.swift; sourceTree = "<group>"; };
+		DAFC42CD2C509DFC00F5D029 /* EmptyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyProfileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,7 +223,7 @@
 				B4DBEE762C460E12002C5231 /* Medical */,
 				B4DBEE752C460E0E002C5231 /* About */,
 				B4B5EE172C440D240035D40F /* ProfileView.swift */,
-				DAFC42CD2C509DFC00F5D029 /* BlankProfileView.swift */,
+				DAFC42CD2C509DFC00F5D029 /* EmptyProfileView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -501,7 +501,7 @@
 				B442E94A2C51E99100129FA2 /* AgeCalculator.swift in Sources */,
 				B4B5EE182C440D240035D40F /* ProfileView.swift in Sources */,
 				D9871CCA2C4A1EA80082E8BE /* Decoder.swift in Sources */,
-				DAFC42CE2C509DFC00F5D029 /* BlankProfileView.swift in Sources */,
+				DAFC42CE2C509DFC00F5D029 /* EmptyProfileView.swift in Sources */,
 				D9871CD32C4A1EA80082E8BE /* PersonalityListView.swift in Sources */,
 				06477ABF2C4548F6006F4C79 /* ForYouCard.swift in Sources */,
 				D9871CD82C4A1EAE0082E8BE /* MedicalUploadDocumentView.swift in Sources */,

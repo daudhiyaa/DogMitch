@@ -106,7 +106,7 @@ struct MedicalUploadDocumentView: View {
                 }) 
                 .navigationDestination(
                 isPresented: $isNavigationActive) {
-                    ContentView()
+                    ContentView(dogBreed: dog.breed)
                     Text("Continue?")
                         .hidden()
                 }

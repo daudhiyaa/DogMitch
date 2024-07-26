@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BlankProfileView: View {
+struct EmptyProfileView: View {
     var body: some View {
         NavigationStack {
             VStack {
@@ -17,9 +17,8 @@ struct BlankProfileView: View {
                 Text("Oops!\nYou Have Not Complete Your Dog's Profile")
                     .font(.title3)
                     .multilineTextAlignment(.center)
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    .fontWeight(.bold)
                     .padding(.horizontal, 15.0)
-                    
                 
                 Text("To gain the trust of other dog owners, please provide your dog's details and verify its health.")
                     .foregroundStyle(.secondary)
@@ -43,14 +42,12 @@ struct BlankProfileView: View {
                     }
                 )
             }
-            
             .navigationTitle(Text("Profile"))
             .navigationBarTitleDisplayMode(.inline)
-            
         }
     }
 }
 
 #Preview {
-    BlankProfileView()
+    EmptyProfileView()
 }

@@ -17,7 +17,8 @@ struct ProfileHeader: View {
     var isMyProfile: Bool
     @State var isReadyToBread: Bool = false
     
-    var profileState: VerificationState
+    var verificationStatusMessage: String
+    var verificationStatusIcon: String
     
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
@@ -48,14 +49,16 @@ struct ProfileHeader: View {
                 HStack{
                     Text(dog.name).font(.title)
                     Image(systemName: "checkmark.seal.fill")
-                        .foregroundColor(dog.isReadyToBreed ? .yellow : .gray.opacity(0.3))
+                        .foregroundColor(
+                            verificationStatusMessage.contains("verified") ? .yellow : .gray.opacity(0.3)
+                        )
                 }
                 
                 Text(dog.location).font(.subheadline)
                 Spacer().frame(height: 8)
                 
                 if isMyProfile {
-                    if profileState == .verified {
+                    if verificationStatusMessage.contains("verified") {
                         HStack {
                             Text("Ready to Breed")
                                 .fontWeight(.bold)
@@ -68,56 +71,29 @@ struct ProfileHeader: View {
                     }
                     else {
                         HStack(alignment: .top) {
-                            Image(systemName: profileStatusIcon)
+                            Image(systemName: verificationStatusIcon)
                                 .foregroundColor(.red)
-                            Text(profileStatusMessage)
+                            Text(verificationStatusMessage)
                                 .font(.caption)
                                 .foregroundColor(.red)
                         }
                     }
                 }
                 else{
-                    if profileState == .verified {
+                    if verificationStatusMessage.contains("verified") {
                         Link(destination: URL(string: "https://api.whatsapp.com/send?phone=\(dog.contact)")!) {
                             ButtonChatOwner()
                         }
-                    } else {
+                    } 
+                    else {
                         Button {
-                            if !dog.isReadyToBreed {
-                                showAlert = true
-                            }
+                            showAlert = true
                         } label: {
                             ButtonChatOwner()
                         }
                     }
                 }
             }
-        }
-    }
-    
-    var profileStatusIcon: String {
-        switch profileState {
-        case .waitingVerification:
-            return "clock"
-        default:
-            return "exclamationmark.triangle"
-        }
-    }
-    
-    var profileStatusMessage: String {
-        switch profileState {
-        case .notUploaded:
-            return "You haven't uploaded any medical document."
-        case .waitingVerification:
-            return "Your account will be verified within a maximum of 24 hours."
-        case .medicalRejected:
-            return "Your medical document is rejected."
-        case .vaccineRejected:
-            return "Your vaccine document is rejected."
-        case .stamboomRejected:
-            return "Your stamboom document is rejected."
-        default:
-            return "Your profile is verified."
         }
     }
 }
@@ -132,8 +108,14 @@ struct ProfileView: View {
     @State var dog: Dog
     var isMyProfile: Bool = true
 
-    var profileState: VerificationState {
-        checkProfileState()
+    var verificationState: VerificationState {
+        checkVerificationState(dog: dog)
+    }
+    var verificationStatusMessage: String {
+        getVerificationStatusMessage(verificationState: verificationState)
+    }
+    var verificationStatusIcon: String {
+        getVerificationStatusIcon(verificationState: verificationState)
     }
     
     var body: some View {
@@ -145,7 +127,8 @@ struct ProfileView: View {
                     isLoading: $isLoading,
                     dog: dog,
                     isMyProfile: isMyProfile,
-                    profileState: profileState
+                    verificationStatusMessage: verificationStatusMessage,
+                    verificationStatusIcon: verificationStatusIcon
                 )
                 
                 // SEGMENTED CONTROLS
@@ -159,15 +142,21 @@ struct ProfileView: View {
                 // PAGE CONTENT
                 if pageState == "About" {
                     AboutView(dog: dog)
-                } else {
-                    if profileState == .notUploaded {
-                        NotUploadedView()
+                } 
+                else {
+                    if verificationState == .notUploaded {
+                        NotUploadedView(dog: dog)
                     }
-                    else if profileState == .waitingVerification {
+                    else if verificationState == .waitingVerification {
                         WaitingVerificationView()
                     }
                     else {
-                        MedicalView(dog: dog, isMyProfile: isMyProfile)
+                        MedicalView(
+                            dog: dog,
+                            isMyProfile: isMyProfile,
+                            verificationStatusMessage: verificationStatusMessage,
+                            verificationStatusIcon: verificationStatusIcon
+                        )
                             .clipShape(RoundedRectangle(cornerRadius: 20))
                     }
                 }
@@ -197,24 +186,11 @@ struct ProfileView: View {
             }
         }
     }
-    
-    func checkProfileState() -> VerificationState {
-        if dog.medicalRecord == "" && dog.vaccine == "" {
-            return .notUploaded
-        } else if (dog.medicalRecord != "" && dog.vaccine != "") && (!dog.isMedicalVerified && !dog.isVaccineVerified) {
-            return .waitingVerification
-        } else if !dog.isMedicalVerified && dog.isVaccineVerified {
-            return .medicalRejected
-        } else if dog.isMedicalVerified && !dog.isVaccineVerified {
-            return .vaccineRejected
-        } else if dog.stamboom != "" && !dog.isStamboomVerified {
-            return .stamboomRejected
-        }
-        return .verified
-    }
 }
 
 struct NotUploadedView: View {
+    var dog: Dog
+
     var body: some View {
         VStack {
             Image("medical_document_state")
@@ -230,8 +206,8 @@ struct NotUploadedView: View {
                 .font(.body)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
-            Button {
-                //
+            NavigationLink {
+                MedicalUploadDocumentView(dog: dog)
             } label: {
                 Text("Complete Now")
                     .font(.system(size: 16, weight: .bold))
