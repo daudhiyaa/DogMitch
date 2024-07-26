@@ -10,7 +10,7 @@ import SwiftUI
 struct SelectBreedView: View {
     let dogBreed = ["Labrador Retriever", "German Shepherd", "Golden Retriever", "Bulldog", "Siberian Husky", "Pomeranian", "Australian Shepherd", "Chihuahua", "Toy Poodle", "Miniature Poodle","Standard Poodle","Dachshund", "Pug", "Rottweiler", "Maltese", "Corgi"]
     
-    @State private var selected: String = ""
+    @State private var selectedDogBreed: String = ""
     @State private var searchText = ""
     
     @State private var isNavigationActive = false
@@ -31,9 +31,9 @@ struct SelectBreedView: View {
                             ForEach(searchResults, id: \.self) { name in
                                 Button(action: {
                                     UIApplication.shared.endEditing()
-                                    selected = name
+                                    selectedDogBreed = name
                                 }) {
-                                    if selected == name{
+                                    if selectedDogBreed == name{
                                         SelectBreedCard(name: name,  isChosen: false)
                                     }else{
                                         SelectBreedCard(name: name,  isChosen: true)
@@ -62,12 +62,12 @@ struct SelectBreedView: View {
                             isNavigationActive = true
                         }) {
                             Text("Next") .font(.system(size: 17)).fontWeight(.semibold)
-                                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+                                .frame(maxWidth: .infinity)
                                 .padding(12)
-                                .background(selected.isEmpty ? Color(hex: "#D9D9D9") : Colors.tosca)
+                                .background(selectedDogBreed.isEmpty ? Color(hex: "#D9D9D9") : Colors.tosca)
                                 .cornerRadius(30)
                                 .foregroundColor(.white)
-                        }.disabled(selected.isEmpty)
+                        }.disabled(selectedDogBreed.isEmpty)
                     }
                 }
             }
@@ -81,29 +81,29 @@ struct SelectBreedView: View {
             .navigationBarTitle("Select Your Dog Breed", displayMode: .inline)
             .navigationDestination(
                 isPresented: $isNavigationActive) {
-                    DogsInformationView(dogBreed: selected).environmentObject(DogViewModel())
+                    ContentView(dogBreed: selectedDogBreed)
+                        .navigationBarBackButtonHidden(true)
                 }
         }
-        
         .searchable(
             text: $searchText,
             placement:.navigationBarDrawer(displayMode: .always)
         )
         .onAppear {
-                    NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
-                        withAnimation {
-                            isKeyboardVisible = true
-                        }
-                    }
-
-                    NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
-                        withAnimation {
-                            isKeyboardVisible = false
-                        }
-                    }
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
+                withAnimation {
+                    isKeyboardVisible = true
                 }
-        
+            }
+            
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+                withAnimation {
+                    isKeyboardVisible = false
+                }
+            }
+        }
     }
+    
     var searchResults: [String] {
         if searchText.isEmpty {
             return dogBreed

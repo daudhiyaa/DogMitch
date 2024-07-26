@@ -10,6 +10,9 @@ import SwiftUI
 struct MedicalDocumentView: View {
     var pageTitle: String
     var documentImage: String
+    var verificationStatusMessage: String
+    var verificationStatusIcon: String
+    
     @EnvironmentObject var dogViewModel: DogViewModel
     @State private var isImagePickerPresented = false
     @State private var selectedImages: URL?
@@ -17,44 +20,38 @@ struct MedicalDocumentView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment:.leading, spacing: 8) {
                 ZStack (alignment: .topTrailing) {
-                    GeometryReader { geometry in
-                            if let image = selectedImages {
-                                AsyncImage(url: image){ result in
-                                    result.image?
-                                        .resizable()
-                                        .scaledToFit()
-                                }.centerCropped()
-                                    .onAppear{
-                                        isImageUploading = true
-                                        if let url = selectedImages{
-                                            if pageTitle == menuItems[0] {
-                                                dogViewModel.updateDocument(fileUrl: url, imageName: .vaccine, uuid: "1KRIa0X7NCt9yUqHkD5B")
-                                            }else if pageTitle == menuItems[1]{
-                                                dogViewModel.updateDocument(fileUrl: url, imageName: .stamboom, uuid: "1KRIa0X7NCt9yUqHkD5B")
-                                            }else{
-                                                dogViewModel.updateDocument(fileUrl: url, imageName: .medicalRecord, uuid: "1KRIa0X7NCt9yUqHkD5B")
-                                            }
-                                        }
-                                    }
-                                    .frame(width: geometry.size.width, height: geometry.size.width * 1.5)
-                                    .cornerRadius(10)
-                            }else{
-                                AsyncImage(url: URL(string: documentImage)){ image in
-                                    image.resizable()
-                                        .scaledToFit()
-                                }placeholder: {
-                                    ProgressView()
-                                }
-                                .centerCropped()
-                                .frame(width: geometry.size.width, height: geometry.size.width * 1.5)
-                                .cornerRadius(10)
+                        if let image = selectedImages {
+                            AsyncImage(url: image){ result in
+                                result.image?
+                                    .resizable()
+                                    .scaledToFit()
                             }
+                            .cornerRadius(10)
+                            .onAppear{
+                                isImageUploading = true
+                                if let url = selectedImages{
+                                    if pageTitle == menuItems[0] {
+                                        dogViewModel.updateDocument(fileUrl: url, imageName: .vaccine, uuid: "1KRIa0X7NCt9yUqHkD5B")
+                                    }else if pageTitle == menuItems[1]{
+                                        dogViewModel.updateDocument(fileUrl: url, imageName: .stamboom, uuid: "1KRIa0X7NCt9yUqHkD5B")
+                                    }else{
+                                        dogViewModel.updateDocument(fileUrl: url, imageName: .medicalRecord, uuid: "1KRIa0X7NCt9yUqHkD5B")
+                                    }
+                                }
+                            }
+                        } else {
+                            AsyncImage(url: URL(string: documentImage)){ image in
+                                image.resizable()
+                                    .scaledToFit()
+                            }placeholder: {
+                                ProgressView()
+                            }
+                            .cornerRadius(10)
                         }
                     
                     Button (action: {
-                        // 
                         self.isImagePickerPresented.toggle()
                     }, label: {
                         Image(systemName: "pencil")
@@ -69,23 +66,33 @@ struct MedicalDocumentView: View {
                             .shadow(radius: 10)
                     })
                 }
+                
+                if !verificationStatusMessage.contains("verified") {
+                    HStack(alignment: .top) {
+                        Image(systemName: verificationStatusIcon)
+                            .foregroundColor(.red)
+                        Text(verificationStatusMessage)
+                            .font(.caption)
+                            .foregroundColor(.red)
+                    }
+                }
             }
+            .frame(maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .topLeading)
             .overlay(content: {
-                        if isImageUploading{
-                            ZStack {
-                                Color(white: 0, opacity: 0.75)
-                                ProgressView().tint(.white)
-                            }.ignoresSafeArea()
-                            if let upload =  dogViewModel.uploadStatus {
-                                Text(upload).hidden()
-                                    .onAppear{
-                                        isImageUploading = false
-                                    }
-                                
+                if isImageUploading{
+                    ZStack {
+                        Color(white: 0, opacity: 0.75)
+                        ProgressView().tint(.white)
+                    }.ignoresSafeArea()
+                    if let upload =  dogViewModel.uploadStatus {
+                        Text(upload).hidden()
+                            .onAppear{
+                                isImageUploading = false
                             }
-                        }
-                    })
-
+                        
+                    }
+                }
+            })
             .sheet(isPresented: $isImagePickerPresented) {
                 ImagePicker(selectedImage: $selectedImages)
             }
@@ -98,6 +105,8 @@ struct MedicalDocumentView: View {
 #Preview {
     MedicalDocumentView(
         pageTitle: "Dummy Title",
-        documentImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThJb3Aueh4k2-eOO3DgTZMUAFjtyvwArQChA&s"
+        documentImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThJb3Aueh4k2-eOO3DgTZMUAFjtyvwArQChA&s",
+        verificationStatusMessage: "Warning",
+        verificationStatusIcon: "x.circle"
     )
 }

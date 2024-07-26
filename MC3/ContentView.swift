@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    var dogBreed: String
+    
     var body: some View {
         TabView{
             ForYouView().tabItem {
@@ -22,5 +24,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    SelectBreedView()
+    ContentView(dogBreed: "Dummy Dog Breed")
 }

@@ -24,7 +24,10 @@ struct ReminderPopUpView: View {
                     close()
                 }
             VStack {
-                Image("MedicalRecordVerifImage")
+                Image("BlankProfileImage")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 200, height: 200)
                 Text(title)
                     .font(.title3)
                     .multilineTextAlignment(.center)
@@ -36,8 +39,6 @@ struct ReminderPopUpView: View {
                     .font(.body)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
-                    
-                    
 
                 Button {
                     action()
@@ -92,9 +93,11 @@ struct ReminderPopUpView: View {
 
 
 #Preview {
-    ReminderPopUpView(isActive: .constant(true),
-                      title: "Fill Your Dog's Information First",
-                      message: "To gain trust of other dog owners, please provide your dog's details and verify its health",
-                      buttonTitle: "Complete Now!",
-                      action: {})
+    ReminderPopUpView(
+        isActive: .constant(true),
+        title: "Fill Your Dog's Information First",
+        message: "To gain trust of other dog owners, please provide your dog's details and verify its health",
+        buttonTitle: "Complete Now",
+        action: {}
+    )
 }

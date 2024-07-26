@@ -23,7 +23,7 @@ struct OnBoardingView: View {
                 Text("Finding a Mate")
                     .font(.title)
                     .fontWeight(.semibold)
-                Text("Finding a mate connects your dog with potential breeding partner")
+                Text("Connects your dog with potential breeding partner")
                     .font(.body)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
