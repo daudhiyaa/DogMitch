@@ -12,7 +12,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView{
-            ForYouView().tabItem {
+            ForYouView(dogs: Dog.sampleDogList).tabItem {
                 Label("For You", systemImage: "hands.and.sparkles")
             }.environmentObject(DogViewModel())
             

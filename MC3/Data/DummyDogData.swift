@@ -19,4 +19,4 @@ extension Dog{
     
     static let emptyDog: Dog =
         Dog(profilePicture: "", picture1: "", picture2: "", name: "", breed: "", birthday: "", gender: "", vaccine: "", stamboom: "", medicalRecord: "", location: "", latitude: "", longitude: "", personality: [], weight: 0, isReadyToBreed: true, isMedicalVerified: false, isVaccineVerified: true, isStamboomVerified: true, contact: "")
-}
+    }

@@ -16,13 +16,16 @@ struct ForYouCard: View {
         VStack {
             Spacer() // Mendorong konten ke tengah vertikal
             GeometryReader { proxy in
-                VStack(spacing: 8) {
-                    AsyncImage(url: URL(string: dog.profilePicture)) { result in
-                        result.image?
-                            .resizable()
+                VStack() {
+                    AsyncImage(url: URL(string: dog.profilePicture)) { image in
+                        image.resizable()
                             .scaledToFill()
+                    }placeholder: {
+                        ProgressView()
                     }
+                    
                     .centerCropped()
+                    .frame(maxHeight: UIScreen.main.bounds.height * 0.3)
                     //                    .frame(height: 320)
                     .cornerRadius(30)
                     .padding(20)
@@ -58,11 +61,13 @@ struct ForYouCard: View {
                     .padding(15)
                     .shadow(radius: 5)
                 }
+                .padding(0)
             }
-            .padding(.horizontal)
-            Spacer() // Mendorong konten ke tengah vertikal
+            Spacer() 
         }
+        
         .frame(maxWidth: UIScreen.main.bounds.width * 0.8, maxHeight: UIScreen.main.bounds.height * 0.5)
+//        .background(Color.red)
         
     }
 }
