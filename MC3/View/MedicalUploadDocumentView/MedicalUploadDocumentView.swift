@@ -63,7 +63,7 @@ struct MedicalUploadDocumentView: View {
                             
                             isImageUploading = true
                             
-                            if MedicalImage != nil && VaccineImage != nil {
+                            if MedicalImage != nil && VaccineImage != nil && StamboomImage == nil {
                                 dogViewModel.uploadCheckerMedical.append(contentsOf: ["medicalRecord", "vaccine"])
                             } else {
                                 dogViewModel.uploadCheckerMedical.append(contentsOf: ["medicalRecord", "vaccine", "stamboom"])
@@ -98,36 +98,35 @@ struct MedicalUploadDocumentView: View {
                     if isImageUploading{
                         LoadingView()
                         
-                        if dogViewModel.uploadStatus == "Success" {
-                            EmptyView()
-                                .onAppear{
-                                    print("Add Dog")
-                                    dogViewModel.addDog(newDog: dogViewModel.dogs)
-                                    isImageUploading = false
-                                    registeredDogID = "keisi"
-                                    isNavigationActive = true
-                                }
+                        if let upload = dogViewModel.uploadStatus {
+                            Text(upload).hidden().onAppear{
+                                print("Add Dog")
+                                dogViewModel.addDog(newDog: dogViewModel.dogs)
+                                isImageUploading = false
+                                registeredDogID = "keisi"
+                                isNavigationActive = true
+                            }
                         }
                     }
-                }) 
-                .navigationDestination(
-                isPresented: $isNavigationActive) {
-                    MainView(dogBreed: dog.breed)
-                    Text("Continue?")
-                        .hidden()
+                })
+                .sheet(isPresented: $isImagePickerPresentedMedical) {
+                    ImagePicker(selectedImage: $MedicalImage)
+                        .ignoresSafeArea()
                 }
-            .sheet(isPresented: $isImagePickerPresentedMedical) {
-                ImagePicker(selectedImage: $MedicalImage)
-                    .ignoresSafeArea()
-            }
-            .sheet(isPresented: $isImagePickerPresentedVaccine) {
-                ImagePicker(selectedImage: $VaccineImage)
-                    .ignoresSafeArea()
-            }
-            .sheet(isPresented: $isImagePickerPresentedStamboom) {
-                ImagePicker(selectedImage: $StamboomImage)
-                    .ignoresSafeArea()
-            }
+                .sheet(isPresented: $isImagePickerPresentedVaccine) {
+                    ImagePicker(selectedImage: $VaccineImage)
+                        .ignoresSafeArea()
+                }
+                .sheet(isPresented: $isImagePickerPresentedStamboom) {
+                    ImagePicker(selectedImage: $StamboomImage)
+                        .ignoresSafeArea()
+                }
+                .navigationDestination(
+                    isPresented: $isNavigationActive) {
+                        MainView(dogBreed: dog.breed)
+                        Text("Continue?")
+                            .hidden()
+                    }
         }
     }
         

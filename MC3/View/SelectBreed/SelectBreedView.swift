@@ -84,29 +84,29 @@ struct SelectBreedView: View {
                     MainView(dogBreed: selectedDogBreed)
                         .navigationBarBackButtonHidden(true)
                 }
+                .searchable(
+                    text: $searchText,
+                    placement:.navigationBarDrawer(displayMode: .always)
+                )
         }
         .navigationDestination(
             isPresented: $isNavigationActive) {
-                ContentView(dogBreed: selectedDogBreed)
+                MainView(dogBreed: selectedDogBreed)
                     .navigationBarBackButtonHidden(true)
             }
-        .searchable(
-            text: $searchText,
-            placement:.navigationBarDrawer(displayMode: .always)
-        )
-        .onAppear {
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
-                withAnimation {
-                    isKeyboardVisible = true
+            .onAppear {
+                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
+                    withAnimation {
+                        isKeyboardVisible = true
+                    }
+                }
+                
+                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+                    withAnimation {
+                        isKeyboardVisible = false
+                    }
                 }
             }
-            
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
-                withAnimation {
-                    isKeyboardVisible = false
-                }
-            }
-        }
     }
     
     var searchResults: [String] {
@@ -117,7 +117,7 @@ struct SelectBreedView: View {
             return dogBreed.filter { $0.lowercased().contains(lowercasedSearchText) }
         }
     }
-
+    
 }
 
 #Preview {

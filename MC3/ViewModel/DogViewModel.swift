@@ -147,11 +147,11 @@ class DogViewModel: ObservableObject{
                        stale == false,
                        url.startAccessingSecurityScopedResource() {
                         if let data = try? Data(contentsOf: fileUrl){
-                            var uiImage: UIImage = UIImage(data: data)!
-                            var compress = uiImage.jpegData(compressionQuality: 0.001)
+                            let uiImage: UIImage = UIImage(data: data)!
+                            let compress = uiImage.jpegData(compressionQuality: 0.001)
                             print(compress!)
-                            let uploadTask = storageReference.putData(compress!, metadata: metadata,completion: { (metadata,error) in
-                                guard let metadata = metadata else{
+                            storageReference.putData(compress!, metadata: metadata,completion: { (metadata,error) in
+                                guard metadata != nil else{
                                     return
                                 }
                                 storageReference.downloadURL { url, error in
@@ -197,10 +197,10 @@ class DogViewModel: ObservableObject{
                            stale == false,
                            url.startAccessingSecurityScopedResource() {
                             if let data = try? Data(contentsOf: fileUrl){
-                                var uiImage: UIImage = UIImage(data: data)!
-                                var compress = uiImage.jpegData(compressionQuality: 0.001)
-                                let uploadTask = storageReference.putData(compress!, metadata: metadata,completion: { (metadata,error) in
-                                    guard let metadata = metadata else{
+                                let uiImage: UIImage = UIImage(data: data)!
+                                let compress = uiImage.jpegData(compressionQuality: 0.001)
+                                storageReference.putData(compress!, metadata: metadata,completion: { (metadata,error) in
+                                    guard metadata != nil else{
                                         return
                                     }
                                     storageReference.downloadURL { url, error in
@@ -239,13 +239,17 @@ class DogViewModel: ObservableObject{
                                             self.dogs.medicalRecord = urls
                                             print(self.uploadCheckerMedical.count)
                                             self.uploadCountMedical += 1
+                                            if self.uploadCountMedical == self.uploadCheckerMedical.count{
+                                                self.uploadStatus = "Success"
+                                            }
                                         case .vaccine:
                                             self.dogs.vaccine = urls
                                             print(self.uploadCheckerMedical.count)
                                             self.uploadCountMedical += 1
-                                            print(self.uploadCountMedical)
+                                           
                                             if self.uploadCountMedical == self.uploadCheckerMedical.count{
                                                 self.uploadStatus = "Success"
+                                                print("tes sini")
                                             }
                                         }
                                     }
