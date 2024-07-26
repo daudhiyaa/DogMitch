@@ -9,14 +9,28 @@ import SwiftUI
 
 struct ForYouView: View {
     @EnvironmentObject var dogViewModel: DogViewModel
+    @State private var isLoading = false
+    @State var dogs : [Dog]
     var body: some View {
         NavigationStack {
-            ForYouSwipe()
+            ForYouSwipe(dogs : $dogs)
             .navigationBarTitle("For You", displayMode: .inline)
+        }
+        .overlay(content: {
+            if isLoading {
+                LoadingView()
+            }
+        })
+        .task {
+            isLoading = true
+            await dogViewModel.fetchDogs()
+            dogs = dogViewModel.fetchedDogs
+            isLoading = false
         }
     }
 }
 
-#Preview {
-    ForYouView().environmentObject(DogViewModel())
-}
+
+//#Preview {
+//    ForYouView().environmentObject(DogViewModel())
+//}
