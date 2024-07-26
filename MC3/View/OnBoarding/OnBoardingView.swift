@@ -32,7 +32,8 @@ struct OnBoardingView: View {
                 Spacer()
                 Spacer()
                 NavigationLink(
-                    destination: SelectBreedView(),
+                    destination: SelectBreedView()
+                        .navigationBarBackButtonHidden(true),
                     label: {
                         Text("Next")
                             .font(.system(size: 17))

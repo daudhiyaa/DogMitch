@@ -15,18 +15,12 @@ struct ForYouSwipe: View {
     @State var isLiked:Bool = false
     @Binding var dogs : [Dog]
 
-
     var body: some View {
         NavigationStack {
             ZStack {
                 ForEach(dogs.indices, id: \.self) { index in
                     if abs(index - currentIndex) <= 1 {
                         ForYouCard(dog: dogs[index])
-                           
-//                            .padding(.horizontal)
-                           
-//                            .padding(.horizontal)
-//                            .background(Color.red.opacity(0.5))
                             .gesture(
                                 DragGesture()
                                     .onChanged { gesture in
@@ -35,11 +29,11 @@ struct ForYouSwipe: View {
                                     .onEnded { _ in
                                         if translation.width < -50 && currentIndex < dogs.count - 1 {
                                             currentIndex += 1
-                                           
+                                            
                                         }
                                         if translation.width > 50 && currentIndex > 0 {
                                             currentIndex -= 1
-                                          
+                                            
                                         }
                                         translation = .zero
                                     }
@@ -53,16 +47,12 @@ struct ForYouSwipe: View {
                                         else {
                                             currentIndex = index
                                         }
-                                        
                                     }
                             )
                             .offset(x: CGFloat(index - currentIndex) * UIScreen.main.bounds.width * 0.9 + translation.width, y: 0)
                             .scaleEffect(index == currentIndex ? 1 : 0.9)
                             .opacity(index == currentIndex ? 1 : 0.8)
                             .animation(.spring())
-//                            .padding(.horizontal)
-//                            .background(Color.red.opacity(0.5))
-                           
                     }
                 }
             }
@@ -72,9 +62,3 @@ struct ForYouSwipe: View {
         }
     }
 }
-
-//#Preview {
-//    ForYouSwipe()
-//}
-
-

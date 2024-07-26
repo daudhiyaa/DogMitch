@@ -16,6 +16,7 @@ struct ForYouView: View {
             ForYouSwipe(dogs : $dogs)
             .navigationBarTitle("For You", displayMode: .inline)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(content: {
             if isLoading {
                 LoadingView()

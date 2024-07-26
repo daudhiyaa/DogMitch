@@ -39,18 +39,16 @@
 		0679CC852C4770A000A3E9C9 /* MedicalDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A4AA652C47683900F471E6 /* MedicalDocumentView.swift */; };
 		0679CC892C477ECB00A3E9C9 /* DogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0679CC882C477ECB00A3E9C9 /* DogViewModel.swift */; };
 		06A5412C2C47A67D00FCA154 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 06A5412B2C47A67D00FCA154 /* GoogleService-Info.plist */; };
+		166EC8F02C4F69D90077606B /* WaitingVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166EC8EF2C4F69D90077606B /* WaitingVerificationView.swift */; };
 		B442E9462C51E69F00129FA2 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B442E9452C51E69F00129FA2 /* LoadingView.swift */; };
 		B442E9482C51E98800129FA2 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B442E9472C51E98800129FA2 /* DateConverter.swift */; };
 		B442E94A2C51E99100129FA2 /* AgeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B442E9492C51E99100129FA2 /* AgeCalculator.swift */; };
 		B442E94C2C51FFE700129FA2 /* VerificationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B442E94B2C51FFE700129FA2 /* VerificationState.swift */; };
-		166EC8F02C4F69D90077606B /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166EC8EF2C4F69D90077606B /* VerificationView.swift */; };
 		B493C18C2C48BD0E00E8509B /* DummyDogData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493C18B2C48BD0E00E8509B /* DummyDogData.swift */; };
 		B4B5EE182C440D240035D40F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B5EE172C440D240035D40F /* ProfileView.swift */; };
-		B4B5EE1C2C440FDE0035D40F /* DogsMateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B5EE1B2C440FDE0035D40F /* DogsMateView.swift */; };
 		B4B5EE1E2C440FEF0035D40F /* ForYouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B5EE1D2C440FEF0035D40F /* ForYouView.swift */; };
 		B4D297242C40DDD80075B940 /* MC3App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D297232C40DDD80075B940 /* MC3App.swift */; };
-		B4D297262C40DDD80075B940 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D297252C40DDD80075B940 /* ContentView.swift */; };
-		B4D297282C40DDD80075B940 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D297272C40DDD80075B940 /* Item.swift */; };
+		B4D297262C40DDD80075B940 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D297252C40DDD80075B940 /* MainView.swift */; };
 		B4D2972A2C40DDD90075B940 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4D297292C40DDD90075B940 /* Assets.xcassets */; };
 		B4D2972D2C40DDD90075B940 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4D2972C2C40DDD90075B940 /* Preview Assets.xcassets */; };
 		B4DBEE782C460E25002C5231 /* MedicalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DBEE772C460E25002C5231 /* MedicalView.swift */; };
@@ -84,21 +82,19 @@
 		06477AC62C4584C4006F4C79 /* SelectBreedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectBreedCard.swift; sourceTree = "<group>"; };
 		0679CC882C477ECB00A3E9C9 /* DogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogViewModel.swift; sourceTree = "<group>"; };
 		06A5412B2C47A67D00FCA154 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		166EC8EF2C4F69D90077606B /* WaitingVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingVerificationView.swift; sourceTree = "<group>"; };
 		B442E9452C51E69F00129FA2 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		B442E9472C51E98800129FA2 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
 		B442E9492C51E99100129FA2 /* AgeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeCalculator.swift; sourceTree = "<group>"; };
 		B442E94B2C51FFE700129FA2 /* VerificationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationState.swift; sourceTree = "<group>"; };
-		166EC8EF2C4F69D90077606B /* VerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
 		B493C18B2C48BD0E00E8509B /* DummyDogData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyDogData.swift; sourceTree = "<group>"; };
 		B4A4AA652C47683900F471E6 /* MedicalDocumentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicalDocumentView.swift; sourceTree = "<group>"; };
 		B4A4AA6E2C476A8A00F471E6 /* Dog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
 		B4B5EE172C440D240035D40F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		B4B5EE1B2C440FDE0035D40F /* DogsMateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogsMateView.swift; sourceTree = "<group>"; };
 		B4B5EE1D2C440FEF0035D40F /* ForYouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForYouView.swift; sourceTree = "<group>"; };
 		B4D297202C40DDD80075B940 /* MC3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MC3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4D297232C40DDD80075B940 /* MC3App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MC3App.swift; sourceTree = "<group>"; };
-		B4D297252C40DDD80075B940 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		B4D297272C40DDD80075B940 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		B4D297252C40DDD80075B940 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		B4D297292C40DDD90075B940 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B4D2972C2C40DDD90075B940 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B4DBEE772C460E25002C5231 /* MedicalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalView.swift; sourceTree = "<group>"; };
@@ -160,14 +156,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		06477AB92C4542E8006F4C79 /* Helper */ = {
-			isa = PBXGroup;
-			children = (
-				06477ABA2C4542F5006F4C79 /* Color.swift */,
-			);
-			path = Helper;
-			sourceTree = "<group>";
-		};
 		06477AC32C457FFF006F4C79 /* SelectBreed */ = {
 			isa = PBXGroup;
 			children = (
@@ -183,6 +171,15 @@
 				0679CC882C477ECB00A3E9C9 /* DogViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B41AB31E2C537CC60089CE2B /* Verification */ = {
+			isa = PBXGroup;
+			children = (
+				166EC8EF2C4F69D90077606B /* WaitingVerificationView.swift */,
+				DAFC42C82C4F752000F5D029 /* VerificationDoneView.swift */,
+			);
+			path = Verification;
 			sourceTree = "<group>";
 		};
 		B493C18A2C48BCFF00E8509B /* Data */ = {
@@ -205,15 +202,14 @@
 		B4B5EE152C440CBD0035D40F /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B4B5EE1A2C440FC00035D40F /* DogsMate */,
 				06477AC32C457FFF006F4C79 /* SelectBreed */,
 				D9871CBC2C4A1EA80082E8BE /* DogsInformation */,
 				D9871CD62C4A1EAE0082E8BE /* MedicalUploadDocumentView */,
 				DAFC42CA2C508B8700F5D029 /* ReminderPopUp */,
-				DAFC42C72C4F74A800F5D029 /* VerificationDone */,
 				DAFC42C42C4F709500F5D029 /* OnBoarding */,
 				B4B5EE192C440FBA0035D40F /* ForYou */,
 				B4B5EE162C440D110035D40F /* Profile */,
+				B41AB31E2C537CC60089CE2B /* Verification */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -240,14 +236,6 @@
 			path = ForYou;
 			sourceTree = "<group>";
 		};
-		B4B5EE1A2C440FC00035D40F /* DogsMate */ = {
-			isa = PBXGroup;
-			children = (
-				B4B5EE1B2C440FDE0035D40F /* DogsMateView.swift */,
-			);
-			path = DogsMate;
-			sourceTree = "<group>";
-		};
 		B4D297172C40DDD80075B940 = {
 			isa = PBXGroup;
 			children = (
@@ -267,16 +255,14 @@
 		B4D297222C40DDD80075B940 /* MC3 */ = {
 			isa = PBXGroup;
 			children = (
-				B493C18A2C48BCFF00E8509B /* Data */,
-				0679CC872C477EB800A3E9C9 /* ViewModel */,
-				B4DBEE852C465265002C5231 /* Model */,
 				B4DBEE7B2C460E6C002C5231 /* Components */,
-				06477AB92C4542E8006F4C79 /* Helper */,
+				B493C18A2C48BCFF00E8509B /* Data */,
+				B4DBEE852C465265002C5231 /* Model */,
 				D9871CD92C4A1EC40082E8BE /* Utils */,
 				B4B5EE152C440CBD0035D40F /* View */,
+				0679CC872C477EB800A3E9C9 /* ViewModel */,
 				B4D297232C40DDD80075B940 /* MC3App.swift */,
-				B4D297252C40DDD80075B940 /* ContentView.swift */,
-				B4D297272C40DDD80075B940 /* Item.swift */,
+				B4D297252C40DDD80075B940 /* MainView.swift */,
 				B4D297292C40DDD90075B940 /* Assets.xcassets */,
 				06A5412B2C47A67D00FCA154 /* GoogleService-Info.plist */,
 				B4D2972B2C40DDD90075B940 /* Preview Content */,
@@ -337,7 +323,6 @@
 				D9871CBE2C4A1EA80082E8BE /* PhoneNumberView.swift */,
 				D9871CC32C4A1EA80082E8BE /* DogsInformationView.swift */,
 				D9871CC72C4A1EA80082E8BE /* PersonalityListView.swift */,
-				166EC8EF2C4F69D90077606B /* VerificationView.swift */,
 			);
 			path = DogsInformation;
 			sourceTree = "<group>";
@@ -363,6 +348,7 @@
 		D9871CD92C4A1EC40082E8BE /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				06477ABA2C4542F5006F4C79 /* Color.swift */,
 				D9871CBD2C4A1EA80082E8BE /* Decoder.swift */,
 				D9871CDA2C4A1EC40082E8BE /* ImagePicker.swift */,
 				B442E9472C51E98800129FA2 /* DateConverter.swift */,
@@ -379,14 +365,6 @@
 				DAFC42C52C4F70F200F5D029 /* OnBoardingView.swift */,
 			);
 			path = OnBoarding;
-			sourceTree = "<group>";
-		};
-		DAFC42C72C4F74A800F5D029 /* VerificationDone */ = {
-			isa = PBXGroup;
-			children = (
-				DAFC42C82C4F752000F5D029 /* VerificationDoneView.swift */,
-			);
-			path = VerificationDone;
 			sourceTree = "<group>";
 		};
 		DAFC42CA2C508B8700F5D029 /* ReminderPopUp */ = {
@@ -511,19 +489,17 @@
 				0679CC892C477ECB00A3E9C9 /* DogViewModel.swift in Sources */,
 				D9871CCB2C4A1EA80082E8BE /* PhoneNumberView.swift in Sources */,
 				D9871CCD2C4A1EA80082E8BE /* CustomSegmentedControl.swift in Sources */,
-				166EC8F02C4F69D90077606B /* VerificationView.swift in Sources */,
+				166EC8F02C4F69D90077606B /* WaitingVerificationView.swift in Sources */,
 				D9871CD42C4A1EA80082E8BE /* CustomSegmentedPicker.swift in Sources */,
 				06477AC52C458023006F4C79 /* SelectBreedView.swift in Sources */,
 				DAFC42CC2C508BA000F5D029 /* ReminderPopUpView.swift in Sources */,
-				B4D297262C40DDD80075B940 /* ContentView.swift in Sources */,
+				B4D297262C40DDD80075B940 /* MainView.swift in Sources */,
 				D9871CD22C4A1EA80082E8BE /* LocationManager.swift in Sources */,
 				B4B5EE1E2C440FEF0035D40F /* ForYouView.swift in Sources */,
 				B4DBEE7A2C460E4D002C5231 /* AboutView.swift in Sources */,
-				B4B5EE1C2C440FDE0035D40F /* DogsMateView.swift in Sources */,
 				B442E9482C51E98800129FA2 /* DateConverter.swift in Sources */,
 				D9871CD12C4A1EA80082E8BE /* SearchView.swift in Sources */,
 				B4DBEE842C46509A002C5231 /* FlowLayout.swift in Sources */,
-				B4D297282C40DDD80075B940 /* Item.swift in Sources */,
 				B4DBEE782C460E25002C5231 /* MedicalView.swift in Sources */,
 				D9871CDB2C4A1EC40082E8BE /* ImagePicker.swift in Sources */,
 				D9871CCC2C4A1EA80082E8BE /* CPData.swift in Sources */,

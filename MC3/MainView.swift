@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  MainView.swift
 //  MC3
 //
 //  Created by Daud on 12/07/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MainView: View {
     var dogBreed: String
     
     var body: some View {
@@ -24,5 +24,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(dogBreed: "Dummy Dog Breed")
+    MainView(dogBreed: "Dummy Dog Breed")
 }
