@@ -67,7 +67,7 @@ struct ForYouSwipe: View {
                 }
             }
             .navigationDestination(isPresented: $isNavigationActive) {
-                ProfileView(dog: dogs[currentIndex])
+                ProfileView(dog: dogs[currentIndex]).environmentObject(DogViewModel())
             }
         }
     }
