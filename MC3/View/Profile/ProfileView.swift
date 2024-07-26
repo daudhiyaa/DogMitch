@@ -14,41 +14,21 @@ struct ProfileHeader: View {
     @Binding var isLoading: Bool
 
     var dog: Dog
+    var isMyProfile: Bool
+    @State var isReadyToBread: Bool = false
+    
+    var profileState: VerificationState
     
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
             ZStack(alignment: .bottomTrailing) {
-                AsyncImage(url: URL(string: dog.profilePicture)){ result in
-                    result.image?
+                AsyncImage(url: URL(string: dog.profilePicture)){ image in
+                    image
                         .resizable()
                         .scaledToFill()
+                } placeholder: {
+                    ProgressView()
                 }
-//                AsyncImage(url: URL(string: dog.profilePicture)) { phase in
-//                    switch phase {
-//                    case .empty:
-//                        EmptyView()
-//                    case .success(let image):
-//                        image
-//                            .resizable()
-//                            .scaledToFill()
-//                            .onAppear {
-//                                isLoading = false
-//                            }
-//                    case .failure:
-//                        Image(systemName: "exclamationmark.triangle.fill")
-//                            .resizable()
-//                            .scaledToFit()
-//                            .foregroundColor(.red)
-//                            .onAppear {
-//                                isLoading = true
-//                            }
-//                    @unknown default:
-//                        EmptyView()
-//                            .onAppear {
-//                                isLoading = true
-//                            }
-//                    }
-//                }
                 .centerCropped()
                 .frame(width: 120, height: 120)
                 .cornerRadius(10)
@@ -67,27 +47,77 @@ struct ProfileHeader: View {
             VStack(alignment: .leading) {
                 HStack{
                     Text(dog.name).font(.title)
-                    Button {
-                        if !dog.isReadyToBreed {
-                            showAlert = true
+                    Image(systemName: "checkmark.seal.fill")
+                        .foregroundColor(dog.isReadyToBreed ? .yellow : .gray.opacity(0.3))
+                }
+                
+                Text(dog.location).font(.subheadline)
+                Spacer().frame(height: 8)
+                
+                if isMyProfile {
+                    if profileState == .verified {
+                        HStack {
+                            Text("Ready to Breed")
+                                .fontWeight(.bold)
+                            Spacer()
+                            Toggle(isOn: $isReadyToBread) {
+                                EmptyView()
+                            }
+                            .toggleStyle(SwitchToggleStyle(tint: .blue))
                         }
-                    } label: {
-                        Image(systemName: "checkmark.seal.fill")
-                            .foregroundColor(dog.isReadyToBreed ? .yellow : .gray.opacity(0.3))
+                    }
+                    else {
+                        HStack(alignment: .top) {
+                            Image(systemName: profileStatusIcon)
+                                .foregroundColor(.red)
+                            Text(profileStatusMessage)
+                                .font(.caption)
+                                .foregroundColor(.red)
+                        }
                     }
                 }
-                Text(dog.location).font(.subheadline)
-                Link(destination: URL(string: "https://api.whatsapp.com/send?phone=\(dog.contact)")!) {
-                    HStack {
-                        Image(systemName: "bubble.left.and.bubble.right")
-                        Text("Chat Owner")
+                else{
+                    if profileState == .verified {
+                        Link(destination: URL(string: "https://api.whatsapp.com/send?phone=\(dog.contact)")!) {
+                            ButtonChatOwner()
+                        }
+                    } else {
+                        Button {
+                            if !dog.isReadyToBreed {
+                                showAlert = true
+                            }
+                        } label: {
+                            ButtonChatOwner()
+                        }
                     }
-                    .padding(10)
-                    .background(Color.teal)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
                 }
             }
+        }
+    }
+    
+    var profileStatusIcon: String {
+        switch profileState {
+        case .waitingVerification:
+            return "clock"
+        default:
+            return "exclamationmark.triangle"
+        }
+    }
+    
+    var profileStatusMessage: String {
+        switch profileState {
+        case .notUploaded:
+            return "You haven't uploaded any medical document."
+        case .waitingVerification:
+            return "Your account will be verified within a maximum of 24 hours."
+        case .medicalRejected:
+            return "Your medical document is rejected."
+        case .vaccineRejected:
+            return "Your vaccine document is rejected."
+        case .stamboomRejected:
+            return "Your stamboom document is rejected."
+        default:
+            return "Your profile is verified."
         }
     }
 }
@@ -97,10 +127,14 @@ struct ProfileView: View {
     
     @State private var pageState: String = "About"
     @State private var showAlert = false
-    @State private var isLoading = true
+    @State private var isLoading = false
     
     @State var dog: Dog
-    var isMyProfile: Bool = false
+    var isMyProfile: Bool = true
+
+    var profileState: VerificationState {
+        checkProfileState()
+    }
     
     var body: some View {
         NavigationStack {
@@ -109,7 +143,9 @@ struct ProfileView: View {
                 ProfileHeader(
                     showAlert: $showAlert,
                     isLoading: $isLoading,
-                    dog: dog
+                    dog: dog,
+                    isMyProfile: isMyProfile,
+                    profileState: profileState
                 )
                 
                 // SEGMENTED CONTROLS
@@ -124,8 +160,16 @@ struct ProfileView: View {
                 if pageState == "About" {
                     AboutView(dog: dog)
                 } else {
-                    MedicalView(dog: dog, isMyProfile: isMyProfile)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                    if profileState == .notUploaded {
+                        NotUploadedView()
+                    }
+                    else if profileState == .waitingVerification {
+                        WaitingVerificationView()
+                    }
+                    else {
+                        MedicalView(dog: dog, isMyProfile: isMyProfile)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                    }
                 }
             }
             .padding(24)
@@ -134,6 +178,7 @@ struct ProfileView: View {
                     LoadingView()
                 }
             })
+            .frame(maxHeight: .infinity, alignment: .topLeading)
             .navigationBarTitle("Profile", displayMode: .inline)
             .alert(isPresented: $showAlert) {
                 Alert(
@@ -145,14 +190,85 @@ struct ProfileView: View {
         }
         .task {
             if isMyProfile{
+                isLoading = true
                 await dogViewModel.fetchDogs()
                 dog = dogViewModel.fetchedDogs[0]
                 isLoading = false
             }
         }
     }
+    
+    func checkProfileState() -> VerificationState {
+        if dog.medicalRecord == "" && dog.vaccine == "" {
+            return .notUploaded
+        } else if (dog.medicalRecord != "" && dog.vaccine != "") && (!dog.isMedicalVerified && !dog.isVaccineVerified) {
+            return .waitingVerification
+        } else if !dog.isMedicalVerified && dog.isVaccineVerified {
+            return .medicalRejected
+        } else if dog.isMedicalVerified && !dog.isVaccineVerified {
+            return .vaccineRejected
+        } else if dog.stamboom != "" && !dog.isStamboomVerified {
+            return .stamboomRejected
+        }
+        return .verified
+    }
 }
 
-#Preview {
-    ProfileView(dog: Dog.sampleDogList[1])
+struct NotUploadedView: View {
+    var body: some View {
+        VStack {
+            Image("medical_document_state")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 200, height: 200)
+            Text("Oops, you haven’t complete your dog’s health verification")
+                .font(.title3)
+                .multilineTextAlignment(.center)
+                .fontWeight(.semibold)
+                .padding(.bottom, 3.0)
+            Text("To gain the trust of other dog owners, please verify your dog's health.")
+                .font(.body)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+            Button {
+                //
+            } label: {
+                Text("Complete Now")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(.white)
+            }
+            .padding(10)
+            .background(Colors.tosca)
+            .cornerRadius(24)
+        }
+    }
+}
+
+struct WaitingVerificationView: View {
+    var body: some View {
+        VStack {
+            Image("medical_document_state")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 200, height: 200)
+            Text("Your account will be verified within a maximum of 24 hours.")
+                .font(.title3)
+                .multilineTextAlignment(.center)
+                .fontWeight(.semibold)
+                .padding(.bottom, 3.0)
+        }
+    }
+}
+
+struct ButtonChatOwner: View {
+    var body: some View {
+        HStack {
+            Image(systemName: "bubble.left.and.bubble.right")
+            Text("Chat Owner")
+        }
+        .padding(10)
+        .background(Color.teal)
+        .foregroundColor(.white)
+        .cornerRadius(8)
+    }
 }

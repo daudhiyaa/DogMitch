@@ -72,10 +72,16 @@ struct AboutView: View {
                 // GALLERY VIEW
                 HStack(spacing: 16) {
                     GeometryReader { geometry in
-                        AsyncImage(url: URL(string: dog.picture1)){ result in
-                            result.image?
+                        AsyncImage(url: URL(string: dog.picture1)){ image in
+                            image
                                 .resizable()
                                 .scaledToFill()
+                        } placeholder: {
+                            if dog.picture1 == "" {
+                                EmptyView()
+                            } else  {
+                                ProgressView()
+                            }
                         }
                         .centerCropped()
                         .frame(
@@ -86,10 +92,16 @@ struct AboutView: View {
                     }
                     
                     GeometryReader { geometry in
-                        AsyncImage(url: URL(string: dog.picture2)){ result in
-                            result.image?
+                        AsyncImage(url: URL(string: dog.picture2)){ image in
+                            image
                                 .resizable()
                                 .scaledToFill()
+                        } placeholder: {
+                            if dog.picture2 == "" {
+                                EmptyView()
+                            } else  {
+                                ProgressView()
+                            }
                         }
                         .centerCropped()
                         .frame(
