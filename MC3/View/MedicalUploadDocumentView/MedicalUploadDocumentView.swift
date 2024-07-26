@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MedicalUploadDocumentView: View {
     @EnvironmentObject var dogViewModel: DogViewModel
+    
     @State private var isNavigationActive = false
     @State private var isImageUploading = false
     @State private var isImagePickerPresentedMedical = false
@@ -18,6 +19,7 @@ struct MedicalUploadDocumentView: View {
     @State private var MedicalImage: URL?
     @State private var VaccineImage: URL?
     @State private var StamboomImage: URL?
+    @AppStorage("registeredDogID") private var registeredDogID: String = ""
     var dog: Dog
     
     var isFormValid: Bool {
@@ -41,7 +43,10 @@ struct MedicalUploadDocumentView: View {
                     
                     HStack {
                         Button(action: {
+                            dogViewModel.addDog(newDog: dogViewModel.dogs)
+                            registeredDogID = "keisi"
                             isNavigationActive = true
+                            print(registeredDogID)
                         }) {
                             Text("Later")
                                 .font(.system(size: 17))
@@ -55,7 +60,7 @@ struct MedicalUploadDocumentView: View {
                         
                         Button(action: {
                             dogViewModel.dogs = dog
-                            print(dogViewModel.dogs.profilePicture)
+                            
                             isImageUploading = true
                             
                             if MedicalImage != nil && VaccineImage != nil {
@@ -73,8 +78,6 @@ struct MedicalUploadDocumentView: View {
                             if let url = StamboomImage{
                                 dogViewModel.uploadFile(fileUrl: url, imageName: .stamboom)
                             }
-                         
-                            print("medical:\(dogViewModel.dogs)")
                         }) {
                             Text("Upload")
                                 .font(.system(size: 17))
@@ -95,10 +98,13 @@ struct MedicalUploadDocumentView: View {
                     if isImageUploading{
                         LoadingView()
                         
-                        if let upload =  dogViewModel.uploadStatus {
-                            Text(upload).hidden()
+                        if dogViewModel.uploadStatus == "Success" {
+                            EmptyView()
                                 .onAppear{
+                                    print("Add Dog")
                                     dogViewModel.addDog(newDog: dogViewModel.dogs)
+                                    isImageUploading = false
+                                    registeredDogID = "keisi"
                                     isNavigationActive = true
                                 }
                         }

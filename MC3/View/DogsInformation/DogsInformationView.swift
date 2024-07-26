@@ -17,7 +17,6 @@ struct DogsInformationView: View {
     var dogBreed: String
     @State private var isNavigationMedActive = false
     @State private var isImageUploading = false
-    
     init(dogBreed : String){
         UISegmentedControl.appearance().selectedSegmentTintColor = .white
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor : UIColor.blue], for: .selected)
@@ -695,18 +694,18 @@ struct DogsInformationView: View {
                                     dogViewModel.dogs.longitude = dogCoordinateLongitude
                                     
                                     isImageUploading = true
-
-                                                            if selectedImages != nil {
-                                                                dogViewModel.uploadCheckerInfo.append("profilePicture")
-                                                                if selectedImages1 != nil {
-                                                                    dogViewModel.uploadCheckerInfo.append("picture1")
-                                                                }
-                                                                if selectedImages2 != nil {
-                                                                    dogViewModel.uploadCheckerInfo.append("picture2")
-                                                                }
-                                                            } else {
-                                                                dogViewModel.uploadCheckerInfo.append(contentsOf: ["profilePicture", "picture1", "picture2"])
-                                                            }
+                                    
+                                    if selectedImages != nil {
+                                        dogViewModel.uploadCheckerInfo.append("profilePicture")
+                                        if selectedImages1 != nil {
+                                            dogViewModel.uploadCheckerInfo.append("picture1")
+                                        }
+                                        if selectedImages2 != nil {
+                                            dogViewModel.uploadCheckerInfo.append("picture2")
+                                        }
+                                    } else {
+                                        dogViewModel.uploadCheckerInfo.append(contentsOf: ["profilePicture", "picture1", "picture2"])
+                                    }
 
                                     
                                     if let url = selectedImages{

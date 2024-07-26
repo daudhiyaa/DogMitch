@@ -12,7 +12,7 @@ let pageStates: [String] = ["About", "Medical"]
 struct ProfileHeader: View {
     @Binding var showAlert: Bool
     @Binding var isLoading: Bool
-
+    @AppStorage("registeredDogID") private var registeredDogID: String?
     var dog: Dog
     var isMyProfile: Bool
     @State var isReadyToBread: Bool = false
@@ -44,7 +44,7 @@ struct ProfileHeader: View {
                     .offset(x: 10, y: 10)
                     .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
             }
-        
+            
             VStack(alignment: .leading) {
                 HStack{
                     Text(dog.name).font(.title)
@@ -78,19 +78,22 @@ struct ProfileHeader: View {
                                 .foregroundColor(.red)
                         }
                     }
+                } else {
+                    Text("No Dog Registered")
+                        .padding()
                 }
-                else{
-                    if verificationStatusMessage.contains("verified") {
-                        Link(destination: URL(string: "https://api.whatsapp.com/send?phone=\(dog.contact)")!) {
-                            ButtonChatOwner()
-                        }
-                    } 
-                    else {
-                        Button {
-                            showAlert = true
-                        } label: {
-                            ButtonChatOwner()
-                        }
+                
+                
+                if verificationStatusMessage.contains("verified") {
+                    Link(destination: URL(string: "https://api.whatsapp.com/send?phone=\(dog.contact)")!) {
+                        ButtonChatOwner()
+                    }
+                }
+                else {
+                    Button {
+                        showAlert = true
+                    } label: {
+                        ButtonChatOwner()
                     }
                 }
             }
@@ -100,7 +103,7 @@ struct ProfileHeader: View {
 
 struct ProfileView: View {
     @EnvironmentObject var dogViewModel: DogViewModel
-    
+    @AppStorage("registeredDogID") private var registeredDogID: String?
     @State private var pageState: String = "About"
     @State private var showAlert = false
     @State private var isLoading = false
@@ -120,71 +123,83 @@ struct ProfileView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 20) {
-                // PROFILE IMAGE
-                ProfileHeader(
-                    showAlert: $showAlert,
-                    isLoading: $isLoading,
-                    dog: dog,
-                    isMyProfile: isMyProfile,
-                    verificationStatusMessage: verificationStatusMessage,
-                    verificationStatusIcon: verificationStatusIcon
-                )
-                
-                // SEGMENTED CONTROLS
-                Picker("Filter", selection: $pageState) {
-                    ForEach(pageStates, id: \.self) { tag in
-                        Text(tag).tag(tag)
+            if registeredDogID != nil {
+                VStack(alignment: .leading, spacing: 20) {
+                    // PROFILE IMAGE
+                    ProfileHeader(
+                        showAlert: $showAlert,
+                        isLoading: $isLoading,
+                        dog: dog,
+                        isMyProfile: isMyProfile,
+                        verificationStatusMessage: verificationStatusMessage,
+                        verificationStatusIcon: verificationStatusIcon
+                    )
+                    
+                    // SEGMENTED CONTROLS
+                    Picker("Filter", selection: $pageState) {
+                        ForEach(pageStates, id: \.self) { tag in
+                            Text(tag).tag(tag)
+                        }
                     }
-                }
-                .pickerStyle(.segmented)
-                
-                // PAGE CONTENT
-                if pageState == "About" {
-                    AboutView(dog: dog)
-                } 
-                else {
-                    if verificationState == .notUploaded {
-                        NotUploadedView(dog: dog)
-                    }
-                    else if verificationState == .waitingVerification {
-                        ProfileWaitingVerificationView()
+                    .pickerStyle(.segmented)
+                    
+                    // PAGE CONTENT
+                    if pageState == "About" {
+                        AboutView(dog: dog)
                     }
                     else {
-                        MedicalView(
-                            dog: dog,
-                            isMyProfile: isMyProfile,
-                            verificationStatusMessage: verificationStatusMessage,
-                            verificationStatusIcon: verificationStatusIcon
-                        )
+                        if verificationState == .notUploaded {
+                            NotUploadedView(dog: dog)
+                        }
+                        else if verificationState == .waitingVerification {
+                            WaitingVerificationView()
+                        }
+                        else {
+                            MedicalView(
+                                dog: dog,
+                                isMyProfile: isMyProfile,
+                                verificationStatusMessage: verificationStatusMessage,
+                                verificationStatusIcon: verificationStatusIcon
+                            )
                             .clipShape(RoundedRectangle(cornerRadius: 20))
+                        }
+                    }
+                }
+                .onAppear(){
+                    print("Registered Dog ID: \(registeredDogID)")
+                }
+                .padding(24)
+                .overlay(content: {
+                    if isLoading {
+                        LoadingView()
+                    }
+                })
+                .frame(maxHeight: .infinity, alignment: .topLeading)
+                .navigationBarTitle("Profile", displayMode: .inline)
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("Not Verified"),
+                        message: Text("Upload & verify all medical document"),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
+                .task {
+                    if isMyProfile{
+                        isLoading = true
+                        await dogViewModel.fetchDogs()
+                        dog = dogViewModel.fetchedDogs[0]
+                        isLoading = false
                     }
                 }
             }
-            .padding(24)
-            .overlay(content: {
-                if isLoading {
-                    LoadingView()
-                }
-            })
-            .frame(maxHeight: .infinity, alignment: .topLeading)
-            .navigationBarTitle("Profile", displayMode: .inline)
-            .alert(isPresented: $showAlert) {
-                Alert(
-                    title: Text("Not Verified"),
-                    message: Text("Upload & verify all medical document"),
-                    dismissButton: .default(Text("OK"))
-                )
+            else{
+                EmptyProfileView()
+                    .onAppear(){
+                        print("No Dog Registered")
+                    }
             }
         }
-        .task {
-            if isMyProfile{
-                isLoading = true
-                await dogViewModel.fetchDogs()
-                dog = dogViewModel.fetchedDogs[0]
-                isLoading = false
-            }
-        }
+        
     }
 }
 

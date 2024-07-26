@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     var dogBreed: String
-    
+    @AppStorage("registeredDogID") private var registeredDogID: String = ""
     var body: some View {
         TabView{
             ForYouView(dogs: Dog.sampleDogList).tabItem {

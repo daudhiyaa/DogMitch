@@ -42,9 +42,36 @@ class DogViewModel: ObservableObject{
     func addDog(newDog: Dog){
         let collection = db.collection("dog")
         collection.addDocument(data: newDog.dictionary)
+        
         print(newDog)
         dog.append(newDog)
     }
+    
+//    func addDog(newDog: Dog) {
+//        let collection = db.collection("dog")
+//        
+//        // Add the document with a completion handler to get the document ID
+//        collection.addDocument(data: newDog.dictionary) { error in
+//            if let error = error {
+//                print("Error adding document: \(error)")
+//            } else {
+//                // Document was added successfully, retrieve the document ID
+//                print("Document added with ID: \(collection.document().documentID)")
+//                
+//                // Optionally, you can fetch the document ID from the added document
+//                let documentID = collection.document().documentID
+//                // Update your dog model or state with the document ID
+//                // Example: Assuming Dog has an id property to store the document ID
+//                var updatedDog = newDog
+//                updatedDog.id = UUID(uuidString: documentID)!
+//                
+//                // Append the updated dog with the document ID to your local array
+//                print(newDog)
+//                self.dog.append(updatedDog)
+//            }
+//        }
+//    }
+
     
     func fetchDogs() async {
         do {

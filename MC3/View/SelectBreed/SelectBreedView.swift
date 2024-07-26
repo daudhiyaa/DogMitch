@@ -85,6 +85,11 @@ struct SelectBreedView: View {
                         .navigationBarBackButtonHidden(true)
                 }
         }
+        .navigationDestination(
+            isPresented: $isNavigationActive) {
+                ContentView(dogBreed: selectedDogBreed)
+                    .navigationBarBackButtonHidden(true)
+            }
         .searchable(
             text: $searchText,
             placement:.navigationBarDrawer(displayMode: .always)
