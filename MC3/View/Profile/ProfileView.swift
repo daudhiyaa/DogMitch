@@ -107,9 +107,11 @@ struct ProfileView: View {
     @State private var pageState: String = "About"
     @State private var showAlert = false
     @State private var isLoading = false
-    
+    @State private var isBackActive = false
+    var dogs: Dog
     @State var dog: Dog
     var isMyProfile: Bool = true
+    var isDogProfile: Bool = false
 
     var verificationState: VerificationState {
         checkVerificationState(dog: dog)
@@ -122,7 +124,85 @@ struct ProfileView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        if isDogProfile{
+            VStack(alignment: .leading, spacing: 20) {
+                // PROFILE IMAGE
+                ProfileHeader(
+                    showAlert: $showAlert,
+                    isLoading: $isLoading,
+                    dog: dogs,
+                    isMyProfile: false,
+                    verificationStatusMessage: verificationStatusMessage,
+                    verificationStatusIcon: verificationStatusIcon
+                ).onAppear{
+                    print(dogs)
+                }
+                
+                // SEGMENTED CONTROLS
+                Picker("Filter", selection: $pageState) {
+                    ForEach(pageStates, id: \.self) { tag in
+                        Text(tag).tag(tag)
+                    }
+                }
+                .pickerStyle(.segmented)
+                
+                // PAGE CONTENT
+                if pageState == "About" {
+                    AboutView(dog: dogs)
+                }
+                else {
+                    if verificationState == .notUploaded {
+                        NotUploadedView(dog: dogs)
+                    }
+                    else if verificationState == .waitingVerification {
+                        WaitingVerificationView()
+                    }
+                    else {
+                        MedicalView(
+                            dog: dogs,
+                            isMyProfile: isMyProfile,
+                            verificationStatusMessage: verificationStatusMessage,
+                            verificationStatusIcon: verificationStatusIcon
+                        )
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                    }
+                }
+            }
+            .onAppear(){
+                print("Registered Dog ID: \(registeredDogID)")
+            }
+            .padding(24)
+            .overlay(content: {
+                if isLoading {
+                    LoadingView()
+                }
+            })
+            .frame(maxHeight: .infinity, alignment: .topLeading)
+            .navigationBarTitle("Profile", displayMode: .inline)
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Not Verified"),
+                    message: Text("Upload & verify all medical document"),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
+            .toolbar {
+                ToolbarItem(placement: .principal) { Color.clear }
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        isBackActive = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "chevron.backward").bold()
+                            Text("Back")
+                        }
+                    }
+                }
+            }.navigationDestination(isPresented: $isBackActive) {
+                MainView(dogBreed: "test")
+            }
+            .navigationBarBackButtonHidden(true)
+        }else{
             if registeredDogID != nil {
                 VStack(alignment: .leading, spacing: 20) {
                     // PROFILE IMAGE
@@ -188,10 +268,25 @@ struct ProfileView: View {
                         isLoading = true
                         await dogViewModel.fetchDog(id: registeredDogID!)
                         await dogViewModel.fetchDogs()
-                        dog = dogViewModel.fetchedDogs[0]
+                        await dogViewModel.fetchDogByID()
+                        dog = dogViewModel.myDog
                         isLoading = false
                     }
+                }     .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            isBackActive = true
+                        } label: {
+                            HStack {
+                                Image(systemName: "chevron.backward").bold()
+                                Text("Back")
+                            }
+                        }
+                    }
+                }.navigationDestination(isPresented: $isBackActive) {
+                    MainView(dogBreed: "test")
                 }
+                .navigationBarBackButtonHidden(true)
             }
             else{
                 EmptyProfileView()
@@ -200,7 +295,6 @@ struct ProfileView: View {
                     }
             }
         }
-        
     }
 }
 

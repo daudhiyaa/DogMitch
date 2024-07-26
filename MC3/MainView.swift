@@ -16,10 +16,10 @@ struct MainView: View {
                 Label("For You", systemImage: "hands.and.sparkles")
             }.environmentObject(DogViewModel())
             
-            ProfileView(dog: Dog.sampleDogList[0], isMyProfile: true).tabItem {
+            ProfileView(dogs: Dog.sampleDogList[0], dog: Dog.sampleDogList[0], isMyProfile: true, isDogProfile: false).tabItem {
                 Label("Profile", systemImage: "person")
             }.environmentObject(DogViewModel())
-        }
+        }.navigationBarBackButtonHidden(true)
     }
 }
 
