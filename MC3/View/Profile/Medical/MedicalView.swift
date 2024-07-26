@@ -33,7 +33,7 @@ struct MedicalView: View {
                                     dog.medicalRecord,
                                 verificationStatusMessage: verificationStatusMessage,
                                 verificationStatusIcon: verificationStatusIcon
-                            )
+                            ).environmentObject(DogViewModel())
                     ) {
                         HStack {
                             Image("medical_icon")

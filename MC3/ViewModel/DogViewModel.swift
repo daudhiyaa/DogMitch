@@ -120,8 +120,11 @@ class DogViewModel: ObservableObject{
                        stale == false,
                        url.startAccessingSecurityScopedResource() {
                         if let data = try? Data(contentsOf: fileUrl){
-                            storageReference.putData(data, metadata: metadata,completion: { (metadata,error) in
-                                guard metadata != nil else{
+                            var uiImage: UIImage = UIImage(data: data)!
+                            var compress = uiImage.jpegData(compressionQuality: 0.001)
+                            print(compress!)
+                            let uploadTask = storageReference.putData(compress!, metadata: metadata,completion: { (metadata,error) in
+                                guard let metadata = metadata else{
                                     return
                                 }
                                 storageReference.downloadURL { url, error in
@@ -167,8 +170,10 @@ class DogViewModel: ObservableObject{
                            stale == false,
                            url.startAccessingSecurityScopedResource() {
                             if let data = try? Data(contentsOf: fileUrl){
-                                storageReference.putData(data, metadata: metadata,completion: { (metadata,error) in
-                                    guard metadata != nil else{
+                                var uiImage: UIImage = UIImage(data: data)!
+                                var compress = uiImage.jpegData(compressionQuality: 0.001)
+                                let uploadTask = storageReference.putData(compress!, metadata: metadata,completion: { (metadata,error) in
+                                    guard let metadata = metadata else{
                                         return
                                     }
                                     storageReference.downloadURL { url, error in
