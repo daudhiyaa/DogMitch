@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct VerificationView: View {
+struct WaitingVerificationView: View {
     var body: some View {
         NavigationStack{
             VStack {
@@ -50,5 +50,5 @@ struct VerificationView: View {
 }
 
 #Preview {
-    VerificationView()
+    WaitingVerificationView()
 }

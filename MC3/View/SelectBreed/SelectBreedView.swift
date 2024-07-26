@@ -81,7 +81,7 @@ struct SelectBreedView: View {
             .navigationBarTitle("Select Your Dog Breed", displayMode: .inline)
             .navigationDestination(
                 isPresented: $isNavigationActive) {
-                    ContentView(dogBreed: selectedDogBreed)
+                    MainView(dogBreed: selectedDogBreed)
                         .navigationBarBackButtonHidden(true)
                 }
         }

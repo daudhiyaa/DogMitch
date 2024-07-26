@@ -148,7 +148,7 @@ struct ProfileView: View {
                         NotUploadedView(dog: dog)
                     }
                     else if verificationState == .waitingVerification {
-                        WaitingVerificationView()
+                        ProfileWaitingVerificationView()
                     }
                     else {
                         MedicalView(
@@ -220,7 +220,7 @@ struct NotUploadedView: View {
     }
 }
 
-struct WaitingVerificationView: View {
+struct ProfileWaitingVerificationView: View {
     var body: some View {
         VStack {
             Image("medical_document_state")
