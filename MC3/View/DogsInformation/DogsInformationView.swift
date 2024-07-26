@@ -17,6 +17,7 @@ struct DogsInformationView: View {
     var dogBreed: String
     @State private var isNavigationMedActive = false
     @State private var isImageUploading = false
+    
     init(dogBreed : String){
         UISegmentedControl.appearance().selectedSegmentTintColor = .white
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor : UIColor.blue], for: .selected)
@@ -100,7 +101,9 @@ struct DogsInformationView: View {
     
     @State private var isKeyboardVisible: Bool = false
     @State private var isReadyToBread: Bool = false
-    
+    @State private var showAlert = false
+    @State private var showImagePicker = false
+    @State private var showingPermissionAlert = false
     
     private func isFormValid() -> Bool {
         return !dogName.isEmpty &&
@@ -471,7 +474,7 @@ struct DogsInformationView: View {
                             }
                             
                             // Add Photos
-                            VStack{
+                            VStack {
                                 HStack {
                                     Text("Add Photos")
                                         .fontWeight(.bold)
@@ -482,13 +485,15 @@ struct DogsInformationView: View {
                                 .onTapGesture {
                                     UIApplication.shared.endEditing()
                                 }
-                                
+
                                 HStack {
                                     Spacer()
                                     if let image = selectedImages {
                                         Button(action: {
                                             imageKe = 0
-                                            self.isImagePickerPresented1.toggle()
+                                            UIApplication.shared.endEditing()
+                                            checkAndPresentImagePicker(for: 1)
+//                                            self.isImagePickerPresented1.toggle()
                                         }) {
                                             AsyncImage(url: image){ result in
                                                 result.image?
@@ -499,112 +504,27 @@ struct DogsInformationView: View {
                                             .scaledToFill()
                                             .frame(width: 100, height: 100)
                                             .cornerRadius(16)
-                                        }
-                                        .padding()
-                                        .frame(width: 100, height: 100)
-                                        .cornerRadius(16)
-                                    }
-                                    
-                                    else {
-                                        Button(action: {self.isImagePickerPresented1.toggle()}) {
-                                            VStack {
-                                                Image(systemName: "photo.badge.plus")
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                                    .frame(width: 40, height: 40)
-                                                    .foregroundColor(.teal)
-                                            }
-                                        }
-                                        .padding()
-                                        .frame(width: 100, height: 100)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 16)
-                                                .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
-                                                .foregroundColor(.teal)
-                                        )
-                                        .cornerRadius(16)
-                                    }
-                                    Spacer()
-                                    
-                                    if let image = selectedImages1 {
-                                        Button(action: {
-                                            imageKe = 1
-                                            self.isImagePickerPresented2.toggle()
-                                            
-                                        })
-                                        {
-                                            AsyncImage(url: image){ result in
-                                                result.image?
-                                                    .resizable()
-                                                    .scaledToFill()
-                                            }
-                                            .centerCropped()
-                                            .scaledToFill()
+                                            .padding()
                                             .frame(width: 100, height: 100)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 16)
+                                                    .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                                                    .foregroundColor(.teal)
+                                            )
                                             .cornerRadius(16)
                                         }
-                                        .padding()
-                                        .frame(width: 100, height: 100)
-                                        .cornerRadius(16)
-                                    }
-                                    
-                                    else {
-                                        Button(action: {self.isImagePickerPresented2.toggle()}) {
-                                            VStack {
-                                                Image(systemName: "photo.badge.plus")
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                                    .frame(width: 40, height: 40)
-                                                    .foregroundColor(.teal)
-                                            }
-                                        }
-                                        .padding()
-                                        .frame(width: 100, height: 100)
-                                        
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 16)
-                                                .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
-                                                .foregroundColor(.teal)
-                                        )
-                                        .cornerRadius(16)
-                                    }
-                                    Spacer()
-                                    
-                                    if let image = selectedImages2 {
+                                    } else {
                                         Button(action: {
-                                            imageKe = 2
-                                            self.isImagePickerPresented3.toggle()
-                                            print(isFormValid())
-                                            print("selesai")
-                                            
+                                            UIApplication.shared.endEditing()
+                                            checkAndPresentImagePicker(for: 1)
+//                                            self.isImagePickerPresented1.toggle()
                                         }) {
-                                            AsyncImage(url: image){ result in
-                                                result.image?
+                                            VStack {
+                                                Image(systemName: "photo.badge.plus")
                                                     .resizable()
-                                                    .scaledToFill()
-                                            }
-                                            .centerCropped()
-                                            .scaledToFill()
-                                            .frame(width: 100, height: 100)
-                                            .cornerRadius(16)
-                                            
-                                        }
-                                        .padding()
-                                        .frame(width: 100, height: 100)
-                                        .cornerRadius(16)
-                                    }
-                                    
-                                    else {
-                                        Button(action: {self.isImagePickerPresented3.toggle()
-                                            print(isFormValid())
-                                            print("selesai")}) {
-                                                VStack {
-                                                    Image(systemName: "photo.badge.plus")
-                                                        .resizable()
-                                                        .aspectRatio(contentMode: .fit)
-                                                        .frame(width: 40, height: 40)
-                                                        .foregroundColor(.teal)
-                                                }
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 40, height: 40)
+                                                    .foregroundColor(.teal)
                                             }
                                             .padding()
                                             .frame(width: 100, height: 100)
@@ -614,6 +534,112 @@ struct DogsInformationView: View {
                                                     .foregroundColor(.teal)
                                             )
                                             .cornerRadius(16)
+                                        }
+                                    }
+                                    Spacer()
+                                    
+                                    if let image = selectedImages1 {
+                                        Button(action: {
+                                            imageKe = 1
+                                            UIApplication.shared.endEditing()
+                                            checkAndPresentImagePicker(for: 2)
+//                                            self.isImagePickerPresented2.toggle()
+                                        }) {
+                                            AsyncImage(url: image){ result in
+                                                result.image?
+                                                    .resizable()
+                                                    .scaledToFill()
+                                            }
+                                            .centerCropped()
+                                            .scaledToFill()
+                                            .frame(width: 100, height: 100)
+                                            .cornerRadius(16)
+                                            .padding()
+                                            .frame(width: 100, height: 100)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 16)
+                                                    .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                                                    .foregroundColor(.teal)
+                                            )
+                                            .cornerRadius(16)
+                                        }
+                                    } else {
+                                        Button(action: {
+//                                            self.isImagePickerPresented2.toggle()
+                                            UIApplication.shared.endEditing()
+                                            checkAndPresentImagePicker(for: 2)
+                                        }) {
+                                            VStack {
+                                                Image(systemName: "photo.badge.plus")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 40, height: 40)
+                                                    .foregroundColor(.teal)
+                                            }
+                                            .padding()
+                                            .frame(width: 100, height: 100)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 16)
+                                                    .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                                                    .foregroundColor(.teal)
+                                            )
+                                            .cornerRadius(16)
+                                        }
+                                    }
+                                    Spacer()
+                                    
+                                    if let image = selectedImages2 {
+                                        Button(action: {
+                                            imageKe = 2
+                                            UIApplication.shared.endEditing()
+                                            checkAndPresentImagePicker(for: 3)
+//                                            self.isImagePickerPresented3.toggle()
+                                            print(isFormValid())
+                                            print("selesai")
+                                        }) {
+                                            AsyncImage(url: image){ result in
+                                                result.image?
+                                                    .resizable()
+                                                    .scaledToFill()
+                                            }
+                                            .centerCropped()
+                                            .scaledToFill()
+                                            .frame(width: 100, height: 100)
+                                            .cornerRadius(16)
+                                            .padding()
+                                            .frame(width: 100, height: 100)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 16)
+                                                    .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                                                    .foregroundColor(.teal)
+                                            )
+                                            .cornerRadius(16)
+                                        }
+                                    } else {
+                                        Button(action: {
+//                                            self.isImagePickerPresented3.toggle()
+                                            UIApplication.shared.endEditing()
+                                            checkAndPresentImagePicker(for: 3)
+                                            print(isFormValid())
+                                            print("selesai")
+                                        }) {
+                                            VStack {
+                                                Image(systemName: "photo.badge.plus")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 40, height: 40)
+                                                    .foregroundColor(.teal)
+                                            }
+                                            .padding()
+                                            .frame(width: 100, height: 100)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 16)
+                                                    .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                                                    .foregroundColor(.teal)
+                                            )
+                                            .cornerRadius(16)
+                                        }
+                                        
                                     }
                                     Spacer()
                                 }
@@ -621,6 +647,8 @@ struct DogsInformationView: View {
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
                             }
+//                            .background(Color.red)
+                            
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 UIApplication.shared.endEditing()
@@ -714,9 +742,7 @@ struct DogsInformationView: View {
                 isPresented: $isNavigationMedActive) {
                     MedicalUploadDocumentView(dog: dogViewModel.dogs).environmentObject(DogViewModel())
                 }
-                .onAppear{
-                    requestPhotoLibraryPermission()
-                }
+                
         }
         
         .onAppear {
@@ -782,12 +808,30 @@ struct DogsInformationView: View {
 
         .sheet(isPresented: $isImagePickerPresented1) {
             ImagePicker(selectedImage: $selectedImages)
+                .ignoresSafeArea()
         }
         .sheet(isPresented: $isImagePickerPresented2) {
             ImagePicker(selectedImage: $selectedImages1 )
+                .ignoresSafeArea()
         }
         .sheet(isPresented: $isImagePickerPresented3) {
             ImagePicker(selectedImage:  $selectedImages2 )
+                .ignoresSafeArea()
+        }
+//        .alert(isPresented: $showingPermissionAlert) {
+//                        Alert(title: Text("Access Denied"),
+//                              message: Text("Please allow photo library access in Settings."),
+//                              dismissButton: .default(Text("OK")))
+//                    }
+        .alert(isPresented: $showingPermissionAlert) {
+            Alert(
+                title: Text("Photos Access Denied"),
+                message: Text("Please allow access to your photos in Settings to add a photo."),
+                primaryButton: .default(Text("Open Settings")) {
+                    openAppSettings()
+                },
+                secondaryButton: .cancel()
+            )
         }
         .sheet(isPresented: $isShowingLocationModal) {
             SearchView( isShowingLocationModal: $isShowingLocationModal, isShowingLocationModa2: $isShowingLocationModa2, dogLocation: $dogLocation, dogCoordinateLatitude: $dogCoordinateLatitude, dogCoordinateLongitude: $dogCoordinateLongitude)
@@ -795,25 +839,25 @@ struct DogsInformationView: View {
         
     }
     
-    func requestPhotoLibraryPermission() {
-      PHPhotoLibrary.requestAuthorization { status in
-        switch status {
-        case .authorized:
-          // Permission granted, proceed with image picker
-            print("Authorized")
-        case .denied, .restricted:
-          // Permission denied or restricted, handle error
-          print("Photos access denied")
-        case .notDetermined:
-          // Not yet decided, do nothing or prompt again later
-          break
-        case .limited:
-            break
-        @unknown default:
-            break
-        }
-      }
-    }
+//    func requestPhotoLibraryPermission() {
+//      PHPhotoLibrary.requestAuthorization { status in
+//        switch status {
+//        case .authorized:
+//          // Permission granted, proceed with image picker
+//            print("Authorized")
+//        case .denied, .restricted:
+//          // Permission denied or restricted, handle error
+//          print("Photos access denied")
+//        case .notDetermined:
+//          // Not yet decided, do nothing or prompt again later
+//          break
+//        case .limited:
+//            break
+//        @unknown default:
+//            break
+//        }
+//      }
+//    }
     
     func applyPatternOnNumbers(_ stringvar: inout String, pattern: String, replacementCharacter: Character) {
         var pureNumber = stringvar.replacingOccurrences( of: "[^0-9]", with: "", options: .regularExpression)
@@ -877,6 +921,46 @@ struct DogsInformationView: View {
             weight = filtered
         }
     }
+    
+    func requestPhotoLibraryPermission(completion: @escaping (Bool) -> Void) {
+            PHPhotoLibrary.requestAuthorization { status in
+                DispatchQueue.main.async {
+                    switch status {
+                    case .authorized, .limited:
+                        completion(true)  // Permission granted
+                    case .denied, .restricted, .notDetermined:
+                        completion(false) // Permission denied
+                    @unknown default:
+                        completion(false) // Handle unknown case
+                    }
+                }
+            }
+        }
+
+        func checkAndPresentImagePicker(for pickerNumber: Int) {
+            requestPhotoLibraryPermission { granted in
+                if granted {
+                    switch pickerNumber {
+                    case 1:
+                        self.isImagePickerPresented1 = true
+                    case 2:
+                        self.isImagePickerPresented2 = true
+                    case 3:
+                        self.isImagePickerPresented3 = true
+                    default:
+                        break
+                    }
+                } else {
+                    self.showingPermissionAlert = true
+                }
+            }
+        }
+
+        func openAppSettings() {
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }
 
 
 }

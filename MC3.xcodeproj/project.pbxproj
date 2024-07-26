@@ -55,6 +55,7 @@
 		B4DBEE7A2C460E4D002C5231 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DBEE792C460E4D002C5231 /* AboutView.swift */; };
 		B4DBEE842C46509A002C5231 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DBEE832C46509A002C5231 /* FlowLayout.swift */; };
 		B4DBEE872C465275002C5231 /* Personality.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4DBEE862C465275002C5231 /* Personality.swift */; };
+		D932CD4D2C50BA92006916C7 /* ForYouSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D932CD4C2C50BA92006916C7 /* ForYouSwipe.swift */; };
 		D9871CCA2C4A1EA80082E8BE /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CBD2C4A1EA80082E8BE /* Decoder.swift */; };
 		D9871CCB2C4A1EA80082E8BE /* PhoneNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CBE2C4A1EA80082E8BE /* PhoneNumberView.swift */; };
 		D9871CCC2C4A1EA80082E8BE /* CPData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9871CBF2C4A1EA80082E8BE /* CPData.swift */; };
@@ -100,6 +101,7 @@
 		B4DBEE792C460E4D002C5231 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		B4DBEE832C46509A002C5231 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
 		B4DBEE862C465275002C5231 /* Personality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Personality.swift; sourceTree = "<group>"; };
+		D932CD4C2C50BA92006916C7 /* ForYouSwipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForYouSwipe.swift; sourceTree = "<group>"; };
 		D9871CBD2C4A1EA80082E8BE /* Decoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
 		D9871CBE2C4A1EA80082E8BE /* PhoneNumberView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberView.swift; sourceTree = "<group>"; };
 		D9871CBF2C4A1EA80082E8BE /* CPData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPData.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				B4B5EE1D2C440FEF0035D40F /* ForYouView.swift */,
+				D932CD4C2C50BA92006916C7 /* ForYouSwipe.swift */,
 				06477ABE2C4548F6006F4C79 /* ForYouCard.swift */,
 			);
 			path = ForYou;
@@ -517,6 +520,7 @@
 				B4DBEE782C460E25002C5231 /* MedicalView.swift in Sources */,
 				D9871CDB2C4A1EC40082E8BE /* ImagePicker.swift in Sources */,
 				D9871CCC2C4A1EA80082E8BE /* CPData.swift in Sources */,
+				D932CD4D2C50BA92006916C7 /* ForYouSwipe.swift in Sources */,
 				B4DBEE872C465275002C5231 /* Personality.swift in Sources */,
 				DAFC42C92C4F752000F5D029 /* VerificationDoneView.swift in Sources */,
 				D9871CD52C4A1EA80082E8BE /* DatePickerTextField.swift in Sources */,
@@ -659,9 +663,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = S929UZL64F;
+				DEVELOPMENT_TEAM = J44YP99CCP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MC3/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DogMitch;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app upload photos to profile";
@@ -692,9 +697,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MC3/Preview Content\"";
-				DEVELOPMENT_TEAM = S929UZL64F;
+				DEVELOPMENT_TEAM = J44YP99CCP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MC3/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DogMitch;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app upload photos to profile";
