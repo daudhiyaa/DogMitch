@@ -19,7 +19,7 @@ struct MedicalUploadDocumentView: View {
     @State private var MedicalImage: URL?
     @State private var VaccineImage: URL?
     @State private var StamboomImage: URL?
-    @AppStorage("registeredDogID") private var registeredDogID: String = ""
+//    @AppStorage("registeredDogID") private var registeredDogID: String = ""
     var dog: Dog
     
     var isFormValid: Bool {
@@ -43,10 +43,12 @@ struct MedicalUploadDocumentView: View {
                     
                     HStack {
                         Button(action: {
-                            dogViewModel.addDog(newDog: dogViewModel.dogs)
-                            registeredDogID = "keisi"
-                            isNavigationActive = true
-                            print(registeredDogID)
+                            Task {
+                                await dogViewModel.addDog(newDog: dogViewModel.dogs)
+                          
+                                isNavigationActive = true
+
+                            }
                         }) {
                             Text("Later")
                                 .font(.system(size: 17))
@@ -100,11 +102,11 @@ struct MedicalUploadDocumentView: View {
                         
                         if let upload = dogViewModel.uploadStatus {
                             Text(upload).hidden().onAppear{
-                                print("Add Dog")
-                                dogViewModel.addDog(newDog: dogViewModel.dogs)
-                                isImageUploading = false
-                                registeredDogID = "keisi"
-                                isNavigationActive = true
+                                Task{
+                                    await dogViewModel.addDog(newDog: dogViewModel.dogs)
+                                    isImageUploading = false
+                                    isNavigationActive = true
+                                }
                             }
                         }
                     }

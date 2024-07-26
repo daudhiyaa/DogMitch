@@ -186,6 +186,7 @@ struct ProfileView: View {
                 .task {
                     if isMyProfile{
                         isLoading = true
+                        await dogViewModel.fetchDog(id: registeredDogID!)
                         await dogViewModel.fetchDogs()
                         dog = dogViewModel.fetchedDogs[0]
                         isLoading = false

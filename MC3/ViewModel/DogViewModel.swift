@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseStorage
+import SwiftUI
 
 enum ImageType {
     case profilePicture
@@ -28,6 +29,8 @@ class DogViewModel: ObservableObject{
     @Published var uploadCountMedical: Int = 0
     @Published var image = ""
     @Published var fetchedDogs = [Dog]()
+    @Published var myDog = Dog.emptyDog
+    @AppStorage("registeredDogID") private var registeredDogID: String = ""
     
     let db = Firestore.firestore()
     
@@ -39,13 +42,15 @@ class DogViewModel: ObservableObject{
         return dog
     }
     
-    func addDog(newDog: Dog){
-        let collection = db.collection("dog")
-        collection.addDocument(data: newDog.dictionary)
-        
-        print(newDog)
-        dog.append(newDog)
-    }
+    func addDog(newDog: Dog) async{
+            do {
+              let ref = try await db.collection("dog").addDocument(data: newDog.dictionary)
+              print("Document added with ID: \(ref.documentID)")
+            registeredDogID = ref.documentID
+            } catch {
+              print("Error adding document: \(error)")
+            }
+        }
     
 //    func addDog(newDog: Dog) {
 //        let collection = db.collection("dog")
@@ -60,10 +65,12 @@ class DogViewModel: ObservableObject{
 //                
 //                // Optionally, you can fetch the document ID from the added document
 //                let documentID = collection.document().documentID
+//                print("document id: ",documentID)
+//                print("Document added with ID: \(collection.document().documentID)")
 //                // Update your dog model or state with the document ID
 //                // Example: Assuming Dog has an id property to store the document ID
 //                var updatedDog = newDog
-//                updatedDog.id = UUID(uuidString: documentID)!
+////                updatedDog.id = UUID(uuidString: documentID)!
 //                
 //                // Append the updated dog with the document ID to your local array
 //                print(newDog)
@@ -71,7 +78,27 @@ class DogViewModel: ObservableObject{
 //            }
 //        }
 //    }
+    
+    func fetchDog(id: String) async {
+        let docRef = db.collection("dog").document(registeredDogID)
 
+        do {
+//            let myDog = try await docRef.getDocument()
+//            print("My Dog: \(myDog)")
+//            DispatchQueue.main.async {
+//                self.myDog = myDog
+//            }
+            let document = try await docRef.getDocument()
+              if document.exists {
+                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                print("Document data: \(dataDescription)")
+              } else {
+                print("Document does not exist")
+              }
+        } catch {
+            print("Error getting documents: \(error)")
+        }
+    }
     
     func fetchDogs() async {
         do {

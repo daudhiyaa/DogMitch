@@ -792,8 +792,10 @@ struct DogsInformationView: View {
                 if let upload =  dogViewModel.uploadStatus {
                     Text(upload).hidden()
                         .onAppear{
-                            dogViewModel.addDog(newDog: dogViewModel.dogs)
-                            isNavigationMedActive = true
+                            Task {
+                                await dogViewModel.addDog(newDog: dogViewModel.dogs)
+                                isNavigationMedActive = true
+                            }
                         }
                 }
             }
