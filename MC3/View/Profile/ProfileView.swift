@@ -12,11 +12,9 @@ let pageStates: [String] = ["About", "Medical"]
 struct ProfileHeader: View {
     @Binding var showAlert: Bool
     @Binding var isLoading: Bool
-    @AppStorage("registeredDogID") private var registeredDogID: String?
     var dog: Dog
     var isMyProfile: Bool
     @State var isReadyToBread: Bool = false
-    
     var verificationStatusMessage: String
     var verificationStatusIcon: String
     
@@ -169,7 +167,7 @@ struct ProfileView: View {
                 }
             }
             .onAppear(){
-                print("Registered Dog ID: \(registeredDogID)")
+                print("Registered Dog ID: \(String(describing: registeredDogID))")
             }
             .padding(24)
             .overlay(content: {
@@ -246,7 +244,7 @@ struct ProfileView: View {
                     }
                 }
                 .onAppear(){
-                    print("Registered Dog ID: \(registeredDogID)")
+                    print("Registered Dog ID: \(String(describing: registeredDogID))")
                 }
                 .padding(24)
                 .overlay(content: {
@@ -266,7 +264,6 @@ struct ProfileView: View {
                 .task {
                     if isMyProfile{
                         isLoading = true
-                        await dogViewModel.fetchDog(id: registeredDogID!)
                         await dogViewModel.fetchDogs()
                         await dogViewModel.fetchDogByID()
                         dog = dogViewModel.myDog
@@ -350,10 +347,10 @@ struct ButtonChatOwner: View {
     var body: some View {
         HStack {
             Image(systemName: "bubble.left.and.bubble.right")
-            Text("Chat Owner")
+            Text("Chat Owner").bold()
         }
         .padding(10)
-        .background(Color.teal)
+        .background(Colors.tosca)
         .foregroundColor(.white)
         .cornerRadius(8)
     }

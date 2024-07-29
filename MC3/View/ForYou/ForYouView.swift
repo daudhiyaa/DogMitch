@@ -30,8 +30,3 @@ struct ForYouView: View {
         }
     }
 }
-
-
-//#Preview {
-//    ForYouView().environmentObject(DogViewModel())
-//}

@@ -66,9 +66,7 @@ struct ForYouCard: View {
             Spacer() 
         }
         
-        .frame(maxWidth: UIScreen.main.bounds.width * 0.8, maxHeight: UIScreen.main.bounds.height * 0.5)
-//        .background(Color.red)
-        
+        .frame(maxWidth: UIScreen.main.bounds.width * 0.8, maxHeight: UIScreen.main.bounds.height * 0.5)        
     }
 }
 
