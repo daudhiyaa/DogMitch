@@ -30,16 +30,12 @@ class DogViewModel: ObservableObject{
     @Published var image = ""
     @Published var fetchedDogs = [Dog]()
     @Published var myDog = Dog.emptyDog
-    @AppStorage("registeredDogID") private var registeredDogID: String = ""
-    
+    @AppStorage("registeredDogID") private var registeredDogID: String = "invalid_id"
+
     let db = Firestore.firestore()
     
     init(){
         dog = Dog.sampleDogList
-    }
-    
-    var showDogs: [Dog] {
-        return dog
     }
     
     func addDog(newDog: Dog) async{
@@ -49,50 +45,6 @@ class DogViewModel: ObservableObject{
             registeredDogID = ref.documentID
         } catch {
             print("Error adding document: \(error)")
-        }
-    }
-    
-    //    func addDog(newDog: Dog) {
-    //        let collection = db.collection("dog")
-    //
-    //        // Add the document with a completion handler to get the document ID
-    //        collection.addDocument(data: newDog.dictionary) { error in
-    //            if let error = error {
-    //                print("Error adding document: \(error)")
-    //            } else {
-    //                // Document was added successfully, retrieve the document ID
-    //                print("Document added with ID: \(collection.document().documentID)")
-    //
-    //                // Optionally, you can fetch the document ID from the added document
-    //                let documentID = collection.document().documentID
-    //                print("document id: ",documentID)
-    //                print("Document added with ID: \(collection.document().documentID)")
-    //                // Update your dog model or state with the document ID
-    //                // Example: Assuming Dog has an id property to store the document ID
-    //                var updatedDog = newDog
-    ////                updatedDog.id = UUID(uuidString: documentID)!
-    //
-    //                // Append the updated dog with the document ID to your local array
-    //                print(newDog)
-    //                self.dog.append(updatedDog)
-    //            }
-    //        }
-    //    }
-    
-    func fetchDog(id: String) async  {
-        let docRef = db.collection("dog").document(registeredDogID)
-        
-        do {
-            let document = try await docRef.getDocument()
-            if document.exists {
-                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                print("Document data: \(dataDescription)")
-                  // Attempt to convert data to Dog dictionary
-            } else {
-                print("Document does not exist")
-            }
-        } catch {
-            print("Error getting documents: \(error)")
         }
     }
     
@@ -133,7 +85,7 @@ class DogViewModel: ObservableObject{
         let birthDate: Date = convertToDate(dateString: data["birthday"] as? String ?? "") ?? Date()
         let dogAge: Int = calculateAge(from: birthDate) ?? 0
         
-        var dog = Dog(
+        let dog = Dog(
             profilePicture: data["profilePicture"] as? String ?? "",
             picture1: data["picture1"] as? String ?? "",
             picture2: data["picture2"] as? String ?? "",
@@ -203,21 +155,23 @@ class DogViewModel: ObservableObject{
                 }
             }
             
-            DispatchQueue.main.async {
-                self.fetchedDogs = newDogs
-            }
+            self.fetchedDogs = newDogs
+            
         } catch {
             print("Error getting documents: \(error)")
         }
     }
+    
     func updateDog(uuid: String, imageName: ImageType, value: String){
-        let updateRef = Firestore.firestore().collection("dog").document(uuid)
-        let updateData = ["\(imageName)": value]
-        updateRef.updateData(updateData) { error in
-            if let error = error {
-                print(error.localizedDescription)
-            } else {
-                print("Image name successfully updated!")
+        do {
+            let updateRef = Firestore.firestore().collection("dog").document(uuid)
+            let updateData = ["\(imageName)": value]
+            updateRef.updateData(updateData) { error in
+                if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    print("Image name successfully updated!")
+                }
             }
         }
     }
@@ -240,7 +194,7 @@ class DogViewModel: ObservableObject{
                             let uiImage: UIImage = UIImage(data: data)!
                             let compress = uiImage.jpegData(compressionQuality: 0.001)
                             print(compress!)
-                            let uploadTask = storageReference.putData(compress!, metadata: metadata,completion: { (metadata,error) in
+                            _ = storageReference.putData(compress!, metadata: metadata,completion: { (metadata,error) in
                                 guard metadata != nil else{
                                     return
                                 }
@@ -289,7 +243,7 @@ class DogViewModel: ObservableObject{
                         if let data = try? Data(contentsOf: fileUrl){
                             let uiImage: UIImage = UIImage(data: data)!
                             let compress = uiImage.jpegData(compressionQuality: 0.001)
-                            let uploadTask = storageReference.putData(compress!, metadata: metadata,completion: { (metadata,error) in
+                            _ = storageReference.putData(compress!, metadata: metadata,completion: { (metadata,error) in
                                 guard metadata != nil else{
                                     return
                                 }

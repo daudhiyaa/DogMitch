@@ -12,7 +12,7 @@ struct MedicalDocumentView: View {
     var documentImage: String
     var verificationStatusMessage: String
     var verificationStatusIcon: String
-    @AppStorage("registeredDogID") private var registeredDogID: String?
+    @AppStorage("registeredDogID") private var registeredDogID: String = "invalid_id"
     @EnvironmentObject var dogViewModel: DogViewModel
     @State private var isImagePickerPresented = false
     @State private var selectedImages: URL?
@@ -33,11 +33,11 @@ struct MedicalDocumentView: View {
                                 isImageUploading = true
                                 if let url = selectedImages{
                                     if pageTitle == menuItems[0] {
-                                        dogViewModel.updateDocument(fileUrl: url, imageName: .vaccine, uuid: registeredDogID!)
+                                        dogViewModel.updateDocument(fileUrl: url, imageName: .vaccine, uuid: registeredDogID)
                                     }else if pageTitle == menuItems[1]{
-                                        dogViewModel.updateDocument(fileUrl: url, imageName: .stamboom, uuid: registeredDogID!)
+                                        dogViewModel.updateDocument(fileUrl: url, imageName: .stamboom, uuid: registeredDogID)
                                     }else{
-                                        dogViewModel.updateDocument(fileUrl: url, imageName: .medicalRecord, uuid: registeredDogID!)
+                                        dogViewModel.updateDocument(fileUrl: url, imageName: .medicalRecord, uuid: registeredDogID)
                                     }
                                 }
                             }
