@@ -71,44 +71,85 @@ struct AboutView: View {
                 
                 // GALLERY VIEW
                 HStack(spacing: 16) {
-                    GeometryReader { geometry in
-                        AsyncImage(url: URL(string: dog.picture1)){ image in
-                            image
-                                .resizable()
-                                .scaledToFill()
-                        } placeholder: {
-                            if dog.picture1 == "" {
-                                EmptyView()
-                            } else  {
-                                ProgressView()
+                    if dog.picture1 == ""{
+                        GeometryReader { geometry in
+                            AsyncImage(url: URL(string: dog.picture2)){ image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            } placeholder: {
+                                if dog.picture2 == "" {
+                                    EmptyView()
+                                } else  {
+                                    ProgressView()
+                                }
                             }
+                            .centerCropped()
+                            .frame(
+                                width: geometry.size.width,
+                                height: geometry.size.width
+                            )
+                            .cornerRadius(10)
                         }
-                        .centerCropped()
-                        .frame(
-                            width: geometry.size.width,
-                            height: geometry.size.width
-                        )
-                        .cornerRadius(10)
-                    }
-                    
-                    GeometryReader { geometry in
-                        AsyncImage(url: URL(string: dog.picture2)){ image in
-                            image
-                                .resizable()
-                                .scaledToFill()
-                        } placeholder: {
-                            if dog.picture2 == "" {
-                                EmptyView()
-                            } else  {
-                                ProgressView()
+                        GeometryReader { geometry in
+                            AsyncImage(url: URL(string: dog.picture1)){ image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            } placeholder: {
+                                if dog.picture1 == "" {
+                                    EmptyView()
+                                } else  {
+                                    ProgressView()
+                                }
                             }
+                            .centerCropped()
+                            .frame(
+                                width: geometry.size.width,
+                                height: geometry.size.width
+                            )
+                            .cornerRadius(10)
                         }
-                        .centerCropped()
-                        .frame(
-                            width: geometry.size.width,
-                            height: geometry.size.width
-                        )
-                        .cornerRadius(10)
+                    }else{
+                        GeometryReader { geometry in
+                            AsyncImage(url: URL(string: dog.picture1)){ image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            } placeholder: {
+                                if dog.picture1 == "" {
+                                    EmptyView()
+                                } else  {
+                                    ProgressView()
+                                }
+                            }
+                            .centerCropped()
+                            .frame(
+                                width: geometry.size.width,
+                                height: geometry.size.width
+                            )
+                            .cornerRadius(10)
+                        }
+                        
+                        GeometryReader { geometry in
+                            AsyncImage(url: URL(string: dog.picture2)){ image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            } placeholder: {
+                                if dog.picture2 == "" {
+                                    EmptyView()
+                                } else  {
+                                    ProgressView()
+                                }
+                            }
+                            .centerCropped()
+                            .frame(
+                                width: geometry.size.width,
+                                height: geometry.size.width
+                            )
+                            .cornerRadius(10)
+                        }
                     }
                 }.frame(height: UIScreen.main.bounds.width / 2)
             }
