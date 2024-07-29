@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Dog: Identifiable{
+struct Dog: Identifiable, Equatable{
     var id : UUID
     var profilePicture : String
     var picture1 : String

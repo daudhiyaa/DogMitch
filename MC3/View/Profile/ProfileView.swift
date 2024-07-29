@@ -77,21 +77,17 @@ struct ProfileHeader: View {
                         }
                     }
                 } else {
-                    Text("No Dog Registered")
-                        .padding()
-                }
-                
-                
-                if verificationStatusMessage.contains("verified") {
-                    Link(destination: URL(string: "https://api.whatsapp.com/send?phone=\(dog.contact)")!) {
-                        ButtonChatOwner()
+                    if verificationStatusMessage.contains("verified") {
+                        Link(destination: URL(string: "https://api.whatsapp.com/send?phone=\(dog.contact)")!) {
+                            ButtonChatOwner()
+                        }
                     }
-                }
-                else {
-                    Button {
-                        showAlert = true
-                    } label: {
-                        ButtonChatOwner()
+                    else {
+                        Button {
+                            showAlert = true
+                        } label: {
+                            ButtonChatOwner()
+                        }
                     }
                 }
             }
@@ -166,9 +162,6 @@ struct ProfileView: View {
                     }
                 }
             }
-            .onAppear(){
-                print("Registered Dog ID: \(String(describing: registeredDogID))")
-            }
             .padding(24)
             .overlay(content: {
                 if isLoading {
@@ -197,7 +190,7 @@ struct ProfileView: View {
                     }
                 }
             }.navigationDestination(isPresented: $isBackActive) {
-                MainView(dogBreed: "test")
+                MainView()
             }
             .navigationBarBackButtonHidden(true)
         }else{
@@ -281,7 +274,7 @@ struct ProfileView: View {
                         }
                     }
                 }.navigationDestination(isPresented: $isBackActive) {
-                    MainView(dogBreed: "test")
+                    MainView()
                 }
                 .navigationBarBackButtonHidden(true)
             }

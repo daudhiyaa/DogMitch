@@ -9,8 +9,11 @@ import SwiftUI
 
 struct ForYouView: View {
     @EnvironmentObject var dogViewModel: DogViewModel
+    @AppStorage("registeredDogBreed") private var registeredDogBreed: String?
+
     @State private var isLoading = false
     @State var dogs : [Dog]
+
     var body: some View {
         NavigationStack {
             ForYouSwipe(dogs : $dogs)

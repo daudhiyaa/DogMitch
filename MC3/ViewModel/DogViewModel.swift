@@ -30,7 +30,9 @@ class DogViewModel: ObservableObject{
     @Published var image = ""
     @Published var fetchedDogs = [Dog]()
     @Published var myDog = Dog.emptyDog
+
     @AppStorage("registeredDogID") private var registeredDogID: String = "invalid_id"
+    @AppStorage("registeredDogBreed") private var registeredDogBreed: String?
 
     let db = Firestore.firestore()
     
@@ -49,29 +51,29 @@ class DogViewModel: ObservableObject{
     }
     
     func fetchDogByID() async {
-      let docRef = db.collection("dog").document(registeredDogID)
+        let docRef = db.collection("dog").document(registeredDogID)
 
-      do {
-        let document = try await docRef.getDocument()
-        if document.exists {
-          guard let data = document.data() else {
-            print("Error: Document data is unexpectedly nil")
-            return
-          }
-
-          // Map data to Dog object
-          let dog = mapDataToDog(data: data)
-          
-          // Update UI or perform other actions with the Dog object
-          DispatchQueue.main.async {
-              self.myDog = dog
-          }
-        } else {
-            print("Document does not exist")
+        do {
+            let document = try await docRef.getDocument()
+            if document.exists {
+                guard let data = document.data() else {
+                    print("Error: Document data is unexpectedly nil")
+                    return
+                }
+    
+                // Map data to Dog object
+                let dog = mapDataToDog(data: data)
+    
+                // Update UI or perform other actions with the Dog object
+                DispatchQueue.main.async {
+                    self.myDog = dog
+                }
+            } else {
+                print("Document does not exist")
+            }
+        } catch {
+            print("Error getting documents: \(error)")
         }
-      } catch {
-        print("Error getting documents: \(error)")
-      }
     }
 
     // Helper function to map data dictionary to Dog object
@@ -113,10 +115,11 @@ class DogViewModel: ObservableObject{
     
     func fetchDogs() async {
         do {
-            let querySnapshot = try await db.collection("dog").getDocuments()
+            let querySnapshot = try await db.collection("dog").order(by: "name").getDocuments()
             await fetchDogByID()
+
             var newDogs: [Dog] = []
-            
+
             for document in querySnapshot.documents {
                 let data = document.data()
                 if document.documentID != registeredDogID{
@@ -185,36 +188,36 @@ class DogViewModel: ObservableObject{
             let storageReference = Storage.storage().reference().child("\(imageName)/\(UUID().uuidString).\(fileExtension)")
             if let fileURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "com.daudhiyaa.DogMitch") {
                 let bookmarkData = try? fileUrl.bookmarkData()
-                if let datas = bookmarkData{
+                if let datas = bookmarkData {
                     var stale = false
                     if let url = try? URL(resolvingBookmarkData: datas, bookmarkDataIsStale: &stale),
-                       stale == false,
-                       url.startAccessingSecurityScopedResource() {
-                        if let data = try? Data(contentsOf: fileUrl){
-                            let uiImage: UIImage = UIImage(data: data)!
-                            let compress = uiImage.jpegData(compressionQuality: 0.001)
-                            print(compress!)
-                            _ = storageReference.putData(compress!, metadata: metadata,completion: { (metadata,error) in
-                                guard metadata != nil else{
-                                    return
-                                }
-                                storageReference.downloadURL { url, error in
-                                    if error != nil {
+                        stale == false,
+                        url.startAccessingSecurityScopedResource() {
+                            if let data = try? Data(contentsOf: fileUrl){
+                                let uiImage: UIImage = UIImage(data: data)!
+                                let compress = uiImage.jpegData(compressionQuality: 0.001)
+                                print(compress!)
+                                
+                                storageReference.putData(compress!, metadata: metadata,completion: { (metadata,error) in
+                                    guard metadata != nil else{
                                         return
                                     }
-                                    urls = url!.description
-                                    print("Url",urls)
-                                    self.updateDog(uuid: uuid, imageName: imageName, value: urls)
-                                    self.uploadStatus = "Success"
-                                }
+                                    storageReference.downloadURL { url, error in
+                                        if error != nil {
+                                            return
+                                        }
+                                        urls = url!.description
+                                        print("Url",urls)
+                                        self.updateDog(uuid: uuid, imageName: imageName, value: urls)
+                                        self.uploadStatus = "Success"
+                                    }
+                                })
                             }
-                            )
+                            let filename = fileUrl.lastPathComponent
+                            
+                            print("Data Byte",datas)
+                            print("filename",filename)
                         }
-                        let filename = fileUrl.lastPathComponent
-                        
-                        print("Data Byte",datas)
-                        print("filename",filename)
-                    }
                     fileURL.stopAccessingSecurityScopedResource()
                 } else {
                     print("Failed to obtain access to the security-scoped resource.")
@@ -238,12 +241,13 @@ class DogViewModel: ObservableObject{
                     var stale = false
                     
                     if let url = try? URL(resolvingBookmarkData: datas, bookmarkDataIsStale: &stale),
-                       stale == false,
-                       url.startAccessingSecurityScopedResource() {
+                        stale == false,
+                        url.startAccessingSecurityScopedResource() {
                         if let data = try? Data(contentsOf: fileUrl){
                             let uiImage: UIImage = UIImage(data: data)!
                             let compress = uiImage.jpegData(compressionQuality: 0.001)
-                            _ = storageReference.putData(compress!, metadata: metadata,completion: { (metadata,error) in
+
+                            storageReference.putData(compress!, metadata: metadata,completion: { (metadata,error) in
                                 guard metadata != nil else{
                                     return
                                 }
