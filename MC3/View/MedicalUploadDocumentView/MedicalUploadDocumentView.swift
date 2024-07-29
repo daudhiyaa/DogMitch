@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MedicalUploadDocumentView: View {
     @EnvironmentObject var dogViewModel: DogViewModel
+    
     @State private var isNavigationActive = false
     @State private var isImageUploading = false
     @State private var isImagePickerPresentedMedical = false
@@ -18,6 +19,7 @@ struct MedicalUploadDocumentView: View {
     @State private var MedicalImage: URL?
     @State private var VaccineImage: URL?
     @State private var StamboomImage: URL?
+//    @AppStorage("registeredDogID") private var registeredDogID: String = ""
     var dog: Dog
     
     var isFormValid: Bool {
@@ -41,7 +43,12 @@ struct MedicalUploadDocumentView: View {
                     
                     HStack {
                         Button(action: {
-                            isNavigationActive = true
+                            Task {
+                                await dogViewModel.addDog(newDog: dogViewModel.dogs)
+                          
+                                isNavigationActive = true
+
+                            }
                         }) {
                             Text("Later")
                                 .font(.system(size: 17))
@@ -55,10 +62,10 @@ struct MedicalUploadDocumentView: View {
                         
                         Button(action: {
                             dogViewModel.dogs = dog
-                            print(dogViewModel.dogs.profilePicture)
+                            
                             isImageUploading = true
                             
-                            if MedicalImage != nil && VaccineImage != nil {
+                            if MedicalImage != nil && VaccineImage != nil && StamboomImage == nil {
                                 dogViewModel.uploadCheckerMedical.append(contentsOf: ["medicalRecord", "vaccine"])
                             } else {
                                 dogViewModel.uploadCheckerMedical.append(contentsOf: ["medicalRecord", "vaccine", "stamboom"])
@@ -73,8 +80,6 @@ struct MedicalUploadDocumentView: View {
                             if let url = StamboomImage{
                                 dogViewModel.uploadFile(fileUrl: url, imageName: .stamboom)
                             }
-                         
-                            print("medical:\(dogViewModel.dogs)")
                         }) {
                             Text("Upload")
                                 .font(.system(size: 17))
@@ -95,33 +100,35 @@ struct MedicalUploadDocumentView: View {
                     if isImageUploading{
                         LoadingView()
                         
-                        if let upload =  dogViewModel.uploadStatus {
-                            Text(upload).hidden()
-                                .onAppear{
-                                    dogViewModel.addDog(newDog: dogViewModel.dogs)
+                        if let upload = dogViewModel.uploadStatus {
+                            Text(upload).hidden().onAppear{
+                                Task{
+                                    await dogViewModel.addDog(newDog: dogViewModel.dogs)
+                                    isImageUploading = false
                                     isNavigationActive = true
                                 }
+                            }
                         }
                     }
-                }) 
-                .navigationDestination(
-                isPresented: $isNavigationActive) {
-                    MainView(dogBreed: dog.breed)
-                    Text("Continue?")
-                        .hidden()
+                })
+                .sheet(isPresented: $isImagePickerPresentedMedical) {
+                    ImagePicker(selectedImage: $MedicalImage)
+                        .ignoresSafeArea()
                 }
-            .sheet(isPresented: $isImagePickerPresentedMedical) {
-                ImagePicker(selectedImage: $MedicalImage)
-                    .ignoresSafeArea()
-            }
-            .sheet(isPresented: $isImagePickerPresentedVaccine) {
-                ImagePicker(selectedImage: $VaccineImage)
-                    .ignoresSafeArea()
-            }
-            .sheet(isPresented: $isImagePickerPresentedStamboom) {
-                ImagePicker(selectedImage: $StamboomImage)
-                    .ignoresSafeArea()
-            }
+                .sheet(isPresented: $isImagePickerPresentedVaccine) {
+                    ImagePicker(selectedImage: $VaccineImage)
+                        .ignoresSafeArea()
+                }
+                .sheet(isPresented: $isImagePickerPresentedStamboom) {
+                    ImagePicker(selectedImage: $StamboomImage)
+                        .ignoresSafeArea()
+                }
+                .navigationDestination(
+                    isPresented: $isNavigationActive) {
+                        MainView(dogBreed: dog.breed)
+                        Text("Continue?")
+                            .hidden()
+                    }
         }
     }
         

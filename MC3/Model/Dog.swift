@@ -8,7 +8,7 @@
 import Foundation
 
 struct Dog: Identifiable{
-    let id : UUID
+    var id : UUID
     var profilePicture : String
     var picture1 : String
     var picture2 : String

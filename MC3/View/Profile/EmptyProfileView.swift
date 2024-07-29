@@ -28,7 +28,9 @@ struct EmptyProfileView: View {
                 
                 // Button
                 NavigationLink(
-                    destination: SelectBreedView(),
+                    destination: DogsInformationView(
+                        dogBreed: "Bulldog"
+                    ).environmentObject(DogViewModel()),
                     label: {
                         Text("Complete Now")
                             .font(.system(size: 17))
