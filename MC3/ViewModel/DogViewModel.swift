@@ -95,6 +95,7 @@ class DogViewModel: ObservableObject{
             print("Error getting documents: \(error)")
         }
     }
+    
     func fetchDogByID() async {
       let docRef = db.collection("dog").document(registeredDogID)
 
@@ -154,48 +155,52 @@ class DogViewModel: ObservableObject{
             isStamboomVerified: data["isStamboomVerified"] as? Bool ?? false,
             contact: data["contact"] as? String ?? ""
         )
-
-      return dog
+        
+        return dog
     }
-
+    
     func fetchDogs() async {
         do {
             let querySnapshot = try await db.collection("dog").getDocuments()
+            await fetchDogByID()
             var newDogs: [Dog] = []
             
             for document in querySnapshot.documents {
                 let data = document.data()
-                
-                var newPersonality: [Personality] = []
-                for personality in data["personality"] as? [String] ?? [] {
-                    newPersonality.append(Personality(value: personality))
+                if document.documentID != registeredDogID{
+                    if  data["gender"] as! String != myDog.gender{
+                        var newPersonality: [Personality] = []
+                        for personality in data["personality"] as? [String] ?? [] {
+                            newPersonality.append(Personality(value: personality))
+                        }
+                        
+                        let birthDate: Date = convertToDate(dateString: data["birthday"] as? String ?? "") ?? Date()
+                        let dogAge: Int = calculateAge(from: birthDate) ?? 0
+                        
+                        newDogs.append(Dog(
+                            profilePicture: data["profilePicture"] as? String ?? "",
+                            picture1: data["picture1"] as? String ?? "",
+                            picture2: data["picture2"] as? String ?? "",
+                            name: data["name"] as? String ?? "Unnamed",
+                            breed: data["breed"] as? String ?? "",
+                            birthday: "\(dogAge/12) yr \(dogAge%12) mo",
+                            gender: data["gender"] as? String ?? "",
+                            vaccine: data["vaccine"] as? String ?? "",
+                            stamboom: data["stamboom"] as? String ?? "",
+                            medicalRecord: data["medicalRecord"] as? String ?? "",
+                            location: data["location"] as? String ?? "",
+                            latitude: data["latitude"] as? String ?? "",
+                            longitude: data["longitude"] as? String ?? "",
+                            personality: newPersonality,
+                            weight: data["weight"] as? Float ?? 0.0,
+                            isReadyToBreed: data["isReadyToBreed"] as? Bool ?? false,
+                            isMedicalVerified: data["isMedicalVerified"] as? Bool ?? false,
+                            isVaccineVerified: data["isVaccineVerified"] as? Bool ?? false,
+                            isStamboomVerified: data["isStamboomVerified"] as? Bool ?? false,
+                            contact: data["contact"] as? String ?? ""
+                        ))
+                    }
                 }
-                
-                let birthDate: Date = convertToDate(dateString: data["birthday"] as? String ?? "") ?? Date()
-                let dogAge: Int = calculateAge(from: birthDate) ?? 0
-                
-                newDogs.append(Dog(
-                    profilePicture: data["profilePicture"] as? String ?? "",
-                    picture1: data["picture1"] as? String ?? "",
-                    picture2: data["picture2"] as? String ?? "",
-                    name: data["name"] as? String ?? "Unnamed",
-                    breed: data["breed"] as? String ?? "",
-                    birthday: "\(dogAge/12) yr \(dogAge%12) mo",
-                    gender: data["gender"] as? String ?? "",
-                    vaccine: data["vaccine"] as? String ?? "",
-                    stamboom: data["stamboom"] as? String ?? "",
-                    medicalRecord: data["medicalRecord"] as? String ?? "",
-                    location: data["location"] as? String ?? "",
-                    latitude: data["latitude"] as? String ?? "",
-                    longitude: data["longitude"] as? String ?? "",
-                    personality: newPersonality,
-                    weight: data["weight"] as? Float ?? 0.0,
-                    isReadyToBreed: data["isReadyToBreed"] as? Bool ?? false,
-                    isMedicalVerified: data["isMedicalVerified"] as? Bool ?? false,
-                    isVaccineVerified: data["isVaccineVerified"] as? Bool ?? false,
-                    isStamboomVerified: data["isStamboomVerified"] as? Bool ?? false,
-                    contact: data["contact"] as? String ?? ""
-                ))
             }
             
             DispatchQueue.main.async {
