@@ -248,9 +248,6 @@ struct ProfileView: View {
             }
             else{
                 EmptyProfileView()
-                    .onAppear(){
-                        print("No Dog Registered")
-                    }
             }
         }
     }

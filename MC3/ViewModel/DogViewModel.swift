@@ -68,8 +68,6 @@ class DogViewModel: ObservableObject{
                 DispatchQueue.main.async {
                     self.myDog = dog
                 }
-            } else {
-                print("Document does not exist")
             }
         } catch {
             print("Error getting documents: \(error)")
@@ -115,11 +113,9 @@ class DogViewModel: ObservableObject{
     
     func fetchDogs() async {
         do {
-            let querySnapshot = try await db.collection("dog").order(by: "name").getDocuments()
+            let querySnapshot = try await db.collection("dog").whereField("breed", isEqualTo: registeredDogBreed?.description).order(by: "name").getDocuments()
             await fetchDogByID()
-
             var newDogs: [Dog] = []
-
             for document in querySnapshot.documents {
                 let data = document.data()
                 if document.documentID != registeredDogID{
