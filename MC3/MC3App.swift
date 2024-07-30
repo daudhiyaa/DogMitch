@@ -33,12 +33,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct MC3App: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-
-    @AppStorage("registeredDogBreed") private var registeredDogBreed: String?
-
     var body: some Scene {
         WindowGroup {
-            OnBoardingView()
+            ContentView()
         }
     }
 }
@@ -47,10 +44,12 @@ struct ContentView: View {
     @AppStorage("registeredDogBreed") private var registeredDogBreed: String?
 
     var body: some View {
-        if registeredDogBreed == nil {
-            OnBoardingView()
-        } else {
-            MainView()
+        NavigationStack{
+            if registeredDogBreed == nil {
+                OnBoardingView()
+            } else {
+                MainView()
+            }
         }
     }
 }

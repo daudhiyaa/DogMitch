@@ -158,8 +158,9 @@ class DogViewModel: ObservableObject{
                 }
             }
             
-            self.fetchedDogs = newDogs
-            
+            DispatchQueue.main.async {
+                self.fetchedDogs = newDogs
+            }
         } catch {
             print("Error getting documents: \(error)")
         }

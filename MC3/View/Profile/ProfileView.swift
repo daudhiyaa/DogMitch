@@ -101,7 +101,6 @@ struct ProfileView: View {
     @State private var pageState: String = "About"
     @State private var showAlert = false
     @State private var isLoading = false
-    @State private var isBackActive = false
     var dogs: Dog
     @State var dog: Dog
     var isMyProfile: Bool = true
@@ -177,22 +176,6 @@ struct ProfileView: View {
                     dismissButton: .default(Text("OK"))
                 )
             }
-            .toolbar {
-                ToolbarItem(placement: .principal) { Color.clear }
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        isBackActive = true
-                    } label: {
-                        HStack {
-                            Image(systemName: "chevron.backward").bold()
-                            Text("Back")
-                        }
-                    }
-                }
-            }.navigationDestination(isPresented: $isBackActive) {
-                MainView()
-            }
-            .navigationBarBackButtonHidden(true)
         }else{
             if registeredDogID != nil {
                 VStack(alignment: .leading, spacing: 20) {
@@ -257,26 +240,11 @@ struct ProfileView: View {
                 .task {
                     if isMyProfile{
                         isLoading = true
-                        await dogViewModel.fetchDogs()
                         await dogViewModel.fetchDogByID()
                         dog = dogViewModel.myDog
                         isLoading = false
                     }
-                }     .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            isBackActive = true
-                        } label: {
-                            HStack {
-                                Image(systemName: "chevron.backward").bold()
-                                Text("Back")
-                            }
-                        }
-                    }
-                }.navigationDestination(isPresented: $isBackActive) {
-                    MainView()
                 }
-                .navigationBarBackButtonHidden(true)
             }
             else{
                 EmptyProfileView()
