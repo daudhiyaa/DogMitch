@@ -16,6 +16,8 @@ struct SelectBreedView: View {
     @State private var isNavigationActive = false
     @State private var isKeyboardVisible: Bool = false
     
+    @AppStorage("registeredDogBreed") private var registeredDogBreed: String = ""
+    
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 20) {
@@ -60,8 +62,9 @@ struct SelectBreedView: View {
                         Button(action: {
                             searchText = ""
                             isNavigationActive = true
+                            registeredDogBreed = selectedDogBreed
                         }) {
-                            Text("Next") .font(.system(size: 17)).fontWeight(.semibold)
+                            Text("Let's explore dogs around you") .font(.system(size: 17)).fontWeight(.semibold)
                                 .frame(maxWidth: .infinity)
                                 .padding(12)
                                 .background(selectedDogBreed.isEmpty ? Color(hex: "#D9D9D9") : Colors.tosca)
@@ -81,7 +84,7 @@ struct SelectBreedView: View {
             .navigationBarTitle("Select Your Dog Breed", displayMode: .inline)
             .navigationDestination(
                 isPresented: $isNavigationActive) {
-                    MainView(dogBreed: selectedDogBreed)
+                    MainView()
                         .navigationBarBackButtonHidden(true)
                 }
                 .searchable(
@@ -91,7 +94,7 @@ struct SelectBreedView: View {
         }
         .navigationDestination(
             isPresented: $isNavigationActive) {
-                MainView(dogBreed: selectedDogBreed)
+                MainView()
                     .navigationBarBackButtonHidden(true)
             }
             .onAppear {

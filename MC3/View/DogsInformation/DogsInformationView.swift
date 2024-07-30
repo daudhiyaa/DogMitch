@@ -12,17 +12,18 @@ import MapKit
 import Photos
 
 struct DogsInformationView: View {
-    @State var dog: Dog?
     @EnvironmentObject var dogViewModel: DogViewModel
-    var dogBreed: String
+    @AppStorage("registeredDogBreed") private var registeredDogBreed: String?
+
+    @State var dog: Dog?
     @State private var isNavigationMedActive = false
     @State private var isImageUploading = false
-    init(dogBreed : String){
+
+    init(){
         UISegmentedControl.appearance().selectedSegmentTintColor = .white
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor : UIColor.blue], for: .selected)
         UISegmentedControl.appearance().setDividerImage(UIImage(), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
         UISegmentedControl.appearance().layer.cornerRadius = 20
-        self.dogBreed = dogBreed
     }
     
     @State private var dogName = ""
@@ -31,7 +32,6 @@ struct DogsInformationView: View {
     @State private var isComplete = false
     @State private var showDatePicker = false
     
-    //    @ObservedObject var weight = NumbersOnly()
     @State var weight = ""
     weak var dateTextField: UITextField!
     @State private var gender = 0
@@ -418,10 +418,7 @@ struct DogsInformationView: View {
                             UIApplication.shared.endEditing()
                         }
                         
-                        
-                        
                         // Phone Number
-                        
                         HStack {
                             Text("Phone Number")
                                 .fontWeight(.bold)
@@ -646,7 +643,6 @@ struct DogsInformationView: View {
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                         }
-                        //                            .background(Color.red)
                         
                         .contentShape(Rectangle())
                         .onTapGesture {
@@ -688,7 +684,7 @@ struct DogsInformationView: View {
                                 }
                                 dogViewModel.dogs.contact = countryCode + removeSpaces(from: mobPhoneNumber)
                                 dogViewModel.dogs.location = dogLocation
-                                dogViewModel.dogs.breed = dogBreed
+                                dogViewModel.dogs.breed = registeredDogBreed!
                                 dogViewModel.dogs.isReadyToBreed = isReadyToBread
                                 dogViewModel.dogs.latitude = dogCoordinateLatitude
                                 dogViewModel.dogs.longitude = dogCoordinateLongitude
@@ -960,56 +956,6 @@ struct DogsInformationView: View {
 extension UIApplication {
     func endEditing() {
         sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
-
-class NumbersOnly: ObservableObject {
-    @Published var value: Float = 0 {
-        didSet {
-            if value < 0 {
-                value = 0
-            }
-        }
-    }
-    
-    @Published var stringValue: String = ""
-}
-
-struct ModalView: View {
-    @Binding var searchText: String
-    @Binding var selectedOption: String?
-    let options = ["Labrador Retriever", "German Shepherd", "Golden Retriever", "Bulldog", "Siberian Husky", "Pomeranian", "Australian Shepherd", "Chihuahua"]
-    
-    var body: some View {
-        NavigationView {
-            VStack {
-                SearchBar(text: $searchText).padding(.horizontal)
-                
-                List(options.filter {
-                    self.searchText.isEmpty || $0.localizedCaseInsensitiveContains(self.searchText)
-                }, id: \.self) { option in
-                    Button(action: {
-                        self.selectedOption = option
-                        self.dismiss()
-                    }) {
-                        Text(option)
-                    }
-                }
-                .listStyle(GroupedListStyle())
-            }
-            .navigationBarTitle("Select Option", displayMode: .inline)
-            .navigationBarItems(
-                trailing: Button("Done") {
-                    self.dismiss()
-                }
-            )
-        }
-        
-    }
-    
-    private func dismiss() {
-        self.selectedOption = nil
-        self.searchText = ""
     }
 }
 

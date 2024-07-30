@@ -19,7 +19,7 @@ struct MedicalUploadDocumentView: View {
     @State private var MedicalImage: URL?
     @State private var VaccineImage: URL?
     @State private var StamboomImage: URL?
-//    @AppStorage("registeredDogID") private var registeredDogID: String = ""
+
     var dog: Dog
     
     var isFormValid: Bool {
@@ -28,107 +28,106 @@ struct MedicalUploadDocumentView: View {
     @State private var uploadStatus: String?
     
     var body: some View {
-            NavigationStack {
-                VStack {
-                    ScrollView {
-                        VStack(alignment: .leading, spacing: 16) {
-                            medicalRecordSection
-                            vaccineBookSection
-                            stamboomSection
+        NavigationStack {
+            VStack {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 16) {
+                        medicalRecordSection
+                        vaccineBookSection
+                        stamboomSection
+                    }
+                    .padding(18)
+                }
+                
+                Spacer()
+                
+                HStack {
+                    Button(action: {
+                        Task {
+                            await dogViewModel.addDog(newDog: dogViewModel.dogs)
+                            
+                            isNavigationActive = true
                         }
-                        .padding(18)
+                    }) {
+                        Text("Later")
+                            .font(.system(size: 17))
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                            .padding(12)
+                            .background(Color(hex: "#D9D9D9"))
+                            .cornerRadius(30)
+                            .foregroundColor(.white)
                     }
                     
-                    Spacer()
+                    Button(action: {
+                        dogViewModel.dogs = dog
+                        
+                        isImageUploading = true
+                        
+                        if MedicalImage != nil && VaccineImage != nil && StamboomImage == nil {
+                            dogViewModel.uploadCheckerMedical.append(contentsOf: ["medicalRecord", "vaccine"])
+                        } else {
+                            dogViewModel.uploadCheckerMedical.append(contentsOf: ["medicalRecord", "vaccine", "stamboom"])
+                        }
+                        
+                        if let url = MedicalImage{
+                            dogViewModel.uploadFile(fileUrl: url, imageName: .medicalRecord)
+                        }
+                        if let url = VaccineImage{
+                            dogViewModel.uploadFile(fileUrl: url, imageName: .vaccine)
+                        }
+                        if let url = StamboomImage{
+                            dogViewModel.uploadFile(fileUrl: url, imageName: .stamboom)
+                        }
+                    }) {
+                        Text("Upload")
+                            .font(.system(size: 17))
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                            .padding(12)
+                            .background(isFormValid ? Colors.tosca : Color(hex: "#D9D9D9"))
+                            .cornerRadius(30)
+                            .foregroundColor(.white)
+                    }
+                    .disabled(!isFormValid)
+                }
+                .padding(.horizontal, 18)
+                .padding(.vertical, 16)
+            }
+            .navigationBarTitle("Health Verification", displayMode: .inline)
+            .overlay(content: {
+                if isImageUploading{
+                    LoadingView()
                     
-                    HStack {
-                        Button(action: {
-                            Task {
+                    if let upload = dogViewModel.uploadStatus {
+                        Text(upload).hidden().onAppear{
+                            Task{
                                 await dogViewModel.addDog(newDog: dogViewModel.dogs)
-                          
+                                isImageUploading = false
                                 isNavigationActive = true
-
-                            }
-                        }) {
-                            Text("Later")
-                                .font(.system(size: 17))
-                                .fontWeight(.semibold)
-                                .frame(maxWidth: .infinity)
-                                .padding(12)
-                                .background(Color(hex: "#D9D9D9"))
-                                .cornerRadius(30)
-                                .foregroundColor(.white)
-                        }
-                        
-                        Button(action: {
-                            dogViewModel.dogs = dog
-                            
-                            isImageUploading = true
-                            
-                            if MedicalImage != nil && VaccineImage != nil && StamboomImage == nil {
-                                dogViewModel.uploadCheckerMedical.append(contentsOf: ["medicalRecord", "vaccine"])
-                            } else {
-                                dogViewModel.uploadCheckerMedical.append(contentsOf: ["medicalRecord", "vaccine", "stamboom"])
-                            }
-                            
-                            if let url = MedicalImage{
-                                dogViewModel.uploadFile(fileUrl: url, imageName: .medicalRecord)
-                            }
-                            if let url = VaccineImage{
-                                dogViewModel.uploadFile(fileUrl: url, imageName: .vaccine)
-                            }
-                            if let url = StamboomImage{
-                                dogViewModel.uploadFile(fileUrl: url, imageName: .stamboom)
-                            }
-                        }) {
-                            Text("Upload")
-                                .font(.system(size: 17))
-                                .fontWeight(.semibold)
-                                .frame(maxWidth: .infinity)
-                                .padding(12)
-                                .background(isFormValid ? Colors.tosca : Color(hex: "#D9D9D9"))
-                                .cornerRadius(30)
-                                .foregroundColor(.white)
-                        }
-                        .disabled(!isFormValid)
-                    }
-                    .padding(.horizontal, 18)
-                    .padding(.vertical, 16)
-                }
-                .navigationBarTitle("Health Verification", displayMode: .inline)
-                .overlay(content: {
-                    if isImageUploading{
-                        LoadingView()
-                        
-                        if let upload = dogViewModel.uploadStatus {
-                            Text(upload).hidden().onAppear{
-                                Task{
-                                    await dogViewModel.addDog(newDog: dogViewModel.dogs)
-                                    isImageUploading = false
-                                    isNavigationActive = true
-                                }
                             }
                         }
                     }
-                })
-                .sheet(isPresented: $isImagePickerPresentedMedical) {
-                    ImagePicker(selectedImage: $MedicalImage)
-                        .ignoresSafeArea()
                 }
-                .sheet(isPresented: $isImagePickerPresentedVaccine) {
-                    ImagePicker(selectedImage: $VaccineImage)
-                        .ignoresSafeArea()
+            })
+            .sheet(isPresented: $isImagePickerPresentedMedical) {
+                ImagePicker(selectedImage: $MedicalImage)
+                    .ignoresSafeArea()
+            }
+            .sheet(isPresented: $isImagePickerPresentedVaccine) {
+                ImagePicker(selectedImage: $VaccineImage)
+                    .ignoresSafeArea()
+            }
+            .sheet(isPresented: $isImagePickerPresentedStamboom) {
+                ImagePicker(selectedImage: $StamboomImage)
+                    .ignoresSafeArea()
+            }
+            .navigationDestination(
+                isPresented: $isNavigationActive) {
+                    MainView()
+                    Text("Continue?")
+                        .hidden()
                 }
-                .sheet(isPresented: $isImagePickerPresentedStamboom) {
-                    ImagePicker(selectedImage: $StamboomImage)
-                        .ignoresSafeArea()
-                }
-                .navigationDestination(
-                    isPresented: $isNavigationActive) {
-                        MainView(dogBreed: dog.breed)
-                        Text("Continue?")
-                            .hidden()
-                    }
         }
     }
         
