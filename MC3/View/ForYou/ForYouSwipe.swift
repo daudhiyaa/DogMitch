@@ -60,7 +60,7 @@ struct ForYouSwipe: View {
             }
             .navigationDestination(isPresented: $isNavigationActive) {
                 if(dogs != []){
-                    ProfileView(dogs: dogs[currentIndex], dog: Dog.emptyDog, isDogProfile: true)
+                    ProfileView(dogs: dogs[currentIndex], dog: dogs[currentIndex], isDogProfile: true)
                         .environmentObject(DogViewModel()).onAppear(perform: {})
                 }
             }

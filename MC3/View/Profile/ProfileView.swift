@@ -153,7 +153,7 @@ struct ProfileView: View {
                     else {
                         MedicalView(
                             dog: dogs,
-                            isMyProfile: isMyProfile,
+                            isMyProfile: false,
                             verificationStatusMessage: verificationStatusMessage,
                             verificationStatusIcon: verificationStatusIcon
                         )

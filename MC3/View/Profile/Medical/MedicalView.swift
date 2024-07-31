@@ -58,8 +58,13 @@ struct MedicalView: View {
                         Spacer()
 
                         // TODO: Add verification status icon
-                        Image(systemName: "checkmark.circle.fill")
-                            .foregroundColor(.gray.opacity(0.3))
+                        if item == "Vaccination" && dog.isVaccineVerified || item == "Stamboom" && dog.isStamboomVerified || item == "Medical Record" && dog.isMedicalVerified{
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.blue)
+                        }else{
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.gray.opacity(0.3))
+                        }
                     }
                 }
             }
